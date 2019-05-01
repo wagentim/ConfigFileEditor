@@ -41,7 +41,14 @@ public class SourceFileSelectComposite extends SelectComposite
 	
 	protected void fileSelected() 
 	{
-		getController().setSourceFilePath(getCurrentFilePath());
+		String filePath = getCurrentFilePath();
+		
+		if( null == filePath || filePath.isEmpty() )
+		{
+			return;
+		}
+		
+		getController().setSourceFilePath(filePath);
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_NEW_FILE_SELECTED, getCurrentFilePath());
 	}
 }

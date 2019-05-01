@@ -6,7 +6,6 @@ import java.util.List;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;

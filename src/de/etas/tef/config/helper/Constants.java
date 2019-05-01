@@ -4,9 +4,15 @@ public final class Constants
 {
 	public static final String EMPTY_STRING = "";
 	public static final int EMPTY_INT = -1;
+	public static final String SYMBOL_INIT_FILE_COMMENT_DASH = "--";
+	public static final String SYMBOL_INIT_FILE_COMMENT_SEMICOLON = ";";
+	public static final String SYMBOL_NEW_LINE = "\n";
+	public static final String SYMBOL_LEFT_BRACKET = "[";
+	public static final String SYMBOL_RIGHT_BRACKET = "]";
+	public static final String SYMBOL_EQUAL = "=";
 	
-	public static final int MAIN_SCREEN_WIDTH = 1600;
-	public static final int MAIN_SCREEN_HEIGHT = 900;
+	public static final int MAIN_SCREEN_WIDTH = 800;
+	public static final int MAIN_SCREEN_HEIGHT = 450;
 	
 	public static final int BTN_DEFAULT_WIDTH = 80;
 	public static final int LABEL_DEFAULT_WIDTH = 45;
@@ -51,6 +57,6 @@ public final class Constants
 	public static final String TXT_GPIB_DEVICE_NAME = "DEVICE_NAME";
 	public static final String TXT_GPIB_PM_NUMBER = "PM_NUMBER";
 	public static final String TXT_GPIB_ADRESS = "GPIB_ADRESS";
-	public static final String SYMBOL_NEW_LINE = "\n";
+	
 	public static final String TXT_CONFIG_FILE = "Config File";
 }

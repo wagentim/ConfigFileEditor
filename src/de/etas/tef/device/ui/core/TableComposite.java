@@ -42,7 +42,7 @@ public class TableComposite extends AbstractComposite
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		initTable(this);
-		initTableButtons(this);
+//		initTableButtons(this);
 	}
 	
 
@@ -126,7 +126,7 @@ public class TableComposite extends AbstractComposite
 			TableColumn column = new TableColumn(table, SWT.LEFT);
 			column.setText(Constants.TABLE_TITLES[i]);
 			column.setResizable(true);
-			column.setWidth(220);
+			column.setWidth(150);
 		}
 		
 		addTableMouseListener();
@@ -183,6 +183,7 @@ public class TableComposite extends AbstractComposite
 				
 			}
 		});
+		btnSave.setVisible(false);
 	}
 
 	public void updateParameters(List<KeyValuePair> values)

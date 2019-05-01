@@ -12,6 +12,11 @@ public final class ConfigFile
 	private List<ConfigBlock> configBlocks = Collections.emptyList();
 	private String comments = Constants.EMPTY_STRING;
 	
+	public ConfigFile()
+	{
+		configBlocks = new ArrayList<ConfigBlock>();
+	}
+	
 	public String getFilePath()
 	{
 		return filePath;

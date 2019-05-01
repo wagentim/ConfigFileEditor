@@ -1,5 +1,6 @@
 package de.etas.tef.config.controller;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.helper.IWorker;
+import de.etas.tef.config.helper.IIniFileWorker;
 import de.etas.tef.config.helper.InitFileWorker;
 
 public class MainController implements IController
@@ -19,7 +20,7 @@ public class MainController implements IController
 	private ConfigBlock currSourceConfigBlock = null;
 	private ConfigBlock currTargetConfigBlock = null;
 
-	private IWorker worker = null;
+	private IIniFileWorker worker = null;
 
 	private ConfigFile sourceConfigFile = null;
 	private ConfigFile targetConfigFile = null;
@@ -35,7 +36,16 @@ public class MainController implements IController
 	{
 		String fp = isSource ? getSourceFilePath() : getTargetFilePath();
 
-		ConfigFile result = worker.read(fp);
+		ConfigFile result = new ConfigFile();
+		
+		try
+		{
+			worker.readFile(fp, result);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 
 		if (isSource)
 		{

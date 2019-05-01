@@ -68,7 +68,7 @@ public class MainScreen
 		Monitor primary = shell.getDisplay().getPrimaryMonitor();
 		Rectangle area = primary.getClientArea();
 		shell.pack();
-		shell.setBounds((area.width - Constants.MAIN_SCREEN_WIDTH) / 2, (area.height - Constants.MAIN_SCREEN_HEIGHT)/2, Constants.MAIN_SCREEN_WIDTH, Constants.MAIN_SCREEN_HEIGHT);
+		shell.setBounds((Math.abs(area.width - Constants.MAIN_SCREEN_WIDTH)) / 2, Math.abs((area.height - Constants.MAIN_SCREEN_HEIGHT))/2, Constants.MAIN_SCREEN_WIDTH, Constants.MAIN_SCREEN_HEIGHT);
 		shell.setText(Constants.TXT_APP_TITLE);
 		
 		GridLayout layout = new GridLayout(1, false);

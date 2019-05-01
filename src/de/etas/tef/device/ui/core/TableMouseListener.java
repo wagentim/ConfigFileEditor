@@ -154,7 +154,7 @@ public class TableMouseListener implements MouseListener
 	protected boolean isSource() 
 	{
 		return false;
-	};
+	}
 	
 	protected String getInfoText() {return Constants.EMPTY_STRING;}
 	

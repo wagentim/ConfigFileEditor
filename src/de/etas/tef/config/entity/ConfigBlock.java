@@ -1,7 +1,6 @@
 package de.etas.tef.config.entity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.etas.tef.config.helper.Constants;
@@ -10,8 +9,13 @@ public final class ConfigBlock
 {
 	private String blockName = Constants.EMPTY_STRING;
 	private int index = -1;
-	private List<KeyValuePair> parameters = Collections.emptyList();
+	private List<KeyValuePair> parameters = null;
 	private String comments = Constants.EMPTY_STRING;
+	
+	public ConfigBlock()
+	{
+		parameters = new ArrayList<KeyValuePair>();
+	}
 	
 	public KeyValuePair getParameter(int index)
 	{
