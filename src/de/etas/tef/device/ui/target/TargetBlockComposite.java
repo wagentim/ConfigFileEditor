@@ -40,8 +40,8 @@ public class TargetBlockComposite extends BlockComposite
 		}
 		else if( (type == Constants.ACTION_CONNECT_SELECTED) )
 		{
-			boolean value = (boolean)content;
-			getCombo().setEnabled(!value);
+//			boolean value = (boolean)content;
+//			getCombo().setEnabled(!value);
 		}
 		else if( getController().isConnected() && type == Constants.ACTION_SOURCE_PARAMETER_UPDATE )
 		{

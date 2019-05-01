@@ -2,6 +2,7 @@ package de.etas.tef.device.ui.core;
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -27,9 +28,7 @@ public class MainScreen
         Shell shell = new Shell(display);
 
         initMainScreen(shell);
-		new SourceConfigComposite(shell, SWT.BORDER, controller);
-        new TargetConfigComposite(shell, SWT.BORDER, controller);
-        initInfoBlock(shell, controller);
+        initMainComponents(shell, controller);
         new OptionComposite(shell, SWT.BORDER, controller);
         
         shell.open();
@@ -39,6 +38,29 @@ public class MainScreen
             }
         }
         display.dispose();
+	}
+	
+	private void initMainComponents(Shell shell, IController controller)
+	{
+		SashForm main = new SashForm(shell, SWT.VERTICAL);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		main.setLayoutData(gd);
+		
+		SashForm sf = new SashForm(main, SWT.HORIZONTAL);
+		gd = new GridData(GridData.FILL_BOTH);
+		main.setLayoutData(gd);
+		
+		new SourceConfigComposite(sf, SWT.BORDER, controller);
+        new TargetConfigComposite(sf, SWT.BORDER, controller);
+        
+        Text txtInfoBlock = new Text(main, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		gd = new GridData(GridData.FILL_BOTH);
+		gd.horizontalSpan = 3;
+		txtInfoBlock.setLayoutData(gd);
+		txtInfoBlock.setEditable(false);
+		new InfoBlockWriter(txtInfoBlock, controller);
+		
+		main.setWeights(new int[]{4, 1});
 	}
 	
 	private void initMainScreen(Shell shell)
@@ -56,77 +78,5 @@ public class MainScreen
 		layout.marginBottom = 10;
 		shell.setLayout(layout);
 	}
-	
-	private void initInfoBlock(Shell shell, IController controller)
-	{
-		Text txtInfoBlock = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.horizontalSpan = 3;
-		txtInfoBlock.setLayoutData(gd);
-		txtInfoBlock.setEditable(false);
-		new InfoBlockWriter(txtInfoBlock, controller);
-		
-	}
-
-//	private void initFunctionSelection(Shell shell)
-//	{
-//		btnGpibAddr = new Button(shell, SWT.CHECK);
-//		btnGpibAddr.setText(Constants.TXT_GPIB_ADDR);
-//		
-//		btnGpibAddr.addSelectionListener(new SelectionListener()
-//		{
-//			
-//			@Override
-//			public void widgetSelected(SelectionEvent e)
-//			{
-//				
-//				boolean status = btnGpibAddr.getSelection();
-//				infoWriter.logInfo("GPIB Adress Template: " + (status ? "True" : "False"));
-//				gpibAddrSelected(status);
-//			}
-//			
-//			@Override
-//			public void widgetDefaultSelected(SelectionEvent arg0)
-//			{
-//				
-//			}
-//		});
-//	}
-
-//	protected void gpibAddrSelected(boolean selected)
-//	{
-//		if( selected )
-//		{
-//			comboxConfigBlocks.setEnabled(false);
-//		}
-//		else
-//		{
-//			comboxConfigBlocks.setEnabled(true);
-//			
-//			if( comboxSelectedIndex < 0 )
-//			{
-//				comboxSelectedIndex = 0;
-//			}
-//			
-//			comboxConfigBlocks.setSelection(new Point(comboxSelectedIndex, comboxSelectedIndex));
-//		}
-//		
-//		controller.GPIBAdreeSelected(selected, comboxSelectedIndex);
-//	}
-
-	
-
-//	private void initBtnSave(Shell shell)
-//	{
-//		btnSave = new Button(shell, SWT.PUSH);
-//		btnSave.setText(Constants.TXT_BTN_SAVE);
-//		GridData gd = new GridData(GridData.FILL);
-//		gd.widthHint = Constants.BTN_DEFAULT_WIDTH;
-//		gd.verticalIndent = 10;
-//		btnSave.setLayoutData(gd);
-//		btnSave.setVisible(false);
-//	}
-	
-
 	
 }

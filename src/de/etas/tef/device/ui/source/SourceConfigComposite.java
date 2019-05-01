@@ -24,7 +24,7 @@ public class SourceConfigComposite extends ConfigComposite
 	protected void initComponent()
 	{
 		new SourceFileSelectComposite(this, SWT.NONE, getController());
-		new SourceBlockComposite(this, SWT.NONE, getController());
+//		new SourceBlockComposite(this, SWT.NONE, getController());
 		new SourceTableComposite(this, SWT.NONE, getController());
 		
 	}

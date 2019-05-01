@@ -1,5 +1,7 @@
 package de.etas.tef.config.controller;
 
+import org.eclipse.swt.widgets.TreeItem;
+
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 

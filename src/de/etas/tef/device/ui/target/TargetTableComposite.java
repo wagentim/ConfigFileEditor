@@ -1,6 +1,7 @@
 package de.etas.tef.device.ui.target;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
@@ -26,7 +27,7 @@ public class TargetTableComposite extends TableComposite
 		}
 		else if( (type == Constants.ACTION_CONNECT_SELECTED) )
 		{
-			setAllComponentsEnable(!(boolean)content);
+//			setAllComponentsEnable(!(boolean)content);
 		}
 		else if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_FINISHED )
 		{
@@ -37,6 +38,29 @@ public class TargetTableComposite extends TableComposite
 		else if( type == Constants.ACTION_TARGET_NEW_FILE_SELECTED )
 		{
 			clearTable();
+			String[] allBlocks = getController().getBlockNames(false);
+			setBlockList(allBlocks);
+		}
+		else if( type == Constants.ACTION_SOURCE_PARAMETER_SELECTED )
+		{
+			String blockName = (String)content;
+			getController().setSelectedBlock(blockName, false);
+			setSelectedBlock(blockName);
+			treeItemSelected(blockName);
+		}
+		
+		
+	}
+	
+	protected void treeItemSelected(String blockName)
+	{
+		
+		getController().setSelectedBlock(blockName, false);
+		ConfigBlock cb = getController().getCurrTargetConfigBlock();
+		
+		if( null != cb)
+		{
+			updateParameters(getController().getCurrTargetConfigBlock().getAllParameters());
 		}
 	}
 	

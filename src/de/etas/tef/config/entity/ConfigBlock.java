@@ -1,6 +1,7 @@
 package de.etas.tef.config.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.etas.tef.config.helper.Constants;
@@ -9,29 +10,8 @@ public final class ConfigBlock
 {
 	private String blockName = Constants.EMPTY_STRING;
 	private int index = -1;
-	private List<KeyValuePair> parameters = null;
-	
-	public ConfigBlock()
-	{
-		if( null == parameters )
-		{
-			parameters = new ArrayList<KeyValuePair>();
-		}
-	}
-	
-	public void clean()
-	{
-		setBlockName(Constants.EMPTY_STRING);
-		
-		if( null == parameters )
-		{
-			parameters = new ArrayList<KeyValuePair>();
-		}
-		else
-		{
-			parameters.clear();
-		}
-	}
+	private List<KeyValuePair> parameters = Collections.emptyList();
+	private String comments = Constants.EMPTY_STRING;
 	
 	public KeyValuePair getParameter(int index)
 	{
@@ -53,7 +33,7 @@ public final class ConfigBlock
 		this.blockName = blockName;
 	}
 	
-	public boolean addParameter(KeyValuePair para)
+	public boolean addParameterInLast(KeyValuePair para)
 	{
 		if( null == para )
 		{
@@ -93,4 +73,26 @@ public final class ConfigBlock
 		
 		return newObject;
 	}
+
+	public String getComments()
+	{
+		return comments;
+	}
+
+	public void setComments(String comments)
+	{
+		this.comments = comments;
+	}
+
+	public List<KeyValuePair> getParameters()
+	{
+		return parameters;
+	}
+
+	public void setParameters(List<KeyValuePair> parameters)
+	{
+		this.parameters = parameters;
+	}
+	
+	
 }

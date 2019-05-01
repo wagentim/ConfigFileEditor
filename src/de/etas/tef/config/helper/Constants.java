@@ -5,7 +5,7 @@ public final class Constants
 	public static final String EMPTY_STRING = "";
 	public static final int EMPTY_INT = -1;
 	
-	public static final int MAIN_SCREEN_WIDTH = 900;
+	public static final int MAIN_SCREEN_WIDTH = 1600;
 	public static final int MAIN_SCREEN_HEIGHT = 900;
 	
 	public static final int BTN_DEFAULT_WIDTH = 80;
@@ -23,7 +23,7 @@ public final class Constants
 	public static final String TXT_BTN_RUN = "Run";
 	public static final String[] EMPTY_STRING_ARRAY = {};
 	
-	public static final String[] TABLE_TITLES = {"Name", "Value", "Other", "Forth"};
+	public static final String[] TABLE_TITLES = {"Name", "Value"};
 	public static final String TXT_BTN_ADD = "Add";
 	public static final String TXT_BTN_DELETE = "Delete";
 	public static final String TXT_BTN_SAVE = "Save";
@@ -46,8 +46,11 @@ public final class Constants
 	public static final int ACTION_TAKE_SOURCE_PARAMETERS_FINISHED = 0x0C;
 	public static final int ACTION_GPIB_SELECTED = 0x0D;
 	public static final int ACTION_GPIB_SOURCE_FINISHED = 0x0F;
+	public static final int ACTION_SOURCE_PARAMETER_SELECTED = 0x11;
 	
 	public static final String TXT_GPIB_DEVICE_NAME = "DEVICE_NAME";
 	public static final String TXT_GPIB_PM_NUMBER = "PM_NUMBER";
 	public static final String TXT_GPIB_ADRESS = "GPIB_ADRESS";
+	public static final String SYMBOL_NEW_LINE = "\n";
+	public static final String TXT_CONFIG_FILE = "Config File";
 }

@@ -1,5 +1,11 @@
 package de.etas.tef.config.entity;
 
+/**
+ * Just for identify the table cell location
+ * 
+ * @author UIH9FE
+ *
+ */
 public class CellIndex
 {
 	private int row = -1;

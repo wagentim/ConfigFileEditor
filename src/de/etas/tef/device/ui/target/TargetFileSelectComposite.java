@@ -20,7 +20,7 @@ public class TargetFileSelectComposite extends SelectComposite
 	{
 		if( type == Constants.ACTION_CONNECT_SELECTED)
 		{
-			setAllComponentsEnable(!(boolean)content);
+//			setAllComponentsEnable(!(boolean)content);
 		}
 	}
 	

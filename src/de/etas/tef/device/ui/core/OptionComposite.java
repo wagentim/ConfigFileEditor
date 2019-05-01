@@ -106,8 +106,8 @@ public class OptionComposite extends AbstractComposite
 	{
 		if( (type == Constants.ACTION_CONNECT_SELECTED) )
 		{
-			boolean value = (boolean)content;
-			btnAcceptSource.setEnabled(value);
+//			boolean value = (boolean)content;
+//			btnAcceptSource.setEnabled(value);
 		}
 	}
 

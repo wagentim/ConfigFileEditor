@@ -24,7 +24,7 @@ public class TargetConfigComposite extends ConfigComposite
 	protected void initComponent()
 	{
 		new TargetFileSelectComposite(this, SWT.NONE, getController());
-		new TargetBlockComposite(this, SWT.NONE, getController());
+//		new TargetBlockComposite(this, SWT.NONE, getController());
 		new TargetTableComposite(this, SWT.NONE, getController());
 	}
 
