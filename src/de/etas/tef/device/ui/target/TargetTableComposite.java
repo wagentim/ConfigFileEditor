@@ -69,4 +69,10 @@ public class TargetTableComposite extends TableComposite
 		getController().saveFile(targetFilePath, false);
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Target Write to: " + targetFilePath + "finished!");
 	}
+
+	@Override
+	protected void addTableSelectedListener()
+	{
+		
+	}
 }

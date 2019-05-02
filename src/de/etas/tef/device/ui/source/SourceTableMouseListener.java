@@ -1,11 +1,13 @@
 package de.etas.tef.device.ui.source;
 
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
-import de.etas.tef.config.helper.IDHelper;
-import de.etas.tef.config.helper.Mapper;
+import de.etas.tef.config.helper.Constants;
 import de.etas.tef.device.ui.core.TableMouseListener;
 
 public class SourceTableMouseListener extends TableMouseListener
@@ -16,11 +18,6 @@ public class SourceTableMouseListener extends TableMouseListener
 		super(table, controller);
 	}
 	
-	protected String getInfoText() 
-	{
-		return Mapper.INSTANCE.getText(IDHelper.ID_SOURCE_CONFIG_COMPOSITE);
-	}
-	
 	protected ConfigBlock getConfigBlock()
 	{
 		return getController().getCurrSourceConfigBlock();
@@ -29,5 +26,22 @@ public class SourceTableMouseListener extends TableMouseListener
 	protected boolean isSource()
 	{
 		return true;
+	}
+	
+	@Override
+	protected void disposeEditor(CellIndex cell, String newValue)
+	{
+		Control oldEditor = getTableEditor().getEditor();
+		
+        if (oldEditor != null)
+        {
+			oldEditor.dispose();
+			if( isTextChanged )
+			{
+				getController().updateParameter(cell, newValue, true);
+				isTextChanged = false;
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Config Block: " + getConfigBlock().getBlockName() + " with new value: " + newValue + cell.toString());
+			}
+        }
 	}
 }

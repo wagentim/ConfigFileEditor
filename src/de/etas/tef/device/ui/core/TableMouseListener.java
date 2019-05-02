@@ -10,12 +10,10 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
@@ -24,12 +22,12 @@ import de.etas.tef.config.helper.Constants;
 public class TableMouseListener implements MouseListener
 {
 
-	private final TableEditor editor;
+	private TableEditor editor = null;
 	private final Table table;
 	private final IController controller;
-//	private final boolean isSource;
 	private CellIndex cell = null;
 	private String newValue = Constants.EMPTY_STRING;
+	protected boolean isTextChanged = false;
 	
 	public TableMouseListener(Table table, IController controller)
 	{
@@ -40,6 +38,11 @@ public class TableMouseListener implements MouseListener
 		editor.horizontalAlignment = SWT.LEFT;
 	    editor.grabHorizontal = true;
 	    editor.minimumWidth = 50;
+	}
+	
+	protected TableEditor getTableEditor()
+	{
+		return editor;
 	}
 	
 	@Override
@@ -83,7 +86,6 @@ public class TableMouseListener implements MouseListener
 			@Override
 			public void keyPressed(KeyEvent arg0)
 			{
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -97,6 +99,7 @@ public class TableMouseListener implements MouseListener
 				Text text = (Text) editor.getEditor();
 				newValue = text.getText();
 				editor.getItem().setText(cell.getColumn(), newValue);
+				isTextChanged = true;
 			}
 
 		});
@@ -104,14 +107,17 @@ public class TableMouseListener implements MouseListener
         newEditor.selectAll();
         newEditor.setFocus();
         editor.setEditor(newEditor, item, cell.getColumn());
-	
-		
 	}
 
 	@Override
 	public void mouseDown(MouseEvent arg0)
 	{
 		disposeOldEditor();
+	}
+
+	private void disposeOldEditor()
+	{
+		disposeEditor(cell, newValue);
 	}
 
 	@Override
@@ -139,21 +145,8 @@ public class TableMouseListener implements MouseListener
 		return null;
 	}
 	
-	private void disposeOldEditor()
+	protected void disposeEditor(CellIndex cell, String newValue)
 	{
-		Control oldEditor = editor.getEditor();
-		
-        if (oldEditor != null)
-        {
-			oldEditor.dispose();
-			getController().updateParameter(cell, newValue, isSource());
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, getInfoText() + " File Block: " + getConfigBlock().getBlockName() + " with new value: " + newValue + cell.toString());
-        }
-	}
-	
-	protected boolean isSource() 
-	{
-		return false;
 	}
 	
 	protected String getInfoText() {return Constants.EMPTY_STRING;}

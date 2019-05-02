@@ -1,6 +1,7 @@
 package de.etas.tef.config.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import de.etas.tef.config.entity.CellIndex;
@@ -80,6 +81,8 @@ public class MainController implements IController
 			result[i] = blocks.get(i).getBlockName();
 		}
 
+		Arrays.sort(result);
+		
 		return result;
 	}
 
@@ -116,27 +119,6 @@ public class MainController implements IController
 		}
 
 		return cb;
-	}
-
-	@Override
-	public int findConfigBlockIndexInTarget(String blockName)
-	{
-		int result = -1;
-
-//		if( !targetConfigBlocks.containsKey(blockName) )
-//			return result;
-//		else
-//		{
-//			for (String entry : targetConfigBlocks.keySet()) 
-//			{
-//				result++;
-//			     if (blockName.equals(entry)) 
-//			     {
-//			    	 break;
-//			     }
-//			}
-//		}
-		return result;
 	}
 
 	public boolean isConnected()
@@ -209,21 +191,6 @@ public class MainController implements IController
 		return currTargetConfigBlock;
 	}
 
-	@Override
-	public void startAcceptSourceParameter()
-	{
-//		try
-//		{
-//			ConfigBlock cb = currSourceConfigBlock.clone();
-//			targetConfigBlocks.put(cb.getBlockName(), cb);
-//			currTargetConfigBlock = cb;
-//			ActionManager.INSTANCE.sendAction(Constants.ACTION_TAKE_SOURCE_PARAMETERS_FINISHED, null);
-//		} catch (CloneNotSupportedException e)
-//		{
-//			e.printStackTrace();
-//		}
-	}
-
 	public String getSourceFilePath()
 	{
 		return sourceFilePath;
@@ -247,16 +214,15 @@ public class MainController implements IController
 	}
 
 	@Override
-	public void saveFile(String targetFilePath, boolean isSource)
+	public void saveFile(String filePath, boolean isSource)
 	{
-	}
-
-	@Override
-	public void gpibSelected(boolean isSelected)
-	{
-		if (!isSelected)
+		try
 		{
-			return;
+			worker.writeFile(filePath, isSource ? sourceConfigFile : targetFilePath);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

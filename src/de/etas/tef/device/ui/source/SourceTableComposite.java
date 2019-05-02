@@ -38,14 +38,6 @@ public class SourceTableComposite extends TableComposite
 				updateParameters(Collections.emptyList());
 			}
 		}
-		else if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_START)
-		{
-			setAllComponentsEnable(false);
-		}
-		else if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_FINISHED)
-		{
-			setAllComponentsEnable(true);
-		}
 		else if( type == Constants.ACTION_SOURCE_NEW_FILE_SELECTED )
 		{
 			clearTable();
@@ -107,6 +99,6 @@ public class SourceTableComposite extends TableComposite
 	{
 		getController().saveFile(targetFilePath, true);
 		
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Source Write to: " + targetFilePath + "finished!");
+		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Source Write to: " + targetFilePath + " finished!");
 	}
 }

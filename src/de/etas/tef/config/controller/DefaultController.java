@@ -14,13 +14,6 @@ public class DefaultController implements IController
 	}
 
 	@Override
-	public int findConfigBlockIndexInTarget(String blockName)
-	{
-		// TODO Auto-generated method stub
-		return -1;
-	}
-
-	@Override
 	public boolean isConnected()
 	{
 		// TODO Auto-generated method stub
@@ -69,13 +62,6 @@ public class DefaultController implements IController
 	}
 
 	@Override
-	public void startAcceptSourceParameter()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public String getSourceFilePath()
 	{
 		// TODO Auto-generated method stub
@@ -117,9 +103,4 @@ public class DefaultController implements IController
 		
 	}
 
-	@Override
-	public void gpibSelected(boolean isSelected) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -93,7 +93,7 @@ public class OptionComposite extends AbstractComposite
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		btnRight.setLayoutData(gd);
 		btnRight.setText(Constants.TXT_BTN_RIGHT);
-		btnRight.setSelection(true);
+		btnRight.setSelection(false);
 		btnRight.addSelectionListener(new SelectionListener()
 		{
 			
@@ -125,7 +125,6 @@ public class OptionComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				getController().startAcceptSourceParameter();
 			}
 			
 			@Override

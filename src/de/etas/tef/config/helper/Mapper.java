@@ -9,20 +9,20 @@ public final class Mapper
 {
 	public static Mapper INSTANCE = new Mapper();
 	
-	public String getText(int ID)
-	{
-		switch(ID)
-		{
-			case IDHelper.ID_SOURCE_FILE_BTN:	
-				return Constants.TXT_BTN_SELECT;
-			case IDHelper.ID_SOURCE_CONFIG_COMPOSITE:
-				return Constants.TXT_LABEL_FILE;
-			case IDHelper.ID_TARGET_CONFIG_COMPOSITE:
-				return Constants.TXT_LABEL_TARGET;
-			default: 
-				return Constants.EMPTY_STRING;
-		}
-	}
+//	public String getText(int ID)
+//	{
+//		switch(ID)
+//		{
+//			case IDHelper.ID_SOURCE_FILE_BTN:	
+//				return Constants.TXT_BTN_SELECT;
+//			case IDHelper.ID_SOURCE_CONFIG_COMPOSITE:
+//				return Constants.TXT_LABEL_FILE;
+//			case IDHelper.ID_TARGET_CONFIG_COMPOSITE:
+//				return Constants.TXT_LABEL_TARGET;
+//			default: 
+//				return Constants.EMPTY_STRING;
+//		}
+//	}
 	
 	public Color getColor(int ID, final Display display)
 	{

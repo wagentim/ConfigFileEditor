@@ -72,6 +72,9 @@ public class MainScreen implements IActionListener
 
 		main.setWeights(new int[]
 		{ 4, 1 });
+		
+		targetConfigComponent.setVisible(false);
+		sf.setWeights(new int[] {1, 0});
 	}
 
 	private void initMainScreen(Composite shell)

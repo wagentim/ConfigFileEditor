@@ -18,7 +18,7 @@ public final class Constants
 	public static final int LABEL_DEFAULT_WIDTH = 45;
 	
 	public static final String[] CONFIG_FILE_EXTENSION = {"*.ini", "*.*"};
-	public static final String[] CONFIG_FILE_NAME = {"Config File", "All Files"};
+	public static final String[] CONFIG_FILE_NAME = {"Config File (*.ini)", "All Files (*.*)"};
 	
 	public static final String TXT_APP_TITLE = "Config File Editor";
 	public static final String TXT_LABEL_FILE = "File";

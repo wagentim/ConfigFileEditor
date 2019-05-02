@@ -23,7 +23,7 @@ import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
 
-public class TableComposite extends AbstractComposite
+public abstract class TableComposite extends AbstractComposite
 {
 	private Tree blockList;
 	private Table table;
@@ -109,7 +109,6 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetDefaultSelected(SelectionEvent event)
 			{
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -132,22 +131,14 @@ public class TableComposite extends AbstractComposite
 		
 		addTableMouseListener();
 		addTableSelectedListener();
-		sf.setWeights(new int[]{1, 3});
+		sf.setWeights(new int[]{1, 2});
 	}
 	
-	protected void addTableSelectedListener()
-	{
-		
-	}
+	abstract protected void addTableSelectedListener();
 
+	abstract protected void treeItemSelected(String blockName);
 
-	protected void treeItemSelected(String blockName)
-	{
-		
-	}
-
-
-	protected void addTableMouseListener() {}
+	abstract protected void addTableMouseListener();
 	
 	protected void initTableButtons(Composite comp)
 	{
@@ -160,10 +151,30 @@ public class TableComposite extends AbstractComposite
 		btnAdd = new Button(c, SWT.PUSH);
 		btnAdd.setText(Constants.TXT_BTN_ADD);
 		btnAdd.setLayoutData(gd);
+		btnAdd.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btnAdd.setVisible(false);
 		
 		btnDelete = new Button(c, SWT.PUSH);
 		btnDelete.setText(Constants.TXT_BTN_DELETE);
 		btnDelete.setLayoutData(gd);
+		
+		btnDelete.setVisible(false);
 		
 		btnSave = new Button(c, SWT.PUSH);
 		btnSave.setText(Constants.TXT_BTN_SAVE);
@@ -184,7 +195,6 @@ public class TableComposite extends AbstractComposite
 				
 			}
 		});
-		btnSave.setVisible(false);
 	}
 
 	public void updateParameters(List<KeyValuePair> values)
@@ -227,19 +237,6 @@ public class TableComposite extends AbstractComposite
 		}
 	}
 
-	@Override
-	public void receivedAction(int type, Object content)
-	{
-	}
-
-	protected void setAllComponentsEnable(boolean isEnable)
-	{
-		table.setEnabled(isEnable);
-		btnAdd.setEnabled(isEnable);
-		btnDelete.setEnabled(isEnable);
-		btnSave.setEnabled(isEnable);
-	}
-	
 	protected String fileSave(Shell shell)
 	{
 		FileDialog fd = new FileDialog(shell, SWT.APPLICATION_MODAL | SWT.SAVE);
@@ -260,8 +257,7 @@ public class TableComposite extends AbstractComposite
 		saveAction(fileSavePath);
 	}
 	
-	protected void saveAction(String targetFilePath)
-	{}
+	abstract protected void saveAction(String targetFilePath);
 	
 	protected void setTreeSelectedBlock(String blockName)
 	{
