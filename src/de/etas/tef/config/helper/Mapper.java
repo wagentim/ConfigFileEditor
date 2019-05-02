@@ -16,7 +16,7 @@ public final class Mapper
 			case IDHelper.ID_SOURCE_FILE_BTN:	
 				return Constants.TXT_BTN_SELECT;
 			case IDHelper.ID_SOURCE_CONFIG_COMPOSITE:
-				return Constants.TXT_LABEL_SOURCE;
+				return Constants.TXT_LABEL_FILE;
 			case IDHelper.ID_TARGET_CONFIG_COMPOSITE:
 				return Constants.TXT_LABEL_TARGET;
 			default: 

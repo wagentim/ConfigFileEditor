@@ -21,7 +21,7 @@ public final class Constants
 	public static final String[] CONFIG_FILE_NAME = {"Config File", "All Files"};
 	
 	public static final String TXT_APP_TITLE = "Config File Editor";
-	public static final String TXT_LABEL_SOURCE = "Source";
+	public static final String TXT_LABEL_FILE = "File";
 	public static final String TXT_LABEL_TARGET = "Target";
 	public static final String TXT_LABEL_BLOCK_LIST = "Blocks:";
 	public static final String TXT_LABEL_EXEC_DIRECTORY = "Directory: ";

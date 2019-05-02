@@ -263,15 +263,15 @@ public class TableComposite extends AbstractComposite
 	protected void saveAction(String targetFilePath)
 	{}
 	
-	protected void setSelectedBlock(String blockName)
+	protected void setTreeSelectedBlock(String blockName)
 	{
-		TreeItem[] items = blockList.getItems();
+		TreeItem[] items = root.getItems();
 		
 		for( int i = 0 ; i < items.length; i++)
 		{
 			if( blockName.equals(items[i].getText()))
 			{
-				blockList.setSelection(items[i]);
+				blockList.select(items[i]);
 			}
 		}
 	}

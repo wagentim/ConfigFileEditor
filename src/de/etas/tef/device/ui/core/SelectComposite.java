@@ -62,7 +62,7 @@ public class SelectComposite extends AbstractComposite
 		GridData gd = new GridData();
 		gd.widthHint = Constants.LABEL_DEFAULT_WIDTH;
 		labelFileSelect.setLayoutData(gd);
-		labelFileSelect.setText(Constants.TXT_LABEL_SOURCE);
+		labelFileSelect.setText(Constants.TXT_LABEL_FILE);
 	}
 	
 	protected void txtSelectListener(){}

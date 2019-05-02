@@ -99,6 +99,11 @@ public class MainController implements IController
 	private ConfigBlock getConfigBlock(ConfigFile cf, String blockName)
 	{
 		ConfigBlock cb = null;
+		
+		if( null == cf )
+		{
+			return null;
+		}
 
 		List<ConfigBlock> blocks = cf.getConfigBlocks();
 
@@ -158,6 +163,13 @@ public class MainController implements IController
 			cb = getCurrTargetConfigBlock();
 		}
 
+		int row = cell.getRow();
+		
+		if (row < 0)
+		{
+			return;
+		}
+		
 		KeyValuePair pair = cb.getParameter(cell.getRow());
 
 		int column = cell.getColumn();

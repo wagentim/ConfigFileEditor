@@ -17,7 +17,7 @@ public class OptionComposite extends AbstractComposite
 	
 	private Button btnConnect;
 	private Button btnAcceptSource;
-	private Button btnGPIB;
+	private Button openSingleEditor;
 
 	public OptionComposite(Composite parent, int style, IController controller)
 	{
@@ -54,17 +54,17 @@ public class OptionComposite extends AbstractComposite
 			}
 		});
 		
-		btnGPIB = new Button(parent, SWT.CHECK);
+		openSingleEditor = new Button(parent, SWT.CHECK);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		btnGPIB.setLayoutData(gd);
-		btnGPIB.setText(Constants.TXT_BTN_GPIB);
-		btnGPIB.addSelectionListener(new SelectionListener()
+		openSingleEditor.setLayoutData(gd);
+		openSingleEditor.setText(Constants.TXT_BTN_GPIB);
+		openSingleEditor.addSelectionListener(new SelectionListener()
 		{
 			
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_GPIB_SELECTED, btnGPIB.getSelection());
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_GPIB_SELECTED, openSingleEditor.getSelection());
 			}
 			
 			@Override
@@ -73,6 +73,8 @@ public class OptionComposite extends AbstractComposite
 				
 			}
 		});
+
+		openSingleEditor.setVisible(false);
 		
 		Composite c = new Composite(parent, SWT.NONE);
 		c.setLayout(new GridLayout(1, false));
@@ -99,6 +101,8 @@ public class OptionComposite extends AbstractComposite
 				
 			}
 		});
+		
+		btnAcceptSource.setVisible(false);
 	}
 
 	@Override

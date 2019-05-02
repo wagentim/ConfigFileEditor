@@ -24,10 +24,6 @@ public class TargetTableComposite extends TableComposite
 			updateParameters(cb.getAllParameters());
 			
 		}
-		else if( (type == Constants.ACTION_CONNECT_SELECTED) )
-		{
-//			setAllComponentsEnable(!(boolean)content);
-		}
 		else if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_FINISHED )
 		{
 			ConfigBlock cb = getController().getCurrTargetConfigBlock();
@@ -44,7 +40,7 @@ public class TargetTableComposite extends TableComposite
 		{
 			String blockName = (String)content;
 			getController().setSelectedBlock(blockName, false);
-			setSelectedBlock(blockName);
+			setTreeSelectedBlock(blockName);
 			treeItemSelected(blockName);
 		}
 		
