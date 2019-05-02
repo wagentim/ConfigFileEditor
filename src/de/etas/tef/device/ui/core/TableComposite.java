@@ -77,6 +77,7 @@ public class TableComposite extends AbstractComposite
 			it.setText(blockList[i]);
 		}
 		
+		root.setExpanded(true);
 	}
 
 	protected void initTable(Composite comp)

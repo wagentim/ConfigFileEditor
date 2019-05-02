@@ -1,7 +1,6 @@
 package de.etas.tef.device.ui.target;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
