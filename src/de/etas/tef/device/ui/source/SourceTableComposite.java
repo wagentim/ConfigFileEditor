@@ -52,12 +52,6 @@ public class SourceTableComposite extends TableComposite
 			String[] allBlocks = getController().getBlockNames(true);
 			setBlockList(allBlocks);
 		}
-		else if (type == Constants.ACTION_GPIB_SELECTED)
-		{
-			setAllComponentsEnable(!(boolean)content);
-			getController().gpibSelected((boolean)content);
-		}
-		
 		else if (type == Constants.ACTION_GPIB_SOURCE_FINISHED)
 		{
 			updateParameters((List<KeyValuePair>) content);

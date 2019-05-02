@@ -36,7 +36,8 @@ public final class Constants
 	public static final String PM_NUMBER = "PM_NUMBER";
 	public static final String TXT_BTN_CONNECT = "Connect";
 	public static final String TXT_BTN_ACCEPT_SOURCE = "Accept";
-	public static final String TXT_BTN_GPIB = "GPIB";
+	public static final String TXT_BTN_LEFT = "Left";
+	public static final String TXT_BTN_RIGHT = "Right";
 	
 	public static final int ACTION_SOURCE_NEW_FILE_SELECTED = 0x00;
 	public static final int ACTION_LOG_WRITE_INFO = 0x01;
@@ -50,9 +51,11 @@ public final class Constants
 	public static final int ACTION_PARAMETER_UPDATED = 0x0A;
 	public static final int ACTION_TAKE_SOURCE_PARAMETERS_START = 0x0B;
 	public static final int ACTION_TAKE_SOURCE_PARAMETERS_FINISHED = 0x0C;
-	public static final int ACTION_GPIB_SELECTED = 0x0D;
+	public static final int ACTION_LEFT_SELECTED = 0x0D;
 	public static final int ACTION_GPIB_SOURCE_FINISHED = 0x0F;
 	public static final int ACTION_SOURCE_PARAMETER_SELECTED = 0x11;
+	public static final int ACTION_RIGHT_SELECTED = 0X12;
+	public static final int ACTION_COMPOSITE_CHANGED = 0x13;
 	
 	public static final String TXT_GPIB_DEVICE_NAME = "DEVICE_NAME";
 	public static final String TXT_GPIB_PM_NUMBER = "PM_NUMBER";

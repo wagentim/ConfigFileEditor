@@ -18,10 +18,6 @@ public class TargetFileSelectComposite extends SelectComposite
 
 	public void receivedAction(int type, Object content)
 	{
-		if( type == Constants.ACTION_CONNECT_SELECTED)
-		{
-//			setAllComponentsEnable(!(boolean)content);
-		}
 	}
 	
 	protected void initLabel(Composite comp)

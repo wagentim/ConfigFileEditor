@@ -127,41 +127,5 @@ public class SelectComposite extends AbstractComposite
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		
-		if( type == Constants.ACTION_CONNECT_SELECTED )
-		{
-//			boolean selected = (boolean)content;
-//			
-//			if( !isSource() && selected )
-//			{
-//				txtFileSelect.setEnabled(false);
-//				btnFileSelect.setEnabled(false);
-//			}
-//			else
-//			{
-//				txtFileSelect.setEnabled(true);
-//				btnFileSelect.setEnabled(true);
-//			}
-		}
-		else if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_START)
-		{
-//			if(isSource())
-//			{
-//				setAllComponentsEnable(false);
-//			}
-		}
-		else if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_FINISHED)
-		{
-//			if(isSource())
-//			{
-//				setAllComponentsEnable(true);
-//			}
-		}
-	}
-	
-	protected void setAllComponentsEnable(boolean isEnable)
-	{
-		txtFileSelect.setEnabled(isEnable);
-		btnFileSelect.setEnabled(isEnable);
 	}
 }

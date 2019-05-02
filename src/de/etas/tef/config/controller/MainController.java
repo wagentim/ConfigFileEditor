@@ -1,7 +1,6 @@
 package de.etas.tef.config.controller;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import de.etas.tef.config.entity.CellIndex;
@@ -250,10 +249,6 @@ public class MainController implements IController
 	@Override
 	public void saveFile(String targetFilePath, boolean isSource)
 	{
-//		Map<String, ConfigBlock> saveConfigBlocks = isSource ? sourceConfigBlocks : targetConfigBlocks;
-
-//		worker.write(targetFilePath,saveConfigBlocks);
-
 	}
 
 	@Override
@@ -263,92 +258,5 @@ public class MainController implements IController
 		{
 			return;
 		}
-
-//		if (null == sourceConfigBlocks || sourceConfigBlocks.isEmpty())
-//		{
-//			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "[GPIB] Source File is Empty!");
-//			return;
-//		} else
-//		{
-//			ConfigBlock deviceName = sourceConfigBlocks.get(Constants.TXT_GPIB_DEVICE_NAME);
-//
-//			if (null == deviceName)
-//			{
-//				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "[GPIB] Cannot find DEVICE_NAME!");
-//				return;
-//			}
-//
-//			ConfigBlock pmNumber = sourceConfigBlocks.get(Constants.TXT_GPIB_PM_NUMBER);
-//
-//			if (null == pmNumber)
-//			{
-//				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "[GPIB] Cannot find PM_NUMBER!");
-//				return;
-//			}
-//
-//			ConfigBlock gpibAdress = sourceConfigBlocks.get(Constants.TXT_GPIB_ADRESS);
-//
-//			if (null == gpibAdress)
-//			{
-//				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "[GPIB] Cannot find GPIB ADRESS!");
-//				return;
-//			}
-//
-//			List<KeyValuePair> gpibs = new ArrayList<KeyValuePair>();
-//
-//			Iterator<KeyValuePair> it = deviceName.getAllParameters().iterator();
-//
-//			while (it.hasNext())
-//			{
-//				KeyValuePair gpib = new KeyValuePair();
-//
-//				KeyValuePair p = it.next();
-//				String device = p.getKey();
-//				gpib.setKey(device);
-//				gpib.setValue(p.getValue());
-//				String tmp = getValue(device, pmNumber.getAllParameters());
-//
-//				if (null == tmp || tmp.isEmpty())
-//				{
-//					ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR,
-//							"[GPIB] Cannot find PM Number for: " + device);
-//					continue;
-//				}
-//
-//				gpib.setOther(tmp);
-//
-//				tmp = getValue(device, gpibAdress.getAllParameters());
-//
-//				if (null == tmp || tmp.isEmpty())
-//				{
-//					ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR,
-//							"[GPIB] Cannot find GPIB ADRESS for: " + device);
-//					continue;
-//				}
-//
-//				gpib.setForthValue(tmp);
-//
-//				gpibs.add(gpib);
-//			}
-//
-//			ActionManager.INSTANCE.sendAction(Constants.ACTION_GPIB_SOURCE_FINISHED, gpibs);
-//		}
 	}
-
-	private String getValue(String device, List<KeyValuePair> allParameters)
-	{
-		Iterator<KeyValuePair> it = allParameters.iterator();
-
-		while (it.hasNext())
-		{
-			KeyValuePair p = it.next();
-
-			if (device.equals(p.getKey()))
-			{
-				return p.getValue();
-			}
-		}
-		return null;
-	}
-
 }

@@ -1,7 +1,6 @@
 package de.etas.tef.config.test;
 
 import de.etas.tef.device.ui.core.MainScreen;
-import de.etas.tef.device.ui.core.SingleMainScreen;
 
 public class Main
 {

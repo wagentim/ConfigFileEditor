@@ -42,7 +42,7 @@ public class TableComposite extends AbstractComposite
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		initTable(this);
-//		initTableButtons(this);
+		initTableButtons(this);
 	}
 	
 

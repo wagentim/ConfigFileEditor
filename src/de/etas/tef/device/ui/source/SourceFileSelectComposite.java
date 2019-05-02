@@ -19,18 +19,6 @@ public class SourceFileSelectComposite extends SelectComposite
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_START)
-		{
-			setAllComponentsEnable(false);
-		}
-		else if( type == Constants.ACTION_TAKE_SOURCE_PARAMETERS_FINISHED)
-		{
-			setAllComponentsEnable(true);
-		}
-		else if (type == Constants.ACTION_GPIB_SELECTED)
-		{
-			setAllComponentsEnable(!(boolean)content);
-		}
 	}
 	
 	protected void initLabel(Composite comp)

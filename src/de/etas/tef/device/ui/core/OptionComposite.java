@@ -17,13 +17,14 @@ public class OptionComposite extends AbstractComposite
 	
 	private Button btnConnect;
 	private Button btnAcceptSource;
-	private Button openSingleEditor;
+	private Button btnLeft;
+	private Button btnRight;
 
 	public OptionComposite(Composite parent, int style, IController controller)
 	{
 		super(parent, style, controller);
 		
-		this.setLayout(new GridLayout(3, false));
+		this.setLayout(new GridLayout(4, false));
 		this.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		initComponents(this);
@@ -42,7 +43,20 @@ public class OptionComposite extends AbstractComposite
 			public void widgetSelected(SelectionEvent event)
 			{
 				boolean selected = btnConnect.getSelection();
-				getController().setConnected(selected);
+				
+				if(selected)
+				{
+					if(btnLeft.getSelection() && btnRight.getSelection())
+					{
+						getController().setConnected(true);
+					}
+				}
+				else
+				{
+					btnConnect.setSelection(false);
+					getController().setConnected(false);
+				}
+				
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_CONNECT_SELECTED, selected);
 			}
 			
@@ -54,17 +68,39 @@ public class OptionComposite extends AbstractComposite
 			}
 		});
 		
-		openSingleEditor = new Button(parent, SWT.CHECK);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		openSingleEditor.setLayoutData(gd);
-		openSingleEditor.setText(Constants.TXT_BTN_GPIB);
-		openSingleEditor.addSelectionListener(new SelectionListener()
+		btnLeft = new Button(parent, SWT.CHECK);
+		gd = new GridData();
+		btnLeft.setLayoutData(gd);
+		btnLeft.setText(Constants.TXT_BTN_LEFT);
+		btnLeft.setSelection(true);
+		btnLeft.addSelectionListener(new SelectionListener()
 		{
 			
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_GPIB_SELECTED, openSingleEditor.getSelection());
+				checkOptionSelection(Constants.ACTION_LEFT_SELECTED);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent event)
+			{
+				
+			}
+		});
+		
+		btnRight = new Button(parent, SWT.CHECK);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		btnRight.setLayoutData(gd);
+		btnRight.setText(Constants.TXT_BTN_RIGHT);
+		btnRight.setSelection(true);
+		btnRight.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent event)
+			{
+				checkOptionSelection(Constants.ACTION_RIGHT_SELECTED);
 			}
 			
 			@Override
@@ -74,8 +110,6 @@ public class OptionComposite extends AbstractComposite
 			}
 		});
 
-		openSingleEditor.setVisible(false);
-		
 		Composite c = new Composite(parent, SWT.NONE);
 		c.setLayout(new GridLayout(1, false));
 		btnAcceptSource = new Button(c, SWT.PUSH);
@@ -91,7 +125,6 @@ public class OptionComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_TAKE_SOURCE_PARAMETERS_START, null);
 				getController().startAcceptSourceParameter();
 			}
 			
@@ -105,14 +138,40 @@ public class OptionComposite extends AbstractComposite
 		btnAcceptSource.setVisible(false);
 	}
 
+	protected void checkOptionSelection(int currentAction)
+	{
+		boolean isLeftSelected = btnLeft.getSelection();
+		boolean isRightSelected = btnRight.getSelection();
+		
+		if(isLeftSelected && isRightSelected)
+		{
+			btnConnect.setEnabled(true);
+		}
+		else 
+		{
+			btnConnect.setSelection(false);
+			getController().setConnected(false);
+			btnConnect.setEnabled(false);
+			
+			if( !isLeftSelected && !isRightSelected)
+			{
+				if(Constants.ACTION_LEFT_SELECTED == currentAction)
+				{
+					btnRight.setSelection(true);
+				}
+				else
+				{
+					btnLeft.setSelection(true);
+				}
+			}
+		}
+		
+		ActionManager.INSTANCE.sendAction(Constants.ACTION_COMPOSITE_CHANGED, new boolean[] {btnLeft.getSelection(), btnRight.getSelection()});
+	}
+
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		if( (type == Constants.ACTION_CONNECT_SELECTED) )
-		{
-//			boolean value = (boolean)content;
-//			btnAcceptSource.setEnabled(value);
-		}
 	}
 
 }
