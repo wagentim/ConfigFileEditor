@@ -109,9 +109,24 @@ public class InitFileWorker implements IIniFileWorker
 			
 			if( TAG_FILE_COMMENT_START == status )
 			{
-				sb.delete(0, sb.length());
-				sb.append(cf.getComments()).append(System.lineSeparator()).append(currentLine);
-				cf.setComments(sb.toString());
+				
+				if (currentLine.isEmpty())
+				{
+					status = TAG_BLOCK_COMMENT_START;
+					cb = new ConfigBlock();
+					cf.getConfigBlocks().add(cb);
+					continue;
+				}
+				else if ( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
+				{
+					status = TAG_BLOCK_NAME_START;
+				}
+				else
+				{
+					sb.delete(0, sb.length());
+					sb.append(cf.getComments()).append(System.lineSeparator()).append(currentLine);
+					cf.setComments(sb.toString());
+				}
 			}
 			
 			if( TAG_BLOCK_NAME_START == status )
@@ -158,8 +173,10 @@ public class InitFileWorker implements IIniFileWorker
 							sb.append(cb.getComments()).append(System.lineSeparator()).append(currentLine);
 							cb.setComments(sb.toString());
 						}
-						
-						ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by Parsing Parameter in line: " + lineCount);
+						else
+						{
+							ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by Parsing Parameter in line: " + lineCount);
+						}
 					}
 					else
 					{
