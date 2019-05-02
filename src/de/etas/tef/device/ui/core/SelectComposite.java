@@ -71,6 +71,11 @@ public class SelectComposite extends AbstractComposite
 	{
 		currFilePath = fileSelector(this.getShell());
 		
+		setCurrFilePath();
+	}
+	
+	private void setCurrFilePath()
+	{
 		if ( null == currFilePath )
 		{
 			currFilePath = Constants.EMPTY_STRING;
@@ -127,5 +132,10 @@ public class SelectComposite extends AbstractComposite
 	@Override
 	public void receivedAction(int type, Object content)
 	{
+		if( Constants.ACTION_SOURCE_SAVE_FILE_FINISHED == type )
+		{
+			currFilePath = (String) content;
+			setCurrFilePath();
+		}
 	}
 }

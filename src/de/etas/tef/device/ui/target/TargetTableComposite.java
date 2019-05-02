@@ -5,6 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.device.ui.core.TableComposite;
 
@@ -74,5 +75,18 @@ public class TargetTableComposite extends TableComposite
 	protected void addTableSelectedListener()
 	{
 		
+	}
+	
+	@Override
+	protected void addTableItem(KeyValuePair kvp)
+	{
+		if( null == kvp )
+		{
+			kvp = new KeyValuePair();
+			kvp.setKey(Constants.SYMBOL_INIT_FILE_COMMENT_DASH);
+			kvp.setValue(Constants.SYMBOL_INIT_FILE_COMMENT_DASH);
+			getController().getCurrTargetConfigBlock().addParameterInLast(kvp);
+		}
+		super.addTableItem(kvp);
 	}
 }

@@ -150,7 +150,7 @@ public class MainController implements IController
 		{
 			return;
 		}
-		
+
 		KeyValuePair pair = cb.getParameter(cell.getRow());
 
 		int column = cell.getColumn();

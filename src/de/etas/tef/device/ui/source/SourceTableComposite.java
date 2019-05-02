@@ -101,4 +101,19 @@ public class SourceTableComposite extends TableComposite
 		
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Source Write to: " + targetFilePath + " finished!");
 	}
+
+	@Override
+	protected void addTableItem(KeyValuePair kvp)
+	{
+		if( null == kvp )
+		{
+			kvp = new KeyValuePair();
+			kvp.setKey(Constants.SYMBOL_INIT_FILE_COMMENT_DASH);
+			kvp.setValue(Constants.SYMBOL_INIT_FILE_COMMENT_DASH);
+			getController().getCurrSourceConfigBlock().addParameterInLast(kvp);
+		}
+		
+		super.addTableItem(kvp);
+		
+	}
 }

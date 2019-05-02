@@ -7,6 +7,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -32,6 +33,7 @@ public abstract class TableComposite extends AbstractComposite
 	private Button btnSave;
 	private final int HEIGHT_HINT = 150;
 	private TreeItem root;
+	protected Color tableBackgroudColor;
 	
 
 	public TableComposite(Composite parent, int style, IController controller)
@@ -43,6 +45,8 @@ public abstract class TableComposite extends AbstractComposite
 		
 		initTable(this);
 		initTableButtons(this);
+		
+		tableBackgroudColor = parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
 	}
 	
 
@@ -157,7 +161,7 @@ public abstract class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				
+				addTableItem(null);
 			}
 			
 			@Override
@@ -167,8 +171,6 @@ public abstract class TableComposite extends AbstractComposite
 				
 			}
 		});
-		
-		btnAdd.setVisible(false);
 		
 		btnDelete = new Button(c, SWT.PUSH);
 		btnDelete.setText(Constants.TXT_BTN_DELETE);
@@ -208,13 +210,20 @@ public abstract class TableComposite extends AbstractComposite
 		
 		for(int i = 0; i < values.size(); i++)
 		{
-			KeyValuePair kvp = values.get(i);
-			TableItem ti = new TableItem(table, SWT.NONE);
-			ti.setText(0, kvp.getKey());
-			ti.setText(1, kvp.getValue());
-			ti.setText(2, kvp.getOther());
-			ti.setText(3, kvp.getForthValue());
+			addTableItem(values.get(i));
+			
 		}
+	}
+	
+	
+	protected void addTableItem(KeyValuePair kvp)
+	{
+		TableItem ti = new TableItem(table, SWT.NONE);
+		ti.setText(0, kvp.getKey());
+		ti.setText(1, kvp.getValue());
+		ti.setText(2, kvp.getOther());
+		ti.setText(3, kvp.getForthValue());
+		ti.setBackground(tableBackgroudColor);
 	}
 	
 	protected void clearTable()

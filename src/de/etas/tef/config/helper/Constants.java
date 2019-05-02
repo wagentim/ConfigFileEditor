@@ -56,6 +56,7 @@ public final class Constants
 	public static final int ACTION_SOURCE_PARAMETER_SELECTED = 0x11;
 	public static final int ACTION_RIGHT_SELECTED = 0X12;
 	public static final int ACTION_COMPOSITE_CHANGED = 0x13;
+	public static final int ACTION_SOURCE_SAVE_FILE_FINISHED = 0x14;
 	
 	public static final String TXT_GPIB_DEVICE_NAME = "DEVICE_NAME";
 	public static final String TXT_GPIB_PM_NUMBER = "PM_NUMBER";

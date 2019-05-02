@@ -89,7 +89,14 @@ public class InitFileWorker implements IIniFileWorker
 						)
 				{
 					sb.delete(0, sb.length());
-					sb.append(cb.getComments()).append(System.lineSeparator()).append(currentLine);
+					
+					if(!cb.getComments().isEmpty())
+					{
+						sb.append(cb.getComments()).append(System.lineSeparator());
+					}
+					
+					sb.append(cb.getComments()).append(currentLine);
+					
 					cb.setComments(sb.toString());
 				}
 				else if ( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
@@ -124,7 +131,11 @@ public class InitFileWorker implements IIniFileWorker
 				else
 				{
 					sb.delete(0, sb.length());
-					sb.append(cf.getComments()).append(System.lineSeparator()).append(currentLine);
+					if(!cf.getComments().isEmpty())
+					{
+						sb.append(cf.getComments()).append(System.lineSeparator());
+					}
+					sb.append(cf.getComments()).append(currentLine);
 					cf.setComments(sb.toString());
 				}
 			}
@@ -170,7 +181,11 @@ public class InitFileWorker implements IIniFileWorker
 							cb = new ConfigBlock();
 							cf.getConfigBlocks().add(cb);
 							sb.delete(0, sb.length());
-							sb.append(cb.getComments()).append(System.lineSeparator()).append(currentLine);
+							if(!cb.getComments().isEmpty())
+							{
+								sb.append(cb.getComments()).append(System.lineSeparator());
+							}
+							sb.append(cb.getComments()).append(currentLine);
 							cb.setComments(sb.toString());
 						}
 						else
@@ -289,40 +304,5 @@ public class InitFileWorker implements IIniFileWorker
 			e.printStackTrace();
 		}
 		
-	}
-	
-	private String removeLineSeparator(String input)
-	{
-		if( null == input )
-		{
-			return Constants.EMPTY_STRING;
-		}
-		
-		if( input.startsWith(System.lineSeparator()))
-		{
-			input.replaceAll("\\r\\n", "");
-		}
-		
-		if( input.endsWith(System.lineSeparator()))
-		{
-			input = input.substring(0, input.length() - 1);
-		}
-		
-		return input;
-	}
-	
-	public static void main(String[] args)
-	{
-		InitFileWorker w = new InitFileWorker();
-		
-		StringBuffer sb = new StringBuffer();
-		sb.append(System.lineSeparator());
-		sb.append("Hello");
-		
-		System.out.println(sb.toString());
-		
-		System.out.println("------------------");
-		
-		System.out.println(w.removeLineSeparator(sb.toString()));
 	}
 }
