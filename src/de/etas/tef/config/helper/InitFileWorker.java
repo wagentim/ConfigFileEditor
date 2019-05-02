@@ -290,4 +290,39 @@ public class InitFileWorker implements IIniFileWorker
 		}
 		
 	}
+	
+	private String removeLineSeparator(String input)
+	{
+		if( null == input )
+		{
+			return Constants.EMPTY_STRING;
+		}
+		
+		if( input.startsWith(System.lineSeparator()))
+		{
+			input.replaceAll("\\r\\n", "");
+		}
+		
+		if( input.endsWith(System.lineSeparator()))
+		{
+			input = input.substring(0, input.length() - 1);
+		}
+		
+		return input;
+	}
+	
+	public static void main(String[] args)
+	{
+		InitFileWorker w = new InitFileWorker();
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append(System.lineSeparator());
+		sb.append("Hello");
+		
+		System.out.println(sb.toString());
+		
+		System.out.println("------------------");
+		
+		System.out.println(w.removeLineSeparator(sb.toString()));
+	}
 }
