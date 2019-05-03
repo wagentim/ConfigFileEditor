@@ -42,8 +42,6 @@ public class InitFileWorker implements IIniFileWorker
 		
 		String currentLine = null;
 		
-		StringBuffer sb = new StringBuffer();
-		
 		ConfigBlock cb = null;
 		
 		int status = TAG_FILE_NEW;
@@ -88,16 +86,16 @@ public class InitFileWorker implements IIniFileWorker
 						currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)  ||
 							currentLine.isEmpty())
 				{
-					sb.delete(0, sb.length());
+					String s = cb.getComments();
 					
-					if(!cb.getComments().isEmpty())
+					if(!s.isEmpty())
 					{
-						sb.append(cb.getComments()).append(System.lineSeparator());
+						s += System.lineSeparator();
 					}
 					
-					sb.append(cb.getComments()).append(currentLine);
+					s += currentLine;
 					
-					cb.setComments(sb.toString());
+					cb.setComments(s);
 				}
 				else if ( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
 				{
@@ -121,13 +119,14 @@ public class InitFileWorker implements IIniFileWorker
 				}
 				else
 				{
-					sb.delete(0, sb.length());
-					if(!cf.getComments().isEmpty())
+					String s = cf.getComments();
+					
+					if(!s.isEmpty())
 					{
-						sb.append(cf.getComments()).append(System.lineSeparator());
+						s += System.lineSeparator();
 					}
-					sb.append(cf.getComments()).append(currentLine);
-					cf.setComments(sb.toString());
+					s += currentLine;
+					cf.setComments(s);
 				}
 			}
 			
@@ -171,13 +170,13 @@ public class InitFileWorker implements IIniFileWorker
 							status = TAG_BLOCK_COMMENT_START;
 							cb = new ConfigBlock();
 							cf.getConfigBlocks().add(cb);
-							sb.delete(0, sb.length());
-							if(!cb.getComments().isEmpty())
+							String s = cb.getComments();
+							if(!s.isEmpty())
 							{
-								sb.append(cb.getComments()).append(System.lineSeparator());
+								s += System.lineSeparator();
 							}
-							sb.append(cb.getComments()).append(currentLine);
-							cb.setComments(sb.toString());
+							s += currentLine;
+							cb.setComments(s);
 						}
 						else
 						{

@@ -79,10 +79,6 @@ public class MainScreen implements IActionListener
 		commentBlock.setLayoutData(gd);
 		commentBlock.setEditable(false);
 		
-		commentBlock.setVisible(false);
-		
-		sfComment.setWeights(new int[]{1, 0});
-		
 		new InfoBlockWriter(txtInfoBlock, commentBlock, controller);
 
 		main.setWeights(new int[]
