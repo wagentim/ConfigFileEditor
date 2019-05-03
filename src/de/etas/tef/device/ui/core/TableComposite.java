@@ -274,7 +274,7 @@ public abstract class TableComposite extends AbstractComposite
 		
 		for( int i = 0 ; i < items.length; i++)
 		{
-			if( blockName.equals(items[i].getText()))
+			if( blockName.trim().equals(items[i].getText().trim()))
 			{
 				blockList.select(items[i]);
 			}
