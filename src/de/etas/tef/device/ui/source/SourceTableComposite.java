@@ -59,6 +59,7 @@ public class SourceTableComposite extends TableComposite
 		if( null != cb)
 		{
 			updateParameters(getController().getCurrSourceConfigBlock().getAllParameters());
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, cb);
 		}
 	}
 	

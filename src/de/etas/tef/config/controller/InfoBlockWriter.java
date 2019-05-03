@@ -14,11 +14,12 @@ import de.etas.tef.config.listener.IActionListener;
 public class InfoBlockWriter implements IActionListener
 {
 	private final Text infoBlock;
+	private final Text commentBlock;
 	private final Color error;
 	private final Color info;
 	private final IController controller;
 
-	public InfoBlockWriter(final Text infoBlock, IController controller)
+	public InfoBlockWriter(final Text infoBlock, final Text commentBlock, IController controller)
 	{
 		if (null == infoBlock)
 		{
@@ -28,6 +29,7 @@ public class InfoBlockWriter implements IActionListener
 		this.error = infoBlock.getDisplay().getSystemColor(SWT.COLOR_RED);
 		this.info = infoBlock.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		this.controller = controller;
+		this.commentBlock = commentBlock;
 		ActionManager.INSTANCE.addActionListener(this);
 	}
 
@@ -88,6 +90,10 @@ public class InfoBlockWriter implements IActionListener
 			{
 				logInfo("Source File is Disconnected to Target File");
 			}
+		}
+		else if (type == Constants.ACTION_BLOCK_SELECTED)
+		{
+			commentBlock.setText(((ConfigBlock)content).getComments());
 		}
 	}
 }

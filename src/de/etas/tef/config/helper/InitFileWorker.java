@@ -85,8 +85,8 @@ public class InitFileWorker implements IIniFileWorker
 			if( TAG_BLOCK_COMMENT_START == status )
 			{
 				if( currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_DASH) || 
-						currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)
-						)
+						currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)  ||
+							currentLine.isEmpty())
 				{
 					sb.delete(0, sb.length());
 					
@@ -102,15 +102,6 @@ public class InitFileWorker implements IIniFileWorker
 				else if ( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
 				{
 					status = TAG_BLOCK_NAME_START;
-				}
-				else if (currentLine.isEmpty())
-				{
-					continue;
-				}
-				else
-				{
-					ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by Parsing Block Comments in line: " + lineCount);
-					break;
 				}
 			}
 			

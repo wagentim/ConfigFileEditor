@@ -62,13 +62,28 @@ public class MainScreen implements IActionListener
 
 		sourceConfigComponent = new SourceConfigComposite(sf, SWT.BORDER, controller);
 		targetConfigComponent = new TargetConfigComposite(sf, SWT.BORDER, controller);
+		
+		SashForm sfComment = new SashForm(main, SWT.HORIZONTAL);
+		gd = new GridData(GridData.FILL_BOTH);
+		sfComment.setLayoutData(gd);
 
-		Text txtInfoBlock = new Text(main, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		Text txtInfoBlock = new Text(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 3;
 		txtInfoBlock.setLayoutData(gd);
 		txtInfoBlock.setEditable(false);
-		new InfoBlockWriter(txtInfoBlock, controller);
+		
+		Text commentBlock = new Text(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		gd = new GridData(GridData.FILL_BOTH);
+		gd.horizontalSpan = 3;
+		commentBlock.setLayoutData(gd);
+		commentBlock.setEditable(false);
+		
+		commentBlock.setVisible(false);
+		
+		sfComment.setWeights(new int[]{1, 0});
+		
+		new InfoBlockWriter(txtInfoBlock, commentBlock, controller);
 
 		main.setWeights(new int[]
 		{ 4, 1 });

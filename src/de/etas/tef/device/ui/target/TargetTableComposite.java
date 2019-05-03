@@ -57,6 +57,7 @@ public class TargetTableComposite extends TableComposite
 		if( null != cb)
 		{
 			updateParameters(getController().getCurrTargetConfigBlock().getAllParameters());
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, cb);
 		}
 	}
 	
