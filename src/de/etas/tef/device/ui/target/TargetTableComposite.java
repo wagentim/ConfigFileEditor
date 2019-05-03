@@ -51,7 +51,7 @@ public class TargetTableComposite extends TableComposite
 	protected void treeItemSelected(String blockName)
 	{
 		
-		getController().setSelectedBlock(blockName, false);
+		getController().setSelectedBlock(blockName.trim(), false);
 		ConfigBlock cb = getController().getCurrTargetConfigBlock();
 		
 		if( null != cb)
