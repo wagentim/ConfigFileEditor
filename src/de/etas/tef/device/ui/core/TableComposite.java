@@ -1,6 +1,9 @@
 package de.etas.tef.device.ui.core;
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -13,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -175,8 +179,22 @@ public abstract class TableComposite extends AbstractComposite
 		btnDelete = new Button(c, SWT.PUSH);
 		btnDelete.setText(Constants.TXT_BTN_DELETE);
 		btnDelete.setLayoutData(gd);
+		btnDelete.addSelectionListener(new SelectionListener() 
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) 
+			{
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) 
+			{
+				
+			}
+		});
 		
-		btnDelete.setVisible(false);
 		
 		btnSave = new Button(c, SWT.PUSH);
 		btnSave.setText(Constants.TXT_BTN_SAVE);
@@ -251,7 +269,26 @@ public abstract class TableComposite extends AbstractComposite
 		FileDialog fd = new FileDialog(shell, SWT.APPLICATION_MODAL | SWT.SAVE);
 		fd.setFilterExtensions(Constants.CONFIG_FILE_EXTENSION);
 		fd.setFilterNames(Constants.CONFIG_FILE_NAME);
-		return fd.open();
+		String result = fd.open();
+		if( null != result )
+		{
+			Path file = Paths.get(result);
+	        if (Files.exists(file))
+	        {
+	          MessageBox mb = new MessageBox(fd.getParent(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
+
+	          mb.setMessage(result + " already exists. Do you want to replace it?");
+
+	          boolean done = mb.open() == SWT.YES;
+	          
+	          if( !done )
+	          {
+	        	return null;  
+	          }
+	        }
+		}
+		
+		return result;
 	}
 	
 	private void toSave() 

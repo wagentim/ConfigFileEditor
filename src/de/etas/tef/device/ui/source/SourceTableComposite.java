@@ -89,8 +89,6 @@ public class SourceTableComposite extends TableComposite
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0)
 			{
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}
@@ -99,7 +97,6 @@ public class SourceTableComposite extends TableComposite
 	protected void saveAction(String targetFilePath) 
 	{
 		getController().saveFile(targetFilePath, true);
-		
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Source Write to: " + targetFilePath + " finished!");
 	}
 

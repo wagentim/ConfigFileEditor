@@ -226,7 +226,7 @@ public class InitFileWorker implements IIniFileWorker
 		
 		if( !(result instanceof ConfigFile ) || null == result)
 		{
-			throw new RuntimeException("Cannot cast the input object to " + ConfigFile.class.getName());
+			return;
 		}
 		
 		ConfigFile configFile = (ConfigFile)result;
@@ -293,6 +293,5 @@ public class InitFileWorker implements IIniFileWorker
 		{
 			e.printStackTrace();
 		}
-		
 	}
 }
