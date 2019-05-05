@@ -4,6 +4,8 @@ public final class Constants
 {
 	public static final String EMPTY_STRING = "";
 	public static final int EMPTY_INT = -1;
+	public static final String[] EMPTY_STRING_ARRAY = {};
+	
 	public static final String SYMBOL_INIT_FILE_COMMENT_DASH = "--";
 	public static final String SYMBOL_INIT_FILE_COMMENT_SEMICOLON = ";";
 	public static final String SYMBOL_NEW_LINE = "\n";
@@ -27,17 +29,20 @@ public final class Constants
 	public static final String TXT_LABEL_EXEC_DIRECTORY = "Directory: ";
 	public static final String TXT_BTN_SELECT = "Select";
 	public static final String TXT_BTN_RUN = "Run";
-	public static final String[] EMPTY_STRING_ARRAY = {};
-	
-	public static final String[] TABLE_TITLES = {"Name", "Value"};
 	public static final String TXT_BTN_ADD = "Add";
 	public static final String TXT_BTN_DELETE = "Delete";
 	public static final String TXT_BTN_SAVE = "Save";
-	public static final String PM_NUMBER = "PM_NUMBER";
+	public static final String TXT_PM_NUMBER = "PM_NUMBER";
 	public static final String TXT_BTN_CONNECT = "Connect";
 	public static final String TXT_BTN_ACCEPT_SOURCE = "Accept";
 	public static final String TXT_BTN_LEFT = "Left";
 	public static final String TXT_BTN_RIGHT = "Right";
+	public static final String TXT_GPIB_DEVICE_NAME = "DEVICE_NAME";
+	public static final String TXT_GPIB_PM_NUMBER = "PM_NUMBER";
+	public static final String TXT_GPIB_ADRESS = "GPIB_ADRESS";
+	public static final String TXT_CONFIG_FILE = "Config File";
+	public static final String[] TABLE_TITLES = {"Name", "Value"};
+	
 	
 	public static final int ACTION_SOURCE_NEW_FILE_SELECTED = 0x00;
 	public static final int ACTION_LOG_WRITE_INFO = 0x01;
@@ -59,9 +64,4 @@ public final class Constants
 	public static final int ACTION_SOURCE_SAVE_FILE_FINISHED = 0x14;
 	public static final int ACTION_BLOCK_SELECTED = 0x15;
 	
-	public static final String TXT_GPIB_DEVICE_NAME = "DEVICE_NAME";
-	public static final String TXT_GPIB_PM_NUMBER = "PM_NUMBER";
-	public static final String TXT_GPIB_ADRESS = "GPIB_ADRESS";
-	
-	public static final String TXT_CONFIG_FILE = "Config File";
 }
