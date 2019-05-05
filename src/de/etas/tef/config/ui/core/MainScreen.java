@@ -77,7 +77,7 @@ public class MainScreen implements IActionListener
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 3;
 		commentBlock.setLayoutData(gd);
-		commentBlock.setEditable(false);
+		commentBlock.setEditable(true);
 		
 		new InfoBlockWriter(txtInfoBlock, commentBlock, controller);
 

@@ -103,4 +103,11 @@ public class DefaultController implements IController
 		
 	}
 
+	@Override
+	public void deleteParameters(int[] selectedItems, String text, boolean isSource)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
 }

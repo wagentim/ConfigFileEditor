@@ -64,4 +64,7 @@ public final class Constants
 	public static final int ACTION_SOURCE_SAVE_FILE_FINISHED = 0x14;
 	public static final int ACTION_BLOCK_SELECTED = 0x15;
 	
+	public static final int COMPOSITE_ID_LEFT = 0x00;
+	public static final int COMPOSITE_ID_RIGHT = 0x01;
+	
 }

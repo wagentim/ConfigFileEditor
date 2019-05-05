@@ -109,8 +109,8 @@ public abstract class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
-				TreeItem ti = blockList.getSelection()[0];
-				String s = ti.getText();
+				
+				String s = getSelectedTreeItem().getText();
 				treeItemSelected(s.trim());
 			}
 			
@@ -140,6 +140,12 @@ public abstract class TableComposite extends AbstractComposite
 		addTableMouseListener();
 		addTableSelectedListener();
 		sf.setWeights(new int[]{1, 2});
+	}
+	
+	private TreeItem getSelectedTreeItem()
+	{
+		TreeItem ti = blockList.getSelection()[0];
+		return ti;
 	}
 	
 	abstract protected void addTableSelectedListener();
@@ -183,8 +189,10 @@ public abstract class TableComposite extends AbstractComposite
 		{
 			
 			@Override
-			public void widgetSelected(SelectionEvent arg0) 
+			public void widgetSelected(SelectionEvent event) 
 			{
+				deleteSelectedItems();
+				treeItemSelected(getSelectedTreeItem().getText().trim());
 				
 			}
 			
@@ -217,6 +225,28 @@ public abstract class TableComposite extends AbstractComposite
 		});
 	}
 
+	protected void deleteSelectedItems()
+	{
+		int[] selectedItems = table.getSelectionIndices();
+		
+		if( null != selectedItems && selectedItems.length > 0 )
+		{
+			
+			MessageBox mb = new MessageBox(this.getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
+
+			mb.setMessage("Do you really want to delete?");
+
+			boolean done = mb.open() == SWT.YES;
+			
+			if( done )
+			{
+				getController().deleteParameters(selectedItems, getSelectedTreeItem().getText(), isSource());
+		
+			}
+		}
+	}
+
+
 	public void updateParameters(List<KeyValuePair> values)
 	{
 		if( null == table || null == values || values.size() < 1 )
@@ -232,6 +262,8 @@ public abstract class TableComposite extends AbstractComposite
 			
 		}
 	}
+	
+	protected abstract boolean isSource();
 	
 	
 	protected void addTableItem(KeyValuePair kvp)

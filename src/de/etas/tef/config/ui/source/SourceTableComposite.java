@@ -114,4 +114,10 @@ public class SourceTableComposite extends TableComposite
 		super.addTableItem(kvp);
 		
 	}
+
+	@Override
+	protected boolean isSource()
+	{
+		return true;
+	}
 }

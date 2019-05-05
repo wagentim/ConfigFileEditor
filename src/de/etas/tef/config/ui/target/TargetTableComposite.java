@@ -90,4 +90,10 @@ public class TargetTableComposite extends TableComposite
 		}
 		super.addTableItem(kvp);
 	}
+
+	@Override
+	protected boolean isSource()
+	{
+		return false;
+	}
 }

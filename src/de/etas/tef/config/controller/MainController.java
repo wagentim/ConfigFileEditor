@@ -1,6 +1,7 @@
 package de.etas.tef.config.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,17 +12,17 @@ import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.helper.IIniFileWorker;
 import de.etas.tef.config.helper.InitFileWorker;
-import de.etas.tef.config.helper.Validator;
 
 public class MainController implements IController
 {
-	private String sourceFilePath = Constants.EMPTY_STRING;
-	private String targetFilePath = Constants.EMPTY_STRING;
-
-	private ConfigBlock currSourceConfigBlock = null;
-	private ConfigBlock currTargetConfigBlock = null;
-
 	private IIniFileWorker worker = null;
+
+	private String leftFilePath = Constants.EMPTY_STRING;
+	private String rightFilePath = Constants.EMPTY_STRING;
+
+	private ConfigBlock currLeftConfigBlock = null;
+	private ConfigBlock currRightConfigBlock = null;
+
 
 	private ConfigFile sourceConfigFile = null;
 	private ConfigFile targetConfigFile = null;
@@ -91,10 +92,10 @@ public class MainController implements IController
 	{
 		if (isSource)
 		{
-			currSourceConfigBlock = getConfigBlock(sourceConfigFile, blockName);
+			currLeftConfigBlock = getConfigBlock(sourceConfigFile, blockName);
 		} else
 		{
-			currTargetConfigBlock = getConfigBlock(targetConfigFile, blockName);
+			currRightConfigBlock = getConfigBlock(targetConfigFile, blockName);
 		}
 
 	}
@@ -173,44 +174,44 @@ public class MainController implements IController
 	@Override
 	public void setCurrSourceConfigBlock(ConfigBlock cb)
 	{
-		this.currSourceConfigBlock = cb;
+		this.currLeftConfigBlock = cb;
 	}
 
 	@Override
 	public void setCurrTargetConfigBlock(ConfigBlock cb)
 	{
-		this.currTargetConfigBlock = cb;
+		this.currRightConfigBlock = cb;
 	}
 
 	public ConfigBlock getCurrSourceConfigBlock()
 	{
-		return currSourceConfigBlock;
+		return currLeftConfigBlock;
 	}
 
 	public ConfigBlock getCurrTargetConfigBlock()
 	{
-		return currTargetConfigBlock;
+		return currRightConfigBlock;
 	}
 
 	public String getSourceFilePath()
 	{
-		return sourceFilePath;
+		return leftFilePath;
 	}
 
 	public void setSourceFilePath(String sourceFilePaht)
 	{
-		this.sourceFilePath = sourceFilePaht;
+		this.leftFilePath = sourceFilePaht;
 		selectFile(true);
 	}
 
 	public String getTargetFilePath()
 	{
-		return targetFilePath;
+		return rightFilePath;
 	}
 
 	public void setTargetFilePath(String targetFilePath)
 	{
-		this.targetFilePath = targetFilePath;
+		this.rightFilePath = targetFilePath;
 		selectFile(false);
 	}
 
@@ -219,11 +220,29 @@ public class MainController implements IController
 	{
 		try
 		{
-			worker.writeFile(filePath, isSource ? sourceConfigFile : targetFilePath);
+			worker.writeFile(filePath, isSource ? sourceConfigFile : rightFilePath);
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void deleteParameters(int[] selectedItems, String text, boolean isSource)
+	{
+		if( null == text || text.isEmpty() || null == selectedItems|| selectedItems.length < 1)
+		{
+			return;
+		}
+		
+		ConfigBlock currBlock = isSource ? currLeftConfigBlock : currRightConfigBlock;
+		
+		List<KeyValuePair> paras = currBlock.getAllParameters();
+		
+		for(int i = selectedItems.length - 1; i >= 0 ; i--)
+		{
+			paras.remove(selectedItems[i]);
 		}
 	}
 }

@@ -19,4 +19,5 @@ public interface IController
 	public String getTargetFilePath();
 	public void setTargetFilePath(String targetFilePath);
 	void saveFile(String targetFilePath, boolean isSource);
+	void deleteParameters(int[] selectedItems, String text, boolean isSource);
 }
