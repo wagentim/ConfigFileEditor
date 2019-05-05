@@ -1,4 +1,4 @@
-package de.etas.tef.device.ui.core;
+package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -17,8 +17,8 @@ import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
-import de.etas.tef.device.ui.source.SourceConfigComposite;
-import de.etas.tef.device.ui.target.TargetConfigComposite;
+import de.etas.tef.config.ui.source.SourceConfigComposite;
+import de.etas.tef.config.ui.target.TargetConfigComposite;
 
 public class MainScreen implements IActionListener
 {

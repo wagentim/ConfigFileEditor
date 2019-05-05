@@ -1,10 +1,10 @@
-package de.etas.tef.device.ui.source;
+package de.etas.tef.config.ui.source;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.IController;
-import de.etas.tef.device.ui.core.ConfigComposite;
+import de.etas.tef.config.ui.core.ConfigComposite;
 
 public class SourceConfigComposite extends ConfigComposite
 {

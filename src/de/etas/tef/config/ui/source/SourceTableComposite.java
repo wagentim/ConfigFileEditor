@@ -1,4 +1,4 @@
-package de.etas.tef.device.ui.source;
+package de.etas.tef.config.ui.source;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +12,7 @@ import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.device.ui.core.TableComposite;
+import de.etas.tef.config.ui.core.TableComposite;
 
 public class SourceTableComposite extends TableComposite
 {

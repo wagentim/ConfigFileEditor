@@ -1,4 +1,4 @@
-package de.etas.tef.device.ui.source;
+package de.etas.tef.config.ui.source;
 
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -8,7 +8,7 @@ import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.device.ui.core.TableMouseListener;
+import de.etas.tef.config.ui.core.TableMouseListener;
 
 public class SourceTableMouseListener extends TableMouseListener
 {

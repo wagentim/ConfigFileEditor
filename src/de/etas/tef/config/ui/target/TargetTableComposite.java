@@ -1,4 +1,4 @@
-package de.etas.tef.device.ui.target;
+package de.etas.tef.config.ui.target;
 
 import org.eclipse.swt.widgets.Composite;
 
@@ -7,7 +7,7 @@ import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.device.ui.core.TableComposite;
+import de.etas.tef.config.ui.core.TableComposite;
 
 public class TargetTableComposite extends TableComposite
 {

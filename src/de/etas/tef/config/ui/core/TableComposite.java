@@ -1,4 +1,4 @@
-package de.etas.tef.device.ui.core;
+package de.etas.tef.config.ui.core;
 
 
 import java.nio.file.Files;

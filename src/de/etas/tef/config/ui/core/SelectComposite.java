@@ -1,4 +1,4 @@
-package de.etas.tef.device.ui.core;
+package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
