@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
@@ -35,11 +36,12 @@ public abstract class TableComposite extends AbstractComposite
 	private Button btnAdd;
 	private Button btnDelete;
 	private Button btnSave;
+	private Button btnLock;
 	private final int HEIGHT_HINT = 150;
 	private TreeItem root;
 	protected Color tableBackgroudColor;
+	private Composite buttonComposite;
 	
-
 	public TableComposite(Composite parent, int style, IController controller)
 	{
 		super(parent, style, controller);
@@ -156,13 +158,13 @@ public abstract class TableComposite extends AbstractComposite
 	
 	protected void initTableButtons(Composite comp)
 	{
-		Composite c = new Composite(comp, SWT.NONE);
-		c.setLayout(new GridLayout(1, false));
+		buttonComposite = new Composite(comp, SWT.NONE);
+		buttonComposite.setLayout(new GridLayout(1, false));
 		
 		GridData gd = new GridData();
 		gd.widthHint = Constants.BTN_DEFAULT_WIDTH;
 		
-		btnAdd = new Button(c, SWT.PUSH);
+		btnAdd = new Button(buttonComposite, SWT.PUSH);
 		btnAdd.setText(Constants.TXT_BTN_ADD);
 		btnAdd.setLayoutData(gd);
 		btnAdd.addSelectionListener(new SelectionListener()
@@ -182,7 +184,7 @@ public abstract class TableComposite extends AbstractComposite
 			}
 		});
 		
-		btnDelete = new Button(c, SWT.PUSH);
+		btnDelete = new Button(buttonComposite, SWT.PUSH);
 		btnDelete.setText(Constants.TXT_BTN_DELETE);
 		btnDelete.setLayoutData(gd);
 		btnDelete.addSelectionListener(new SelectionListener() 
@@ -204,7 +206,7 @@ public abstract class TableComposite extends AbstractComposite
 		});
 		
 		
-		btnSave = new Button(c, SWT.PUSH);
+		btnSave = new Button(buttonComposite, SWT.PUSH);
 		btnSave.setText(Constants.TXT_BTN_SAVE);
 		btnSave.setLayoutData(gd);
 		btnSave.addSelectionListener(new SelectionListener()
@@ -220,6 +222,30 @@ public abstract class TableComposite extends AbstractComposite
 			public void widgetDefaultSelected(SelectionEvent arg0)
 			{
 				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btnLock = new Button(buttonComposite, SWT.CHECK);
+		btnLock.setText("Edit Lock");
+		gd = new GridData();
+		gd.widthHint = Constants.BTN_DEFAULT_WIDTH;
+		gd.heightHint = 80;
+		btnLock.setLayoutData(gd);
+		btnLock.setSelection(true);
+		
+		btnLock.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOCK_SELECTION_CHANGED, btnLock.getSelection());
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
 				
 			}
 		});

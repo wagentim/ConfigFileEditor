@@ -14,12 +14,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.listener.IActionListener;
 
-public class TableMouseListener implements MouseListener
+public class TableMouseListener implements MouseListener, IActionListener
 {
 
 	private TableEditor editor = null;
@@ -28,6 +30,7 @@ public class TableMouseListener implements MouseListener
 	private CellIndex cell = null;
 	private String newValue = Constants.EMPTY_STRING;
 	protected boolean isTextChanged = false;
+	protected boolean isLocked = true;
 	
 	public TableMouseListener(Table table, IController controller)
 	{
@@ -38,6 +41,8 @@ public class TableMouseListener implements MouseListener
 		editor.horizontalAlignment = SWT.LEFT;
 	    editor.grabHorizontal = true;
 	    editor.minimumWidth = 50;
+
+	    ActionManager.INSTANCE.addActionListener(this);
 	}
 	
 	protected TableEditor getTableEditor()
@@ -48,6 +53,7 @@ public class TableMouseListener implements MouseListener
 	@Override
 	public void mouseDoubleClick(MouseEvent event)
 	{
+		
 		disposeOldEditor();
 
         Point pt = new Point(event.x, event.y);
@@ -60,7 +66,7 @@ public class TableMouseListener implements MouseListener
         
         final TableItem item = table.getItem(cell.getRow());
         
-        if (item == null)
+        if (item == null || (isLocked && cell.getColumn() == 0))
         {
           return;
         }
@@ -115,7 +121,7 @@ public class TableMouseListener implements MouseListener
 		disposeOldEditor();
 	}
 
-	private void disposeOldEditor()
+	protected void disposeOldEditor()
 	{
 		disposeEditor(cell, newValue);
 	}
@@ -156,6 +162,16 @@ public class TableMouseListener implements MouseListener
 	protected IController getController()
 	{
 		return controller;
+	}
+
+	@Override
+	public void receivedAction(int type, Object content)
+	{
+		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
+		{
+			isLocked = (boolean)content;
+			disposeOldEditor();
+		}
 	}
 
 }

@@ -12,6 +12,8 @@ import de.etas.tef.config.ui.core.TableComposite;
 public class TargetTableComposite extends TableComposite
 {
 
+	
+	
 	public TargetTableComposite(Composite parent, int style, IController controller)
 	{
 		super(parent, style, controller);
