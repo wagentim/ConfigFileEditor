@@ -36,7 +36,7 @@ public class MainController implements IController
 	private void selectFile(boolean isSource)
 	{
 		String fp = isSource ? getSourceFilePath() : getTargetFilePath();
-
+		
 		ConfigFile result = new ConfigFile();
 		
 		try

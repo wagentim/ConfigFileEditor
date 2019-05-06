@@ -49,8 +49,13 @@ public abstract class ConfigComposite extends AbstractComposite
 				{
 					return;
 				}
-				
 				String file = fileList[0];
+				
+				if(!file.toLowerCase().endsWith(".ini"))
+				{
+					return;
+				}
+				
 				
 				setFilePath(file);
 			}
