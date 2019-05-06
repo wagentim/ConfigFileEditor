@@ -18,6 +18,10 @@ public class TargetFileSelectComposite extends SelectComposite
 
 	public void receivedAction(int type, Object content)
 	{
+		if( Constants.ACTION_DROP_TARGET_NEW_FILE_SELECTED == type )
+		{
+			getText().setText(content.toString());
+		}
 	}
 	
 	protected void initLabel(Composite comp)
@@ -29,7 +33,10 @@ public class TargetFileSelectComposite extends SelectComposite
 
 	protected void fileSelected() 
 	{
-		getController().setTargetFilePath(getCurrentFilePath());
+		String filePath = getCurrentFilePath();
+		getController().setTargetFilePath(filePath);
+		getText().setText(filePath);
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_TARGET_NEW_FILE_SELECTED, getCurrentFilePath());
 	}
+
 }

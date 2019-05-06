@@ -38,7 +38,7 @@ public class SourceTableComposite extends TableComposite
 				updateParameters(Collections.emptyList());
 			}
 		}
-		else if( type == Constants.ACTION_SOURCE_NEW_FILE_SELECTED )
+		else if( type == Constants.ACTION_SOURCE_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_SOURCE_NEW_FILE_SELECTED)
 		{
 			clearTable();
 			String[] allBlocks = getController().getBlockNames(true);

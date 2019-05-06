@@ -81,7 +81,6 @@ public class SelectComposite extends AbstractComposite
 			currFilePath = Constants.EMPTY_STRING;
 		}
 		
-		txtFileSelect.setText(currFilePath);
 		fileSelected();
 	}
 	

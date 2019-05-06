@@ -33,7 +33,7 @@ public class TargetTableComposite extends TableComposite
 			updateParameters(cb.getAllParameters());
 			getController().setCurrTargetConfigBlock(cb);
 		}
-		else if( type == Constants.ACTION_TARGET_NEW_FILE_SELECTED )
+		else if( type == Constants.ACTION_TARGET_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_TARGET_NEW_FILE_SELECTED)
 		{
 			clearTable();
 			String[] allBlocks = getController().getBlockNames(false);
@@ -98,4 +98,5 @@ public class TargetTableComposite extends TableComposite
 	{
 		return false;
 	}
+
 }

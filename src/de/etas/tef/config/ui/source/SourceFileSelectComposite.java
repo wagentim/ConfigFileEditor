@@ -19,6 +19,10 @@ public class SourceFileSelectComposite extends SelectComposite
 	@Override
 	public void receivedAction(int type, Object content)
 	{
+		if( Constants.ACTION_DROP_SOURCE_NEW_FILE_SELECTED == type )
+		{
+			getText().setText(content.toString());
+		}
 	}
 	
 	protected void initLabel(Composite comp)
@@ -37,6 +41,8 @@ public class SourceFileSelectComposite extends SelectComposite
 		}
 		
 		getController().setSourceFilePath(filePath);
+		getText().setText(filePath);
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_NEW_FILE_SELECTED, getCurrentFilePath());
 	}
+
 }
