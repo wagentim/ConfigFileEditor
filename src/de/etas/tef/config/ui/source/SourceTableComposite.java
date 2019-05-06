@@ -11,6 +11,7 @@ import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.ui.core.TableComposite;
 
@@ -41,7 +42,7 @@ public class SourceTableComposite extends TableComposite
 		else if( type == Constants.ACTION_SOURCE_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_SOURCE_NEW_FILE_SELECTED)
 		{
 			clearTable();
-			String[] allBlocks = getController().getBlockNames(true);
+			String[] allBlocks = getController().getAllBlocks(getCompositeID());
 			setBlockList(allBlocks);
 		}
 		else if (type == Constants.ACTION_GPIB_SOURCE_FINISHED)
@@ -53,7 +54,7 @@ public class SourceTableComposite extends TableComposite
 	
 	protected void treeItemSelected(String blockName)
 	{
-		getController().setSelectedBlock(blockName, true);
+		getController().setSelectedBlock(blockName, getCompositeID());
 		ConfigBlock cb = getController().getCurrSourceConfigBlock();
 		
 		if( null != cb)
@@ -96,7 +97,7 @@ public class SourceTableComposite extends TableComposite
 	
 	protected void saveAction(String targetFilePath) 
 	{
-		getController().saveFile(targetFilePath, true);
+		getController().saveFile(targetFilePath, getCompositeID());
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Source Write to: " + targetFilePath + " finished!");
 	}
 
@@ -119,5 +120,11 @@ public class SourceTableComposite extends TableComposite
 	protected boolean isSource()
 	{
 		return true;
+	}
+	
+	@Override
+	protected int getCompositeID()
+	{
+		return CompositeID.COMPOSITE_LEFT;
 	}
 }

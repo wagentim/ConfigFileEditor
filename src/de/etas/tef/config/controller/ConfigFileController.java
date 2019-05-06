@@ -4,17 +4,20 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.helper.IIniFileWorker;
+import de.etas.tef.config.helper.IConfigFileWorker;
 import de.etas.tef.config.helper.InitFileWorker;
+import de.etas.tef.config.helper.Validator;
 
-public class MainController implements IController
+public class ConfigFileController implements IController
 {
-	private IIniFileWorker worker = null;
+	private IConfigFileWorker worker = null;
 
 	private String leftFilePath = Constants.EMPTY_STRING;
 	private String rightFilePath = Constants.EMPTY_STRING;
@@ -22,50 +25,44 @@ public class MainController implements IController
 	private ConfigBlock currLeftConfigBlock = null;
 	private ConfigBlock currRightConfigBlock = null;
 
+	private ConfigFile leftConfigFile = null;
+	private ConfigFile rightConfigFile = null;
 
-	private ConfigFile sourceConfigFile = null;
-	private ConfigFile targetConfigFile = null;
-
+	// define is left composite is connected to right composite
 	private boolean isConnected = false;
 	
-	public MainController()
+	public ConfigFileController()
 	{
 		worker = new InitFileWorker();
 	}
 
-	private void selectFile(boolean isSource)
+	private ConfigFile parserConfigFile(String inputFile)
 	{
-		String fp = isSource ? getSourceFilePath() : getTargetFilePath();
-		
 		ConfigFile result = new ConfigFile();
 		
 		try
 		{
-			worker.readFile(fp, result);
+			worker.readFile(inputFile, result);
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-
-		if (isSource)
-		{
-			sourceConfigFile = result;
-		} 
-		else
-		{
-			targetConfigFile = result;
-		}
+		
+		return result;
 	}
 
 	@Override
-	public String[] getBlockNames(boolean isSource)
+	public String[] getAllBlocks(int compositeID)
 	{
-		if (isSource)
-			return getBlockNames(sourceConfigFile.getConfigBlocks());
-		else
-			return getBlockNames(targetConfigFile.getConfigBlocks());
-
+		switch(compositeID)
+		{
+			case CompositeID.COMPOSITE_LEFT:
+				return getBlockNames(leftConfigFile.getConfigBlocks());
+			case CompositeID.COMPOSITE_RIGHT:
+				return getBlockNames(rightConfigFile.getConfigBlocks());
+		}
+		return Constants.EMPTY_STRING_ARRAY;
 	}
 
 	private String[] getBlockNames(List<ConfigBlock> blocks)
@@ -87,16 +84,19 @@ public class MainController implements IController
 		return result;
 	}
 
-	public void setSelectedBlock(String blockName, boolean isSource)
+	@Override
+	public void setSelectedBlock(String blockName, int compositeID)
 	{
-		if (isSource)
+		
+		switch(compositeID)
 		{
-			currLeftConfigBlock = getConfigBlock(sourceConfigFile, blockName);
-		} else
-		{
-			currRightConfigBlock = getConfigBlock(targetConfigFile, blockName);
+			case CompositeID.COMPOSITE_LEFT:
+				currLeftConfigBlock = getConfigBlock(leftConfigFile, blockName);
+				break;
+			case CompositeID.COMPOSITE_RIGHT:
+				currRightConfigBlock = getConfigBlock(rightConfigFile, blockName);
+				break;
 		}
-
 	}
 
 	private ConfigBlock getConfigBlock(ConfigFile cf, String blockName)
@@ -133,21 +133,23 @@ public class MainController implements IController
 	}
 
 	@Override
-	public void updateParameter(CellIndex cell, String newValue, boolean isSource)
+	public void parameterChanged(CellIndex cell, String newValue, int compositeID)
 	{
-		ConfigBlock cb;
+		ConfigBlock cb = null;
 
-		if (isSource)
+		switch(compositeID)
 		{
-			cb = getCurrSourceConfigBlock();
-		} else
-		{
-			cb = getCurrTargetConfigBlock();
+			case CompositeID.COMPOSITE_LEFT:
+				cb = getCurrSourceConfigBlock();
+				break;
+			case CompositeID.COMPOSITE_RIGHT:
+				cb = getCurrTargetConfigBlock();
+				break;
 		}
-
+		
 		int row = cell.getRow();
 		
-		if (row < 0)
+		if (row < 0 || null == cb)
 		{
 			return;
 		}
@@ -192,34 +194,20 @@ public class MainController implements IController
 		return currRightConfigBlock;
 	}
 
-	public String getSourceFilePath()
-	{
-		return leftFilePath;
-	}
-
-	public void setSourceFilePath(String sourceFilePaht)
-	{
-		this.leftFilePath = sourceFilePaht;
-		selectFile(true);
-	}
-
-	public String getTargetFilePath()
-	{
-		return rightFilePath;
-	}
-
-	public void setTargetFilePath(String targetFilePath)
-	{
-		this.rightFilePath = targetFilePath;
-		selectFile(false);
-	}
-
 	@Override
-	public void saveFile(String filePath, boolean isSource)
+	public void saveFile(String filePath, int compositeID)
 	{
 		try
 		{
-			worker.writeFile(filePath, isSource ? sourceConfigFile : rightFilePath);
+			switch(compositeID)
+			{
+				case CompositeID.COMPOSITE_LEFT:
+					worker.writeFile(filePath, leftFilePath);
+					break;
+				case CompositeID.COMPOSITE_RIGHT:
+					worker.writeFile(filePath, rightFilePath);
+					break;
+			}
 		}
 		catch (IOException e)
 		{
@@ -228,20 +216,55 @@ public class MainController implements IController
 	}
 
 	@Override
-	public void deleteParameters(int[] selectedItems, String text, boolean isSource)
+	public void deleteParameters(int[] selectedItems, String text, int compositeID)
 	{
 		if( null == text || text.isEmpty() || null == selectedItems|| selectedItems.length < 1)
 		{
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by deleting the parameters");
 			return;
 		}
 		
-		ConfigBlock currBlock = isSource ? currLeftConfigBlock : currRightConfigBlock;
+		ConfigBlock currBlock = null;
+		
+		switch(compositeID)
+		{
+			case CompositeID.COMPOSITE_LEFT:
+				currBlock = currLeftConfigBlock;
+				break;
+			case CompositeID.COMPOSITE_RIGHT:
+				currBlock = currRightConfigBlock;
+				break;
+		}
 		
 		List<KeyValuePair> paras = currBlock.getAllParameters();
 		
 		for(int i = selectedItems.length - 1; i >= 0 ; i--)
 		{
 			paras.remove(selectedItems[i]);
+		}
+	}
+
+	@Override
+	public void setInputConfigFile(String filePath, int compositeID)
+	{
+		if( !Validator.INSTANCE().validFile(filePath, false) )
+		{
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "Input File is Wrong!!");
+			return;
+		}
+		
+		ConfigFile configFile = parserConfigFile(filePath);
+		
+		switch(compositeID)
+		{
+			case CompositeID.COMPOSITE_LEFT:
+				this.leftFilePath = filePath;
+				this.leftConfigFile = configFile;
+				break;
+			case CompositeID.COMPOSITE_RIGHT:
+				this.rightFilePath = filePath;
+				this.rightConfigFile = configFile;
+				break;
 		}
 	}
 }

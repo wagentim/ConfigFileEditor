@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
 
@@ -59,12 +60,12 @@ public class InfoBlockWriter implements IActionListener
 		else if(type == Constants.ACTION_SOURCE_NEW_FILE_SELECTED)
 		{
 			logInfo("Set Source File: " + content.toString());
-			logInfo("New Source Parameter Blocks: " + controller.getBlockNames(true).length);
+			logInfo("New Source Parameter Blocks: " + controller.getAllBlocks(CompositeID.COMPOSITE_LEFT).length);
 		}
 		else if (type == Constants.ACTION_TARGET_NEW_FILE_SELECTED)
 		{
 			logInfo("Set Target File: " + content.toString());
-			logInfo("New Target Parameter Blocks: " + controller.getBlockNames(false).length);
+			logInfo("New Target Parameter Blocks: " + controller.getAllBlocks(CompositeID.COMPOSITE_RIGHT).length);
 		}
 		else if (type == Constants.ACTION_SOURCE_PARAMETER_UPDATE)
 		{

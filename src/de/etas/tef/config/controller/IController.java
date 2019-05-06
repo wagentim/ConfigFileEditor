@@ -5,19 +5,17 @@ import de.etas.tef.config.entity.ConfigBlock;
 
 public interface IController
 {
-	String[] getBlockNames(boolean isSource);
-	void setSelectedBlock(String blockName, boolean isSource);
-	boolean isConnected();
-	void setConnected(boolean isConnected);
-	void updateParameter(CellIndex cell, String newValue, boolean isSource);
-	void setCurrSourceConfigBlock(ConfigBlock cb);
-	void setCurrTargetConfigBlock(ConfigBlock cb);
+	// new methods
+	void setInputConfigFile(String filePath, int compositeID);
+	void deleteParameters(int[] selectedItems, String text, int compositeID);
+	void saveFile(String targetFilePath, int compositeID);
+	void parameterChanged(CellIndex cell, String newValue, int compositeID);
 	ConfigBlock getCurrTargetConfigBlock();
 	ConfigBlock getCurrSourceConfigBlock();
-	public String getSourceFilePath();
-	public void setSourceFilePath(String sourceFilePaht);
-	public String getTargetFilePath();
-	public void setTargetFilePath(String targetFilePath);
-	void saveFile(String targetFilePath, boolean isSource);
-	void deleteParameters(int[] selectedItems, String text, boolean isSource);
+	void setConnected(boolean isConnected);
+	String[] getAllBlocks(int compositeID);
+	void setSelectedBlock(String blockName, int compositeID);
+	boolean isConnected();
+	void setCurrSourceConfigBlock(ConfigBlock cb);
+	void setCurrTargetConfigBlock(ConfigBlock cb);
 }

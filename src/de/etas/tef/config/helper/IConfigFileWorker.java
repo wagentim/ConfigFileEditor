@@ -1,6 +1,6 @@
 package de.etas.tef.config.helper;
 
-public interface IIniFileWorker extends IFileWorker
+public interface IConfigFileWorker extends IFileWorker
 {
 	static final int TAG_FILE_COMMENT_START = 0x00;
 	static final int TAG_FILE_COMMENT_FINISH = 0x01;

@@ -15,7 +15,6 @@ import de.etas.tef.config.controller.IController;
 public abstract class ConfigComposite extends AbstractComposite
 {
 
-	private GridData cgd = new GridData(GridData.FILL_HORIZONTAL);
 
 	public ConfigComposite(Composite composite, int style, IController controller)
 	{
@@ -23,9 +22,11 @@ public abstract class ConfigComposite extends AbstractComposite
 
 		GridLayout layout = new GridLayout(1, false);
 		this.setLayout(layout);
+		
+		GridData cgd = new GridData(GridData.FILL_HORIZONTAL);
 		this.setLayoutData(cgd);
 		
-		initComponent();
+		initChildren();
 		initDropFunction(this);
 	}
 	
@@ -64,5 +65,5 @@ public abstract class ConfigComposite extends AbstractComposite
 
 	protected abstract void setFilePath(String file);
 
-	protected abstract void initComponent();
+	protected abstract void initChildren();
 }

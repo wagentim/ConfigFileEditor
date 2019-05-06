@@ -6,14 +6,13 @@ import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.ui.core.TableComposite;
 
 public class TargetTableComposite extends TableComposite
 {
 
-	
-	
 	public TargetTableComposite(Composite parent, int style, IController controller)
 	{
 		super(parent, style, controller);
@@ -36,13 +35,13 @@ public class TargetTableComposite extends TableComposite
 		else if( type == Constants.ACTION_TARGET_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_TARGET_NEW_FILE_SELECTED)
 		{
 			clearTable();
-			String[] allBlocks = getController().getBlockNames(false);
+			String[] allBlocks = getController().getAllBlocks(getCompositeID());
 			setBlockList(allBlocks);
 		}
 		else if( type == Constants.ACTION_SOURCE_PARAMETER_SELECTED )
 		{
 			String blockName = (String)content;
-			getController().setSelectedBlock(blockName, false);
+			getController().setSelectedBlock(blockName, getCompositeID());
 			setTreeSelectedBlock(blockName);
 			treeItemSelected(blockName);
 		}
@@ -53,7 +52,7 @@ public class TargetTableComposite extends TableComposite
 	protected void treeItemSelected(String blockName)
 	{
 		
-		getController().setSelectedBlock(blockName.trim(), false);
+		getController().setSelectedBlock(blockName.trim(), getCompositeID());
 		ConfigBlock cb = getController().getCurrTargetConfigBlock();
 		
 		if( null != cb)
@@ -70,7 +69,7 @@ public class TargetTableComposite extends TableComposite
 	
 	protected void saveAction(String targetFilePath) 
 	{
-		getController().saveFile(targetFilePath, false);
+		getController().saveFile(targetFilePath, getCompositeID());
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, "Target Write to: " + targetFilePath + "finished!");
 	}
 
@@ -97,6 +96,12 @@ public class TargetTableComposite extends TableComposite
 	protected boolean isSource()
 	{
 		return false;
+	}
+	
+	@Override
+	protected int getCompositeID()
+	{
+		return CompositeID.COMPOSITE_RIGHT;
 	}
 
 }

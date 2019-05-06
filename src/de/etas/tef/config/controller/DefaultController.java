@@ -7,13 +7,6 @@ public class DefaultController implements IController
 {
 
 	@Override
-	public String[] getBlockNames(boolean isSource)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean isConnected()
 	{
 		// TODO Auto-generated method stub
@@ -55,59 +48,44 @@ public class DefaultController implements IController
 	}
 
 	@Override
-	public void updateParameter(CellIndex cell, String newValue, boolean isSource)
+	public void setInputConfigFile(String filePath, int compositeID)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public String getSourceFilePath()
+	public void deleteParameters(int[] selectedItems, String text, int compositeID)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveFile(String targetFilePath, int compositeID)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void parameterChanged(CellIndex cell, String newValue, int compositeID)
+	{
+		
+	}
+
+	@Override
+	public void setSelectedBlock(String blockName, int compositeID)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String[] getAllBlocks(int compositeID)
 	{
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void setSourceFilePath(String sourceFilePaht)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getTargetFilePath()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setTargetFilePath(String targetFilePath)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setSelectedBlock(String blockName, boolean isSource)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void saveFile(String targetFilePath, boolean b)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteParameters(int[] selectedItems, String text, boolean isSource)
-	{
-		// TODO Auto-generated method stub
-		
 	}
 
 }

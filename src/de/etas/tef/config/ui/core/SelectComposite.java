@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.helper.Constants;
 
-public class SelectComposite extends AbstractComposite
+public abstract class SelectComposite extends AbstractComposite
 {
 	
 	private Text txtFileSelect;

@@ -266,7 +266,7 @@ public abstract class TableComposite extends AbstractComposite
 			
 			if( done )
 			{
-				getController().deleteParameters(selectedItems, getSelectedTreeItem().getText(), isSource());
+				getController().deleteParameters(selectedItems, getSelectedTreeItem().getText(), getCompositeID());
 		
 			}
 		}

@@ -7,6 +7,7 @@ import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.ui.core.TableMouseListener;
 
@@ -38,7 +39,7 @@ public class TargetTableMouseListener extends TableMouseListener
 			oldEditor.dispose();
 			if( isTextChanged )
 			{
-				getController().updateParameter(cell, newValue, false);
+				getController().parameterChanged(cell, newValue, CompositeID.COMPOSITE_RIGHT);
 				isTextChanged = false;
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, getInfoText() + " File Block: " + getConfigBlock().getBlockName() + " with new value: " + newValue + cell.toString());
 			}

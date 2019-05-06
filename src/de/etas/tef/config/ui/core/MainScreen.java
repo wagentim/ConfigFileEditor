@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.InfoBlockWriter;
-import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.controller.ConfigFileController;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
 import de.etas.tef.config.ui.source.SourceConfigComposite;
@@ -28,7 +28,7 @@ public class MainScreen implements IActionListener
 
 	public MainScreen()
 	{
-		IController controller = new MainController();
+		IController controller = new ConfigFileController();
 		ActionManager.INSTANCE.addActionListener(this);
 
 		Display display = new Display();

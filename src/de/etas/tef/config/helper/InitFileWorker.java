@@ -14,7 +14,7 @@ import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 
-public class InitFileWorker implements IIniFileWorker
+public class InitFileWorker implements IConfigFileWorker
 {
 	
 	@Override

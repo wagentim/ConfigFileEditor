@@ -5,6 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.ui.core.SelectComposite;
 
@@ -34,9 +35,15 @@ public class TargetFileSelectComposite extends SelectComposite
 	protected void fileSelected() 
 	{
 		String filePath = getCurrentFilePath();
-		getController().setTargetFilePath(filePath);
+		getController().setInputConfigFile(filePath, getCompositeID());
 		getText().setText(filePath);
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_TARGET_NEW_FILE_SELECTED, getCurrentFilePath());
+	}
+	
+	@Override
+	protected int getCompositeID()
+	{
+		return CompositeID.COMPOSITE_RIGHT;
 	}
 
 }

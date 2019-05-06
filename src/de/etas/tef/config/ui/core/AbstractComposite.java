@@ -10,7 +10,7 @@ import de.etas.tef.config.listener.IActionListener;
 public abstract class AbstractComposite extends Composite implements IActionListener
 {
 	
-	private IController controller = new DefaultController();
+	private IController controller = null;
 
 	public AbstractComposite(Composite parent, int style, IController controller)
 	{
@@ -20,6 +20,10 @@ public abstract class AbstractComposite extends Composite implements IActionList
 		{
 			this.controller = controller;
 		}
+		else
+		{
+			this.controller = new DefaultController();
+		}
 		
 		ActionManager.INSTANCE.addActionListener(this);
 	}
@@ -28,4 +32,6 @@ public abstract class AbstractComposite extends Composite implements IActionList
 	{
 		return controller;
 	}
+	
+	protected abstract int getCompositeID();
 }

@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
 public class OptionComposite extends AbstractComposite
@@ -27,10 +28,10 @@ public class OptionComposite extends AbstractComposite
 		this.setLayout(new GridLayout(4, false));
 		this.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		initComponents(this);
+		initChildren(this);
 	}
 
-	private void initComponents(Composite parent)
+	private void initChildren(Composite parent)
 	{
 		btnConnect = new Button(parent, SWT.CHECK);
 		GridData gd = new GridData();
@@ -171,6 +172,12 @@ public class OptionComposite extends AbstractComposite
 	@Override
 	public void receivedAction(int type, Object content)
 	{
+	}
+
+	@Override
+	protected int getCompositeID()
+	{
+		return CompositeID.COMPOSITE_ALONE;
 	}
 
 }

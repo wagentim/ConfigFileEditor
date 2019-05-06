@@ -66,8 +66,4 @@ public final class Constants
 	public static final int ACTION_LOCK_SELECTION_CHANGED = 0x16;
 	public static final int ACTION_DROP_TARGET_NEW_FILE_SELECTED = 0x17;
 	public static final int ACTION_DROP_SOURCE_NEW_FILE_SELECTED = 0x18;
-	
-	public static final int COMPOSITE_ID_LEFT = 0x00;
-	public static final int COMPOSITE_ID_RIGHT = 0x01;
-	
 }
