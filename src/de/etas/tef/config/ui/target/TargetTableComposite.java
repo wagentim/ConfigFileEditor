@@ -45,8 +45,6 @@ public class TargetTableComposite extends TableComposite
 			setTreeSelectedBlock(blockName);
 			treeItemSelected(blockName);
 		}
-		
-		
 	}
 	
 	protected void treeItemSelected(String blockName)

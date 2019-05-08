@@ -92,6 +92,7 @@ public abstract class SelectComposite extends AbstractComposite
 		GridData txtGD = new GridData(GridData.FILL_HORIZONTAL);
 		txtFileSelect.setLayoutData(txtGD);
 		txtFileSelect.setEditable(false);
+		txtFileSelect.setMessage("Select File Here");
 	}
 	
 	protected void initButton(Composite comp)

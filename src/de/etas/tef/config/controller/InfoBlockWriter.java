@@ -3,6 +3,8 @@ package de.etas.tef.config.controller;
 import javax.management.RuntimeErrorException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Text;
 
@@ -14,13 +16,15 @@ import de.etas.tef.config.listener.IActionListener;
 
 public class InfoBlockWriter implements IActionListener
 {
-	private final Text infoBlock;
+	private final StyledText infoBlock;
 	private final Text commentBlock;
 	private final Color error;
 	private final Color info;
 	private final IController controller;
+	
+	private String txt = Constants.EMPTY_STRING;
 
-	public InfoBlockWriter(final Text infoBlock, final Text commentBlock, IController controller)
+	public InfoBlockWriter(final StyledText infoBlock, final Text commentBlock, IController controller)
 	{
 		if (null == infoBlock)
 		{
@@ -36,14 +40,28 @@ public class InfoBlockWriter implements IActionListener
 
 	private void logError(String text)
 	{
-		infoBlock.setForeground(error);
-		infoBlock.append("[ERRO] " + text + "\n");
+		txt = "[ERROR] " + text + "\n";
+		
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = error;
+		sr.fontStyle = SWT.ITALIC;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
 	}
 
 	private void logInfo(String text)
 	{
-		infoBlock.setForeground(info);
-		infoBlock.append("[INFO] " + text + "\n");
+		txt = "[INFO] " + text + "\n";
+		
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = info;
+		sr.fontStyle = SWT.ITALIC;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
 	}
 
 	@Override

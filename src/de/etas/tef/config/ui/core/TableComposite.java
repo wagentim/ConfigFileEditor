@@ -21,8 +21,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
@@ -31,16 +29,16 @@ import de.etas.tef.config.helper.Constants;
 
 public abstract class TableComposite extends AbstractComposite
 {
-	private Tree blockList;
+	
 	private Table table;
 	private Button btnAdd;
 	private Button btnDelete;
 	private Button btnSave;
 	private Button btnLock;
-	private final int HEIGHT_HINT = 150;
-	private TreeItem root;
 	protected Color tableBackgroudColor;
 	private Composite buttonComposite;
+	
+	private SearchTreeComponent searchTree;
 	
 	public TableComposite(Composite parent, int style, IController controller)
 	{
@@ -49,7 +47,7 @@ public abstract class TableComposite extends AbstractComposite
 		this.setLayout(new GridLayout(2, false));
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
-		initTable(this);
+		initMainComposite(this, controller);
 		initTableButtons(this);
 		
 		tableBackgroudColor = parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
@@ -76,59 +74,23 @@ public abstract class TableComposite extends AbstractComposite
 		return btnSave;
 	}
 	
-	public void setBlockList(String[] blockList)
-	{
-		root.removeAll();
-		root.setText(root.getText()); 
-		
-		for(int i = 0; i < blockList.length; i++)
-		{
-			TreeItem it = new TreeItem(root, SWT.NONE);
-			it.setText(blockList[i]);
-		}
-		
-		root.setExpanded(true);
-	}
+	
 
-	protected void initTable(Composite comp)
+	protected void initMainComposite(Composite comp, IController controller)
 	{
-		
 		SashForm sf = new SashForm(comp, SWT.HORIZONTAL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		sf.setLayoutData(gd);
 		
-		blockList = new Tree(sf, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = HEIGHT_HINT;
-		blockList.setLayoutData(gd);
-		
-		root = new TreeItem(blockList, SWT.NONE);
-		root.setText(Constants.TXT_CONFIG_FILE);
-		
-		blockList.addSelectionListener(new SelectionListener()
-		{
-			
-			@Override
-			public void widgetSelected(SelectionEvent event)
-			{
-				
-				String s = getSelectedTreeItem().getText();
-				treeItemSelected(s.trim());
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent event)
-			{
-				
-			}
-		});
+		searchTree = new SearchTreeComponent(sf, SWT.NONE, controller);
+		searchTree.setTableComposite(this);
 		
 		table = new Table(sf, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		
 		gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = HEIGHT_HINT;
+		gd.heightHint = Constants.HEIGHT_HINT;
 		table.setLayoutData(gd);
 	    
 		for (int i = 0; i < Constants.TABLE_TITLES.length; i++) 
@@ -144,17 +106,21 @@ public abstract class TableComposite extends AbstractComposite
 		sf.setWeights(new int[]{1, 2});
 	}
 	
-	private TreeItem getSelectedTreeItem()
-	{
-		TreeItem ti = blockList.getSelection()[0];
-		return ti;
-	}
-	
 	abstract protected void addTableSelectedListener();
 
 	abstract protected void treeItemSelected(String blockName);
 
 	abstract protected void addTableMouseListener();
+	
+	protected void setTreeSelectedBlock(String blockName)
+	{
+		searchTree.setTreeSelectedBlock(blockName);
+	}
+	
+	protected void setBlockList(String[] blockList)
+	{
+		searchTree.setBlockList(blockList);
+	}
 	
 	protected void initTableButtons(Composite comp)
 	{
@@ -194,7 +160,7 @@ public abstract class TableComposite extends AbstractComposite
 			public void widgetSelected(SelectionEvent event) 
 			{
 				deleteSelectedItems();
-				treeItemSelected(getSelectedTreeItem().getText().trim());
+				treeItemSelected(searchTree.getSelectedTreeItem().getText().trim());
 				
 			}
 			
@@ -266,7 +232,7 @@ public abstract class TableComposite extends AbstractComposite
 			
 			if( done )
 			{
-				getController().deleteParameters(selectedItems, getSelectedTreeItem().getText(), getCompositeID());
+				getController().deleteParameters(selectedItems, searchTree.getSelectedTreeItem().getText(), getCompositeID());
 		
 			}
 		}
@@ -363,16 +329,5 @@ public abstract class TableComposite extends AbstractComposite
 	
 	abstract protected void saveAction(String targetFilePath);
 	
-	protected void setTreeSelectedBlock(String blockName)
-	{
-		TreeItem[] items = root.getItems();
-		
-		for( int i = 0 ; i < items.length; i++)
-		{
-			if( blockName.trim().equals(items[i].getText().trim()))
-			{
-				blockList.select(items[i]);
-			}
-		}
-	}
+	
 }

@@ -18,6 +18,8 @@ public final class Constants
 	
 	public static final int BTN_DEFAULT_WIDTH = 80;
 	public static final int LABEL_DEFAULT_WIDTH = 45;
+	public static final int HEIGHT_HINT = 150;
+	public static final int SEARCH_TEXT_HEIGHT = 24;
 	
 	public static final String[] CONFIG_FILE_EXTENSION = {"*.ini", "*.*"};
 	public static final String[] CONFIG_FILE_NAME = {"Config File (*.ini)", "All Files (*.*)"};

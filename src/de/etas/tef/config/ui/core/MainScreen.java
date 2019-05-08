@@ -2,6 +2,7 @@ package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -67,7 +68,7 @@ public class MainScreen implements IActionListener
 		gd = new GridData(GridData.FILL_BOTH);
 		sfComment.setLayoutData(gd);
 
-		Text txtInfoBlock = new Text(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		StyledText txtInfoBlock = new StyledText(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 3;
 		txtInfoBlock.setLayoutData(gd);
