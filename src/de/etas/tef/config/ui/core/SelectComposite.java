@@ -28,8 +28,12 @@ public abstract class SelectComposite extends AbstractComposite
 	protected SelectComposite(Composite parent, int style, IController controller)
 	{
 		super(parent, style, controller);
+
+		GridLayout layout = new GridLayout(3, false);
+		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = 0; 
+		layout.marginHeight = layout.marginWidth = 0;
 		
-		this.setLayout(new GridLayout(3, false));
+		this.setLayout(layout);
 		this.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		initLabel(this);

@@ -17,7 +17,6 @@ public class SearchTreeComponent extends AbstractComposite
 {
 
 	private Tree blockList;
-//	private Text searchText;
 	private TreeItem root;
 	private TableComposite tableComposite;
 	
@@ -37,10 +36,6 @@ public class SearchTreeComponent extends AbstractComposite
 	{
 		
 		new SearchComposite(this, SWT.BORDER);
-//		searchText = new Text(this, SWT.ICON_SEARCH | SWT.ICON_CANCEL);
-//		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-//		gd.heightHint = Constants.SEARCH_TEXT_HEIGHT;
-//		searchText.setLayoutData(gd);
 		
 		blockList = new Tree(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
