@@ -8,8 +8,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.config.entity.ConfigFile;
-
 public class TT 
 {
 	public static void main(String[] args) {

@@ -6,7 +6,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
@@ -18,7 +17,7 @@ public class SearchTreeComponent extends AbstractComposite
 {
 
 	private Tree blockList;
-	private Text searchText;
+//	private Text searchText;
 	private TreeItem root;
 	private TableComposite tableComposite;
 	
@@ -37,14 +36,14 @@ public class SearchTreeComponent extends AbstractComposite
 	protected void initComponent()
 	{
 		
-		
-		searchText = new Text(this, SWT.ICON_SEARCH | SWT.ICON_CANCEL);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = Constants.SEARCH_TEXT_HEIGHT;
-		searchText.setLayoutData(gd);
+		new SearchComposite(this, SWT.BORDER);
+//		searchText = new Text(this, SWT.ICON_SEARCH | SWT.ICON_CANCEL);
+//		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.heightHint = Constants.SEARCH_TEXT_HEIGHT;
+//		searchText.setLayoutData(gd);
 		
 		blockList = new Tree(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		gd = new GridData(GridData.FILL_BOTH);
+		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = Constants.HEIGHT_HINT;
 		blockList.setLayoutData(gd);
 		

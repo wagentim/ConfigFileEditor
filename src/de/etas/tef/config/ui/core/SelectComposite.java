@@ -3,6 +3,7 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -60,9 +61,10 @@ public abstract class SelectComposite extends AbstractComposite
 	{
 		labelFileSelect = new Label(comp, SWT.NULL);
 		GridData gd = new GridData();
-		gd.widthHint = Constants.LABEL_DEFAULT_WIDTH;
 		labelFileSelect.setLayoutData(gd);
-		labelFileSelect.setText(Constants.TXT_LABEL_FILE);
+		Image image = new Image(this.getDisplay(), "icons/file_36.png");
+//		labelFileSelect.setText(Constants.TXT_LABEL_FILE);
+		labelFileSelect.setImage(image);
 	}
 	
 	protected void txtSelectListener(){}
