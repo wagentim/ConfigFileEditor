@@ -16,7 +16,7 @@ public abstract class AbstractController implements IController
 	@Override
 	public void setParent(IController parent)
 	{
-
+		this.parent = parent;
 	}
 	
 	@Override

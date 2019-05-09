@@ -4,6 +4,7 @@ package de.etas.tef.config.ui.core;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -23,10 +24,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import de.etas.tef.config.action.ActionManager;
-import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
 public class TableComposite extends AbstractComposite
@@ -42,7 +43,7 @@ public class TableComposite extends AbstractComposite
 	
 	private SearchTreeComponent searchTree;
 	
-	public TableComposite(Composite parent, int style, IController controller, int compositeID)
+	public TableComposite(Composite parent, int style, MainController controller, int compositeID)
 	{
 		super(parent, style, controller, compositeID);
 
@@ -76,7 +77,7 @@ public class TableComposite extends AbstractComposite
 		return btnSave;
 	}
 	
-	protected void initMainComposite(Composite comp, IController controller)
+	protected void initMainComposite(Composite comp, MainController controller)
 	{
 		SashForm sf = new SashForm(comp, SWT.HORIZONTAL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
@@ -116,7 +117,7 @@ public class TableComposite extends AbstractComposite
 			{
 				String text = getTable().getItem(getTable().getSelectionIndex()).getText(1);
 				
-				if( !((MainController)getController().getParent()).isConnected() )
+				if( !((MainController)(getController().getParent())).isConnected() )
 				{
 					return;
 				}
@@ -366,5 +367,32 @@ public class TableComposite extends AbstractComposite
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, getCompositeID(), "Source Write to: " + targetFilePath + " finished!");
 	}
 	
-	
+	@Override
+	public void receivedAction(int type, int compositeID, Object content)
+	{
+		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE )
+		{
+			return;
+		}
+		
+		if( type == Constants.ACTION_PARAMETER_UPDATE )
+		{
+			ConfigBlock cb = getController().getSelectedConfigBlock();
+			if( null != cb )
+			{
+				updateParameters(cb.getAllParameters());
+			}
+			else
+			{
+				updateParameters(Collections.emptyList());
+			}
+		}
+		else if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
+		{
+			clearTable();
+			String[] allBlocks = getController().getAllBlocks();
+			setBlockList(allBlocks);
+		}
+		 
+	}
 }

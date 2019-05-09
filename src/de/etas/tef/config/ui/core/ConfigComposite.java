@@ -12,12 +12,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.action.ActionManager;
-import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.Constants;
 
 public class ConfigComposite extends AbstractComposite
 {
-	public ConfigComposite(Composite composite, int style, IController controller, int compositeID)
+	public ConfigComposite(Composite composite, int style, MainController controller, int compositeID)
 	{
 		super(composite, style, controller, compositeID);
 
@@ -27,7 +27,8 @@ public class ConfigComposite extends AbstractComposite
 		GridData cgd = new GridData(GridData.FILL_HORIZONTAL);
 		this.setLayoutData(cgd);
 		
-		initChildren();
+		new SelectComposite(this, SWT.NONE, controller, getCompositeID());
+		new TableComposite(this, SWT.NONE, controller, getCompositeID());
 		initDropFunction(this);
 	}
 	
@@ -64,11 +65,5 @@ public class ConfigComposite extends AbstractComposite
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_DROP_NEW_FILE_SELECTED, getCompositeID(), filePath);
 			}
 		});
-	}
-
-	protected void initChildren()
-	{
-		new SelectComposite(this, SWT.NONE, getController(), getCompositeID());
-		new TableComposite(this, SWT.NONE, getController(), getCompositeID());
 	}
 }

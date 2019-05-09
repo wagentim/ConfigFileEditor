@@ -13,7 +13,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.action.ActionManager;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.Constants;
 
 public class SelectComposite extends AbstractComposite
@@ -23,9 +24,7 @@ public class SelectComposite extends AbstractComposite
 	private Button btnFileSelect;
 	private Label labelFileSelect;
 	
-	private String currFilePath = Constants.EMPTY_STRING;
-
-	protected SelectComposite(Composite parent, int style, IController controller, int compositeID)
+	protected SelectComposite(Composite parent, int style, MainController controller, int compositeID)
 	{
 		super(parent, style, controller, compositeID);
 
@@ -58,7 +57,7 @@ public class SelectComposite extends AbstractComposite
 	
 	protected String getCurrentFilePath()
 	{
-		return currFilePath;
+		return txtFileSelect.getText();
 	}
 	
 	protected void initLabel(Composite comp)
@@ -73,24 +72,17 @@ public class SelectComposite extends AbstractComposite
 	
 	protected void txtSelectListener(){}
 	
-	protected void btnSelectListener()
+	protected void setCurrFilePath()
 	{
-		currFilePath = fileSelector(this.getShell());
+		String currFilePath = fileSelector(this.getShell());
 		
-		setCurrFilePath();
-	}
-	
-	private void setCurrFilePath()
-	{
 		if ( null == currFilePath )
 		{
 			currFilePath = Constants.EMPTY_STRING;
 		}
 		
-		fileSelected();
+		getController().setInputConfigFile(currFilePath);
 	}
-	
-	protected void fileSelected() {}
 	
 	protected void initText(Composite comp)
 	{
@@ -117,7 +109,8 @@ public class SelectComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				btnSelectListener();
+				setCurrFilePath();
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_NEW_FILE_SELECTED, getCompositeID(), Constants.EMPTY_STRING);
 			}
 			
 			@Override
@@ -138,10 +131,5 @@ public class SelectComposite extends AbstractComposite
 	@Override
 	public void receivedAction(int type, int compositeID, Object content)
 	{
-		if( Constants.ACTION_SOURCE_SAVE_FILE_FINISHED == type )
-		{
-			currFilePath = (String) content;
-			setCurrFilePath();
-		}
 	}
 }

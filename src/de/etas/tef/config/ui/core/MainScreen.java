@@ -63,8 +63,8 @@ public class MainScreen implements IActionListener
 		gd = new GridData(GridData.FILL_BOTH);
 		configCompositeSashForm.setLayoutData(gd);
 		
-		leftConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller.getController(CompositeID.COMPOSITE_LEFT), CompositeID.COMPOSITE_LEFT);
-		rightConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller.getController(CompositeID.COMPOSITE_RIGHT), CompositeID.COMPOSITE_RIGHT);
+		leftConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller, CompositeID.COMPOSITE_LEFT);
+		rightConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller, CompositeID.COMPOSITE_RIGHT);
 		
 		SashForm sfComment = new SashForm(main, SWT.HORIZONTAL);
 		gd = new GridData(GridData.FILL_BOTH);

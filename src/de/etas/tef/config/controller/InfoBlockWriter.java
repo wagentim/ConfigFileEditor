@@ -76,7 +76,6 @@ public class InfoBlockWriter implements IActionListener
 		}
 		else if(type == Constants.ACTION_NEW_FILE_SELECTED)
 		{
-			
 			logInfo("Set Source File: " + content.toString());
 			logInfo("New Source Parameter Blocks: " + controller.getController(compositeID).getAllBlocks().length);
 		}

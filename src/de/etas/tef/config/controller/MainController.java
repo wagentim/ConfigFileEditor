@@ -14,7 +14,7 @@ public class MainController extends AbstractController
 		this.left = new ConfigFileController();
 		this.left.setParent(this);
 		this.right = new ConfigFileController();
-		right.setParent(this);
+		this.right.setParent(this);
 	}
 	
 	public IController getController(int compositeID)
@@ -25,6 +25,9 @@ public class MainController extends AbstractController
 				return left;
 			case CompositeID.COMPOSITE_RIGHT:
 				return right;
+			case CompositeID.COMPOSITE_ALONE:
+			case CompositeID.COMPOSITE_ROOT:
+				return this;
 		}
 		
 		return null;

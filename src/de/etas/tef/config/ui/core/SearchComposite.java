@@ -11,13 +11,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 
 public class SearchComposite extends AbstractComposite
 {
 	
 	protected IController controller;
 	
-	public SearchComposite(Composite parent, int style, IController controller, int compositeID)
+	public SearchComposite(Composite parent, int style, MainController controller, int compositeID)
 	{
 		super(parent, style, controller, compositeID);
 		

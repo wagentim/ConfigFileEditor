@@ -59,7 +59,7 @@ public final class Constants
 	public static final int ACTION_CONNECT_SELECTED = 0x10;
 	public static final int ACTION_PARAMETER_UPDATED = 0x0A;
 	public static final int ACTION_TAKE_SOURCE_PARAMETERS_START = 0x0B;
-	public static final int ACTION_TAKE_SOURCE_PARAMETERS_FINISHED = 0x0C;
+//	public static final int ACTION_TAKE_SOURCE_PARAMETERS_FINISHED = 0x0C;
 	public static final int ACTION_LEFT_SELECTED = 0x0D;
 	public static final int ACTION_GPIB_SOURCE_FINISHED = 0x0F;
 	public static final int ACTION_SOURCE_PARAMETER_SELECTED = 0x11;

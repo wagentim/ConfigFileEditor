@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
@@ -20,7 +20,7 @@ public class SearchTreeComponent extends AbstractComposite
 	private TreeItem root;
 	private TableComposite tableComposite;
 	
-	public SearchTreeComponent(Composite parent, int style, IController controller, int compositeID)
+	public SearchTreeComponent(Composite parent, int style, MainController controller, int compositeID)
 	{
 		super(parent, style, controller, compositeID);
 		
@@ -32,7 +32,7 @@ public class SearchTreeComponent extends AbstractComposite
 		initComponent(controller);
 	}
 
-	protected void initComponent(IController controller)
+	protected void initComponent(MainController controller)
 	{
 		new SearchComposite(this, SWT.BORDER, controller, getCompositeID());
 		
