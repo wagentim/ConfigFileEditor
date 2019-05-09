@@ -165,7 +165,7 @@ public class TableMouseListener implements MouseListener, IActionListener
 	}
 
 	@Override
-	public void receivedAction(int type, Object content)
+	public void receivedAction(int type, int compositeID, Object content)
 	{
 		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
 		{

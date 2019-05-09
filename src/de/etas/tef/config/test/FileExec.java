@@ -15,6 +15,7 @@ import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
 public class FileExec
@@ -26,7 +27,7 @@ public class FileExec
 	{
 		if( null == filePath || filePath.isEmpty() )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "Input File Path is NULL or empty");
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Input File Path is NULL or empty");
 			return null;
 		}
 		
@@ -35,7 +36,7 @@ public class FileExec
 		
 		if( !file.exists() )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "CANNOT find file: " + filePath);
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "CANNOT find file: " + filePath);
 			return null;
 		}
 		

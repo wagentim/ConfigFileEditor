@@ -10,7 +10,6 @@ import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
-import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
 
@@ -20,11 +19,11 @@ public class InfoBlockWriter implements IActionListener
 	private final Text commentBlock;
 	private final Color error;
 	private final Color info;
-	private final IController controller;
+	private final MainController controller;
 	
 	private String txt = Constants.EMPTY_STRING;
 
-	public InfoBlockWriter(final StyledText infoBlock, final Text commentBlock, IController controller)
+	public InfoBlockWriter(final StyledText infoBlock, final Text commentBlock, MainController controller)
 	{
 		if (null == infoBlock)
 		{
@@ -65,7 +64,7 @@ public class InfoBlockWriter implements IActionListener
 	}
 
 	@Override
-	public void receivedAction(int type, Object content)
+	public void receivedAction(int type, int compositeID, Object content)
 	{
 		if ((type == Constants.ACTION_LOG_WRITE_INFO))
 		{
@@ -75,29 +74,20 @@ public class InfoBlockWriter implements IActionListener
 		{
 			logError(content.toString());
 		}
-		else if(type == Constants.ACTION_SOURCE_NEW_FILE_SELECTED)
+		else if(type == Constants.ACTION_NEW_FILE_SELECTED)
 		{
+			
 			logInfo("Set Source File: " + content.toString());
-			logInfo("New Source Parameter Blocks: " + controller.getAllBlocks(CompositeID.COMPOSITE_LEFT).length);
+			logInfo("New Source Parameter Blocks: " + controller.getAllBlocks(compositeID).length);
 		}
-		else if (type == Constants.ACTION_TARGET_NEW_FILE_SELECTED)
+		else if (type == Constants.ACTION_PARAMETER_UPDATE)
 		{
-			logInfo("Set Target File: " + content.toString());
-			logInfo("New Target Parameter Blocks: " + controller.getAllBlocks(CompositeID.COMPOSITE_RIGHT).length);
-		}
-		else if (type == Constants.ACTION_SOURCE_PARAMETER_UPDATE)
-		{
-			ConfigBlock cb = controller.getCurrSourceConfigBlock();
+			ConfigBlock cb = controller.getSelectedConfigBlock(compositeID);
 			if(null == cb)
 			{
 				return;
 			}
 			logInfo("Select Source Block: " + cb.getBlockName() + " : Parameter Number: " + cb.getAllParameters().size());
-		}
-		else if (type == Constants.ACTION_TARGET_PARAMETER_UPDATE)
-		{
-			ConfigBlock cb = controller.getCurrTargetConfigBlock();
-			logInfo("Select Target Block: " + cb.getBlockName() + " : Parameter Number: " + cb.getAllParameters().size());
 		}
 		else if (type == Constants.ACTION_CONNECT_SELECTED)
 		{

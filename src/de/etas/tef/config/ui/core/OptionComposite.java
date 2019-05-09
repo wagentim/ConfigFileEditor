@@ -21,9 +21,9 @@ public class OptionComposite extends AbstractComposite
 	private Button btnLeft;
 	private Button btnRight;
 
-	public OptionComposite(Composite parent, int style, IController controller)
+	public OptionComposite(Composite parent, int style, IController controller, int compositeID)
 	{
-		super(parent, style, controller);
+		super(parent, style, controller, compositeID);
 		
 		this.setLayout(new GridLayout(4, false));
 		this.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -58,7 +58,7 @@ public class OptionComposite extends AbstractComposite
 					getController().setConnected(false);
 				}
 				
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_CONNECT_SELECTED, selected);
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_CONNECT_SELECTED, getCompositeID(), selected);
 			}
 			
 			@Override
@@ -166,12 +166,7 @@ public class OptionComposite extends AbstractComposite
 			}
 		}
 		
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_COMPOSITE_CHANGED, new boolean[] {btnLeft.getSelection(), btnRight.getSelection()});
-	}
-
-	@Override
-	public void receivedAction(int type, Object content)
-	{
+		ActionManager.INSTANCE.sendAction(Constants.ACTION_COMPOSITE_CHANGED, getCompositeID(), new boolean[] {btnLeft.getSelection(), btnRight.getSelection()});
 	}
 
 	@Override

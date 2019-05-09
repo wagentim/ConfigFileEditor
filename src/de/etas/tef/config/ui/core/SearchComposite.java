@@ -1,6 +1,8 @@
 package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -8,12 +10,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class SearchComposite extends Composite
+import de.etas.tef.config.controller.IController;
+
+public class SearchComposite extends AbstractComposite
 {
 	
-	public SearchComposite(Composite parent, int style)
+	protected IController controller;
+	
+	public SearchComposite(Composite parent, int style, IController controller, int compositeID)
 	{
-		super(parent, style);
+		super(parent, style, controller, compositeID);
 		
 		GridLayout layout = new GridLayout(2, false);
 		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = 0; 
@@ -29,11 +35,22 @@ public class SearchComposite extends Composite
 		gd = new GridData();
 		label.setLayoutData(gd);
 		
-		Text text = new Text(this, SWT.NONE);
+		Text searchText = new Text(this, SWT.NONE);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.verticalSpan = gd.horizontalSpan = 0;
-		text.setLayoutData(gd);
-		text.setMessage("Search");
+		searchText.setLayoutData(gd);
+		searchText.setMessage("Search");
+		
+		searchText.addModifyListener(new ModifyListener()
+		{
+			
+			@Override
+			public void modifyText(ModifyEvent event)
+			{
+				
+			}
+		});
+		
+		this.controller = controller;
 	}
-
 }

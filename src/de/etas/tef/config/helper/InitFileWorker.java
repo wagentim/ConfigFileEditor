@@ -22,7 +22,7 @@ public class InitFileWorker implements IConfigFileWorker
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "Cannot find file: " + filePath);
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "Cannot find file: " + filePath);
 			
 			return;
 		}
@@ -75,7 +75,7 @@ public class InitFileWorker implements IConfigFileWorker
 				}
 				else
 				{
-					ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by Parsing File Comments in line: " + lineCount);
+					ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing File Comments in line: " + lineCount);
 					break;
 				}
 			}
@@ -180,7 +180,7 @@ public class InitFileWorker implements IConfigFileWorker
 						}
 						else
 						{
-							ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by Parsing Parameter in line: " + lineCount);
+							ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing Parameter in line: " + lineCount);
 						}
 					}
 					else
@@ -205,7 +205,7 @@ public class InitFileWorker implements IConfigFileWorker
 		
 		if( index < 1 )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by parsing block name in line: " + lineCount);
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by parsing block name in line: " + lineCount);
 			configBlock.setBlockName(currentLine.substring(1, currentLine.length()));
 		}
 		else
@@ -219,7 +219,7 @@ public class InitFileWorker implements IConfigFileWorker
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "Cannot find file: " + filePath);
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Cannot find file: " + filePath);
 			
 			return;
 		}

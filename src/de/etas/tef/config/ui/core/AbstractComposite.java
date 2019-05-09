@@ -3,28 +3,20 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.action.ActionManager;
-import de.etas.tef.config.controller.DefaultController;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.listener.IActionListener;
 
-public abstract class AbstractComposite extends Composite implements IActionListener
+public class AbstractComposite extends Composite implements IActionListener
 {
 	
-	private IController controller = null;
+	private final IController controller;
+	private final int compositeID;
 
-	public AbstractComposite(Composite parent, int style, IController controller)
+	public AbstractComposite(Composite parent, int style, IController controller, int compositeID)
 	{
 		super(parent, style);
-		
-		if(null != controller)
-		{
-			this.controller = controller;
-		}
-		else
-		{
-			this.controller = new DefaultController();
-		}
-		
+		this.controller = controller;
+		this.compositeID = compositeID;
 		ActionManager.INSTANCE.addActionListener(this);
 	}
 	
@@ -33,5 +25,13 @@ public abstract class AbstractComposite extends Composite implements IActionList
 		return controller;
 	}
 	
-	protected abstract int getCompositeID();
+	protected int getCompositeID()
+	{
+		return this.compositeID;
+	}
+
+	@Override
+	public void receivedAction(int type, int compositeID, Object content)
+	{
+	}
 }

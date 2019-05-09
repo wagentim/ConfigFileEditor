@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.helper.Constants;
 
-public abstract class SelectComposite extends AbstractComposite
+public class SelectComposite extends AbstractComposite
 {
 	
 	private Text txtFileSelect;
@@ -25,9 +25,9 @@ public abstract class SelectComposite extends AbstractComposite
 	
 	private String currFilePath = Constants.EMPTY_STRING;
 
-	protected SelectComposite(Composite parent, int style, IController controller)
+	protected SelectComposite(Composite parent, int style, IController controller, int compositeID)
 	{
-		super(parent, style, controller);
+		super(parent, style, controller, compositeID);
 
 		GridLayout layout = new GridLayout(3, false);
 		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = 0; 
@@ -136,7 +136,7 @@ public abstract class SelectComposite extends AbstractComposite
 	}
 
 	@Override
-	public void receivedAction(int type, Object content)
+	public void receivedAction(int type, int compositeID, Object content)
 	{
 		if( Constants.ACTION_SOURCE_SAVE_FILE_FINISHED == type )
 		{

@@ -1,5 +1,6 @@
 package de.etas.tef.config.ui.core;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetAdapter;
@@ -10,15 +11,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.helper.Constants;
 
-public abstract class ConfigComposite extends AbstractComposite
+public class ConfigComposite extends AbstractComposite
 {
-
-
-	public ConfigComposite(Composite composite, int style, IController controller)
+	public ConfigComposite(Composite composite, int style, IController controller, int compositeID)
 	{
-		super(composite, style, controller);
+		super(composite, style, controller, compositeID);
 
 		GridLayout layout = new GridLayout(1, false);
 		this.setLayout(layout);
@@ -50,20 +51,24 @@ public abstract class ConfigComposite extends AbstractComposite
 				{
 					return;
 				}
-				String file = fileList[0];
+				String filePath = fileList[0];
 				
-				if(!file.toLowerCase().endsWith(".ini"))
+				if(!filePath.toLowerCase().trim().endsWith(".ini"))
 				{
 					return;
 				}
 				
 				
-				setFilePath(file);
+				getController().setInputConfigFile(filePath);
+				
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_DROP_NEW_FILE_SELECTED, getCompositeID(), filePath);
 			}
 		});
 	}
 
-	protected abstract void setFilePath(String file);
-
-	protected abstract void initChildren();
+	protected void initChildren()
+	{
+		new SelectComposite(this, SWT.NONE, getController(), getCompositeID());
+		new TableComposite(this, SWT.NONE, getController(), getCompositeID());
+	}
 }

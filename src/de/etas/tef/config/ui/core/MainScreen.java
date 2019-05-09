@@ -3,6 +3,7 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -16,6 +17,7 @@ import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.ConfigFileController;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
 import de.etas.tef.config.ui.source.SourceConfigComposite;
@@ -35,10 +37,12 @@ public class MainScreen implements IActionListener
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setText(Constants.TXT_APP_TITLE);
+		Image image = new Image(display, "icons/file_24.png");
+		shell.setImage(image);
 
 		initMainScreen(shell);
 		initMainComponents(shell, controller);
-		new OptionComposite(shell, SWT.BORDER, controller);
+		new OptionComposite(shell, SWT.BORDER, controller, CompositeID.COMPOSITE_ALONE);
 
 		shell.open();
 		while (!shell.isDisposed())
@@ -107,7 +111,7 @@ public class MainScreen implements IActionListener
 	}
 
 	@Override
-	public void receivedAction(int type, Object content)
+	public void receivedAction(int type, int compositeID, Object content)
 	{
 		if (Constants.ACTION_COMPOSITE_CHANGED == type)
 		{

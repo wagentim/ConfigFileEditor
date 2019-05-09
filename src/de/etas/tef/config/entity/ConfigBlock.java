@@ -98,5 +98,16 @@ public final class ConfigBlock
 		this.parameters = parameters;
 	}
 	
-	
+	public String getDisplayName()
+	{
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append(getBlockName());
+		sb.append(Constants.SYMBOL_SPACE);
+		sb.append(Constants.SYMBOL_LEFT_PARENTHESES_);
+		sb.append(getParameters().size());
+		sb.append(Constants.SYMBOL_RIGHT_PARENTHESES_);
+		
+		return sb.toString();
+	}
 }

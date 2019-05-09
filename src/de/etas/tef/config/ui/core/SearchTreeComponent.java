@@ -20,22 +20,21 @@ public class SearchTreeComponent extends AbstractComposite
 	private TreeItem root;
 	private TableComposite tableComposite;
 	
-	public SearchTreeComponent(Composite parent, int style, IController controller)
+	public SearchTreeComponent(Composite parent, int style, IController controller, int compositeID)
 	{
-		super(parent, style, controller);
+		super(parent, style, controller, compositeID);
 		
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginTop = 0;
 		this.setLayout(layout);
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
-		
-		initComponent();
+
+		initComponent(controller);
 	}
 
-	protected void initComponent()
+	protected void initComponent(IController controller)
 	{
-		
-		new SearchComposite(this, SWT.BORDER);
+		new SearchComposite(this, SWT.BORDER, controller, getCompositeID());
 		
 		blockList = new Tree(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
@@ -76,13 +75,6 @@ public class SearchTreeComponent extends AbstractComposite
 		}
 		
 		root.setExpanded(true);
-	}
-
-	@Override
-	public void receivedAction(int type, Object content)
-	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

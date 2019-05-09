@@ -17,23 +17,28 @@ import de.etas.tef.config.helper.Validator;
 
 public class ConfigFileController implements IController
 {
+	// worker is used to parser the file and also save the content to the file
 	private IConfigFileWorker worker = null;
-
-	private String leftFilePath = Constants.EMPTY_STRING;
-	private String rightFilePath = Constants.EMPTY_STRING;
-
-	private ConfigBlock currLeftConfigBlock = null;
-	private ConfigBlock currRightConfigBlock = null;
-
-	private ConfigFile leftConfigFile = null;
-	private ConfigFile rightConfigFile = null;
-
-	// define is left composite is connected to right composite
-	private boolean isConnected = false;
 	
+	// input file
+	private ConfigFile configFile = null;
+	private ConfigBlock selectedConfigBlock = null;
+
 	public ConfigFileController()
 	{
 		worker = new InitFileWorker();
+	}
+	
+	@Override
+	public void setInputConfigFile(String filePath)
+	{
+		if( !Validator.INSTANCE().validFile(filePath, false) )
+		{
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "Input File is Wrong!!");
+			return;
+		}
+		
+		configFile = parserConfigFile(filePath);
 	}
 
 	private ConfigFile parserConfigFile(String inputFile)
@@ -46,6 +51,7 @@ public class ConfigFileController implements IController
 		}
 		catch (IOException e)
 		{
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "I/O Error by parsing inputFile: " + inputFile);
 			e.printStackTrace();
 		}
 		
@@ -53,20 +59,10 @@ public class ConfigFileController implements IController
 	}
 
 	@Override
-	public String[] getAllBlocks(int compositeID)
+	public String[] getAllBlocks()
 	{
-		switch(compositeID)
-		{
-			case CompositeID.COMPOSITE_LEFT:
-				return getBlockNames(leftConfigFile.getConfigBlocks());
-			case CompositeID.COMPOSITE_RIGHT:
-				return getBlockNames(rightConfigFile.getConfigBlocks());
-		}
-		return Constants.EMPTY_STRING_ARRAY;
-	}
+		List<ConfigBlock> blocks = configFile.getConfigBlocks();
 
-	private String[] getBlockNames(List<ConfigBlock> blocks)
-	{
 		if (null == blocks || blocks.isEmpty())
 		{
 			return Constants.EMPTY_STRING_ARRAY;
@@ -80,72 +76,30 @@ public class ConfigFileController implements IController
 		}
 
 		Arrays.sort(result);
-		
+
 		return result;
 	}
 
 	@Override
-	public void setSelectedBlock(String blockName, int compositeID)
+	public void setSelectedBlock(String blockName)
 	{
-		
-		switch(compositeID)
-		{
-			case CompositeID.COMPOSITE_LEFT:
-				currLeftConfigBlock = getConfigBlock(leftConfigFile, blockName);
-				break;
-			case CompositeID.COMPOSITE_RIGHT:
-				currRightConfigBlock = getConfigBlock(rightConfigFile, blockName);
-				break;
-		}
-	}
 
-	private ConfigBlock getConfigBlock(ConfigFile cf, String blockName)
-	{
-		ConfigBlock cb = null;
-		
-		if( null == cf )
-		{
-			return null;
-		}
-
-		List<ConfigBlock> blocks = cf.getConfigBlocks();
+		List<ConfigBlock> blocks = configFile.getConfigBlocks();
 
 		for (int i = 0; i < blocks.size(); i++)
 		{
 			if (blockName.equals(blocks.get(i).getBlockName()))
 			{
-				cb = blocks.get(i);
+				selectedConfigBlock = blocks.get(i);
 				break;
 			}
 		}
-
-		return cb;
-	}
-
-	public boolean isConnected()
-	{
-		return isConnected;
-	}
-
-	public void setConnected(boolean isConnected)
-	{
-		this.isConnected = isConnected;
 	}
 
 	@Override
-	public void parameterChanged(CellIndex cell, String newValue, int compositeID)
+	public void parameterChanged(CellIndex cell, String newValue)
 	{
-		ConfigBlock cb = null;
-
-		switch(compositeID)
-		{
-			case CompositeID.COMPOSITE_LEFT:
-				cb = getCurrSourceConfigBlock();
-				break;
-			case CompositeID.COMPOSITE_RIGHT:
-				cb = getCurrTargetConfigBlock();
-				break;
-		}
+		ConfigBlock cb = getSelectedConfigBlock();
 		
 		int row = cell.getRow();
 		
@@ -172,69 +126,35 @@ public class ConfigFileController implements IController
 		}
 	}
 
-	@Override
-	public void setCurrSourceConfigBlock(ConfigBlock cb)
+	public ConfigBlock getSelectedConfigBlock()
 	{
-		this.currLeftConfigBlock = cb;
+		return selectedConfigBlock;
 	}
 
 	@Override
-	public void setCurrTargetConfigBlock(ConfigBlock cb)
-	{
-		this.currRightConfigBlock = cb;
-	}
-
-	public ConfigBlock getCurrSourceConfigBlock()
-	{
-		return currLeftConfigBlock;
-	}
-
-	public ConfigBlock getCurrTargetConfigBlock()
-	{
-		return currRightConfigBlock;
-	}
-
-	@Override
-	public void saveFile(String filePath, int compositeID)
+	public void saveFile(String filePath)
 	{
 		try
 		{
-			switch(compositeID)
-			{
-				case CompositeID.COMPOSITE_LEFT:
-					worker.writeFile(filePath, leftFilePath);
-					break;
-				case CompositeID.COMPOSITE_RIGHT:
-					worker.writeFile(filePath, rightFilePath);
-					break;
-			}
+			worker.writeFile(filePath, configFile);
 		}
 		catch (IOException e)
 		{
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Error by writing data to file: " + filePath);
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void deleteParameters(int[] selectedItems, String text, int compositeID)
+	public void deleteParameters(int[] selectedItems, String text)
 	{
 		if( null == text || text.isEmpty() || null == selectedItems|| selectedItems.length < 1)
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "ERROR by deleting the parameters");
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "ERROR by deleting the parameters");
 			return;
 		}
 		
-		ConfigBlock currBlock = null;
-		
-		switch(compositeID)
-		{
-			case CompositeID.COMPOSITE_LEFT:
-				currBlock = currLeftConfigBlock;
-				break;
-			case CompositeID.COMPOSITE_RIGHT:
-				currBlock = currRightConfigBlock;
-				break;
-		}
+		ConfigBlock currBlock = selectedConfigBlock;
 		
 		List<KeyValuePair> paras = currBlock.getAllParameters();
 		
@@ -244,27 +164,5 @@ public class ConfigFileController implements IController
 		}
 	}
 
-	@Override
-	public void setInputConfigFile(String filePath, int compositeID)
-	{
-		if( !Validator.INSTANCE().validFile(filePath, false) )
-		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, "Input File is Wrong!!");
-			return;
-		}
-		
-		ConfigFile configFile = parserConfigFile(filePath);
-		
-		switch(compositeID)
-		{
-			case CompositeID.COMPOSITE_LEFT:
-				this.leftFilePath = filePath;
-				this.leftConfigFile = configFile;
-				break;
-			case CompositeID.COMPOSITE_RIGHT:
-				this.rightFilePath = filePath;
-				this.rightConfigFile = configFile;
-				break;
-		}
-	}
+	
 }

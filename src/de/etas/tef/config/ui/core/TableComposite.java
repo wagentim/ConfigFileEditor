@@ -24,10 +24,12 @@ import org.eclipse.swt.widgets.TableItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.ui.source.SourceTableMouseListener;
 
-public abstract class TableComposite extends AbstractComposite
+public class TableComposite extends AbstractComposite
 {
 	
 	private Table table;
@@ -40,9 +42,9 @@ public abstract class TableComposite extends AbstractComposite
 	
 	private SearchTreeComponent searchTree;
 	
-	public TableComposite(Composite parent, int style, IController controller)
+	public TableComposite(Composite parent, int style, IController controller, int compositeID)
 	{
-		super(parent, style, controller);
+		super(parent, style, controller, compositeID);
 
 		this.setLayout(new GridLayout(2, false));
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -82,7 +84,7 @@ public abstract class TableComposite extends AbstractComposite
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		sf.setLayoutData(gd);
 		
-		searchTree = new SearchTreeComponent(sf, SWT.NONE, controller);
+		searchTree = new SearchTreeComponent(sf, SWT.NONE, controller, getCompositeID());
 		searchTree.setTableComposite(this);
 		
 		table = new Table(sf, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
@@ -106,11 +108,47 @@ public abstract class TableComposite extends AbstractComposite
 		sf.setWeights(new int[]{1, 2});
 	}
 	
-	abstract protected void addTableSelectedListener();
+	protected void addTableSelectedListener()
+	{
+		getTable().addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent event)
+			{
+				String text = getTable().getItem(getTable().getSelectionIndex()).getText(1);
+				
+				if(!getController().isConnected())
+				{
+					return;
+				}
+					
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_PARAMETER_SELECTED, getCompositeID(), text);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
+			}
+		});
+	}
 
-	abstract protected void treeItemSelected(String blockName);
+	protected void treeItemSelected(String blockName)
+	{
+		getController().setSelectedBlock(blockName, getCompositeID());
+		ConfigBlock cb = getController().getCurrSourceConfigBlock();
+		
+		if( null != cb)
+		{
+			updateParameters(getController().getCurrSourceConfigBlock().getAllParameters());
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, getCompositeID(), cb);
+		}
+	}
 
-	abstract protected void addTableMouseListener();
+	protected void addTableMouseListener()
+	{
+		getTable().addMouseListener(new SourceTableMouseListener(getTable(), getController()));
+	}
 	
 	protected void setTreeSelectedBlock(String blockName)
 	{
@@ -206,7 +244,7 @@ public abstract class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOCK_SELECTION_CHANGED, btnLock.getSelection());
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOCK_SELECTION_CHANGED, getCompositeID(), btnLock.getSelection());
 			}
 			
 			@Override
@@ -254,9 +292,6 @@ public abstract class TableComposite extends AbstractComposite
 			
 		}
 	}
-	
-	protected abstract boolean isSource();
-	
 	
 	protected void addTableItem(KeyValuePair kvp)
 	{
@@ -327,7 +362,11 @@ public abstract class TableComposite extends AbstractComposite
 		saveAction(fileSavePath);
 	}
 	
-	abstract protected void saveAction(String targetFilePath);
+	protected void saveAction(String targetFilePath)
+	{
+		getController().saveFile(targetFilePath, getCompositeID());
+		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, getCompositeID(), "Source Write to: " + targetFilePath + " finished!");
+	}
 	
 	
 }
