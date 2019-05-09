@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.action.ActionManager;
-import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
@@ -21,7 +21,7 @@ public class OptionComposite extends AbstractComposite
 	private Button btnLeft;
 	private Button btnRight;
 
-	public OptionComposite(Composite parent, int style, IController controller, int compositeID)
+	public OptionComposite(Composite parent, int style, MainController controller, int compositeID)
 	{
 		super(parent, style, controller, compositeID);
 		
@@ -49,13 +49,13 @@ public class OptionComposite extends AbstractComposite
 				{
 					if(btnLeft.getSelection() && btnRight.getSelection())
 					{
-						getController().setConnected(true);
+						((MainController)getController()).setConnected(true);
 					}
 				}
 				else
 				{
 					btnConnect.setSelection(false);
-					getController().setConnected(false);
+					((MainController)getController()).setConnected(false);
 				}
 				
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_CONNECT_SELECTED, getCompositeID(), selected);
@@ -150,7 +150,7 @@ public class OptionComposite extends AbstractComposite
 		else 
 		{
 			btnConnect.setSelection(false);
-			getController().setConnected(false);
+			((MainController)getController()).setConnected(false);
 			btnConnect.setEnabled(false);
 			
 			if( !isLeftSelected && !isRightSelected)

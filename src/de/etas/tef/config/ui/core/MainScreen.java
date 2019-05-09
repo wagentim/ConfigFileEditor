@@ -14,24 +14,22 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.action.ActionManager;
-import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.InfoBlockWriter;
-import de.etas.tef.config.controller.ConfigFileController;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
-import de.etas.tef.config.ui.source.SourceConfigComposite;
-import de.etas.tef.config.ui.target.TargetConfigComposite;
 
 public class MainScreen implements IActionListener
 {
-	private TargetConfigComposite targetConfigComponent = null;
-	private SourceConfigComposite sourceConfigComponent = null;
-	private SashForm sf = null;
+	private ConfigComposite leftConfigComposite = null;
+	private ConfigComposite rightConfigComposite = null;
+	private SashForm configCompositeSashForm = null;
+	private final MainController controller;
 
 	public MainScreen()
 	{
-		IController controller = new ConfigFileController();
+		controller = new MainController();
 		ActionManager.INSTANCE.addActionListener(this);
 
 		Display display = new Display();
@@ -41,7 +39,7 @@ public class MainScreen implements IActionListener
 		shell.setImage(image);
 
 		initMainScreen(shell);
-		initMainComponents(shell, controller);
+		initMainComponents(shell);
 		new OptionComposite(shell, SWT.BORDER, controller, CompositeID.COMPOSITE_ALONE);
 
 		shell.open();
@@ -55,18 +53,18 @@ public class MainScreen implements IActionListener
 		display.dispose();
 	}
 
-	private void initMainComponents(Composite shell, IController controller)
+	private void initMainComponents(Composite shell)
 	{
 		SashForm main = new SashForm(shell, SWT.VERTICAL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		main.setLayoutData(gd);
 
-		sf = new SashForm(main, SWT.HORIZONTAL);
+		configCompositeSashForm = new SashForm(main, SWT.HORIZONTAL);
 		gd = new GridData(GridData.FILL_BOTH);
-		main.setLayoutData(gd);
-
-		sourceConfigComponent = new SourceConfigComposite(sf, SWT.BORDER, controller);
-		targetConfigComponent = new TargetConfigComposite(sf, SWT.BORDER, controller);
+		configCompositeSashForm.setLayoutData(gd);
+		
+		leftConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller.getController(CompositeID.COMPOSITE_LEFT), CompositeID.COMPOSITE_LEFT);
+		rightConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller.getController(CompositeID.COMPOSITE_RIGHT), CompositeID.COMPOSITE_RIGHT);
 		
 		SashForm sfComment = new SashForm(main, SWT.HORIZONTAL);
 		gd = new GridData(GridData.FILL_BOTH);
@@ -89,8 +87,8 @@ public class MainScreen implements IActionListener
 		main.setWeights(new int[]
 		{ 4, 1 });
 		
-		targetConfigComponent.setVisible(false);
-		sf.setWeights(new int[] {1, 0});
+		rightConfigComposite.setVisible(false);
+		configCompositeSashForm.setWeights(new int[] {1, 0});
 	}
 
 	private void initMainScreen(Composite shell)
@@ -120,20 +118,20 @@ public class MainScreen implements IActionListener
 			boolean left = value[0];
 			boolean right = value[1];
 			
-			sourceConfigComponent.setVisible(left);
-			targetConfigComponent.setVisible(right);
+			leftConfigComposite.setVisible(left);
+			rightConfigComposite.setVisible(right);
 			
 			if(left && right)
 			{
-				sf.setWeights(new int[]{ 1, 1 });
+				configCompositeSashForm.setWeights(new int[]{ 1, 1 });
 			}
 			else if(!left && right)
 			{
-				sf.setWeights(new int[]{ 0, 1 });
+				configCompositeSashForm.setWeights(new int[]{ 0, 1 });
 			}
 			else if(left && !right)
 			{
-				sf.setWeights(new int[]{ 1, 0 });
+				configCompositeSashForm.setWeights(new int[]{ 1, 0 });
 			}
 		}
 	}

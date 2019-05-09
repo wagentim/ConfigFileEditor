@@ -78,11 +78,11 @@ public class InfoBlockWriter implements IActionListener
 		{
 			
 			logInfo("Set Source File: " + content.toString());
-			logInfo("New Source Parameter Blocks: " + controller.getAllBlocks(compositeID).length);
+			logInfo("New Source Parameter Blocks: " + controller.getController(compositeID).getAllBlocks().length);
 		}
 		else if (type == Constants.ACTION_PARAMETER_UPDATE)
 		{
-			ConfigBlock cb = controller.getSelectedConfigBlock(compositeID);
+			ConfigBlock cb = controller.getController(compositeID).getSelectedConfigBlock();
 			if(null == cb)
 			{
 				return;

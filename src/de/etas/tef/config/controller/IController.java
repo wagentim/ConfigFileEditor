@@ -12,4 +12,6 @@ public interface IController
 	ConfigBlock getSelectedConfigBlock();
 	String[] getAllBlocks();
 	void setSelectedBlock(String blockName);
+	IController getParent();
+	void setParent(IController parent);
 }

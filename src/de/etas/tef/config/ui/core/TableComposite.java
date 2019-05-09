@@ -24,10 +24,10 @@ import org.eclipse.swt.widgets.TableItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.ui.source.SourceTableMouseListener;
 
 public class TableComposite extends AbstractComposite
 {
@@ -76,8 +76,6 @@ public class TableComposite extends AbstractComposite
 		return btnSave;
 	}
 	
-	
-
 	protected void initMainComposite(Composite comp, IController controller)
 	{
 		SashForm sf = new SashForm(comp, SWT.HORIZONTAL);
@@ -118,7 +116,7 @@ public class TableComposite extends AbstractComposite
 			{
 				String text = getTable().getItem(getTable().getSelectionIndex()).getText(1);
 				
-				if(!getController().isConnected())
+				if( !((MainController)getController().getParent()).isConnected() )
 				{
 					return;
 				}
@@ -135,19 +133,19 @@ public class TableComposite extends AbstractComposite
 
 	protected void treeItemSelected(String blockName)
 	{
-		getController().setSelectedBlock(blockName, getCompositeID());
-		ConfigBlock cb = getController().getCurrSourceConfigBlock();
+		getController().setSelectedBlock(blockName);
+		ConfigBlock cb = getController().getSelectedConfigBlock();
 		
 		if( null != cb)
 		{
-			updateParameters(getController().getCurrSourceConfigBlock().getAllParameters());
+			updateParameters(getController().getSelectedConfigBlock().getAllParameters());
 			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, getCompositeID(), cb);
 		}
 	}
 
 	protected void addTableMouseListener()
 	{
-		getTable().addMouseListener(new SourceTableMouseListener(getTable(), getController()));
+		getTable().addMouseListener(new TableMouseListener(getTable(), getController(), getCompositeID()));
 	}
 	
 	protected void setTreeSelectedBlock(String blockName)
@@ -270,7 +268,7 @@ public class TableComposite extends AbstractComposite
 			
 			if( done )
 			{
-				getController().deleteParameters(selectedItems, searchTree.getSelectedTreeItem().getText(), getCompositeID());
+				getController().deleteParameters(selectedItems, searchTree.getSelectedTreeItem().getText());
 		
 			}
 		}
@@ -364,7 +362,7 @@ public class TableComposite extends AbstractComposite
 	
 	protected void saveAction(String targetFilePath)
 	{
-		getController().saveFile(targetFilePath, getCompositeID());
+		getController().saveFile(targetFilePath);
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, getCompositeID(), "Source Write to: " + targetFilePath + " finished!");
 	}
 	

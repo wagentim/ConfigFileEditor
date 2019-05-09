@@ -50,7 +50,6 @@ public class SearchTreeComponent extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
-				
 				String s = getSelectedTreeItem().getText();
 				getTableComposite().treeItemSelected(s.trim());
 			}

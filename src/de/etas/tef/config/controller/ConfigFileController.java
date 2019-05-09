@@ -15,7 +15,7 @@ import de.etas.tef.config.helper.IConfigFileWorker;
 import de.etas.tef.config.helper.InitFileWorker;
 import de.etas.tef.config.helper.Validator;
 
-public class ConfigFileController implements IController
+public class ConfigFileController extends AbstractController
 {
 	// worker is used to parser the file and also save the content to the file
 	private IConfigFileWorker worker = null;
@@ -83,6 +83,11 @@ public class ConfigFileController implements IController
 	@Override
 	public void setSelectedBlock(String blockName)
 	{
+		
+		if( null == configFile )
+		{
+			return;
+		}
 
 		List<ConfigBlock> blocks = configFile.getConfigBlocks();
 

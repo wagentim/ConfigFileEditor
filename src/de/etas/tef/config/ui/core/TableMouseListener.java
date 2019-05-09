@@ -31,11 +31,13 @@ public class TableMouseListener implements MouseListener, IActionListener
 	private String newValue = Constants.EMPTY_STRING;
 	protected boolean isTextChanged = false;
 	protected boolean isLocked = true;
+	private final int compositeID;
 	
-	public TableMouseListener(Table table, IController controller)
+	public TableMouseListener(Table table, IController controller, int compositeID)
 	{
 		this.table = table;
 		this.controller = controller;
+		this.compositeID = compositeID;
 		
 		editor = new TableEditor(table);
 		editor.horizontalAlignment = SWT.LEFT;
@@ -172,6 +174,11 @@ public class TableMouseListener implements MouseListener, IActionListener
 			isLocked = (boolean)content;
 			disposeOldEditor();
 		}
+	}
+	
+	protected int getCompositeID()
+	{
+		return this.compositeID;
 	}
 
 }
