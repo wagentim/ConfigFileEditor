@@ -76,12 +76,6 @@ public class SearchTreeComponent extends AbstractComposite
 		root.setExpanded(true);
 	}
 
-	@Override
-	protected int getCompositeID()
-	{
-		return CompositeID.COMPOSITE_ALONE;
-	}
-	
 	public TreeItem getSelectedTreeItem()
 	{
 		TreeItem ti = blockList.getSelection()[0];
@@ -109,6 +103,32 @@ public class SearchTreeComponent extends AbstractComposite
 	public void setTableComposite(TableComposite tableComposite)
 	{
 		this.tableComposite = tableComposite;
+	}
+	
+	public void receivedAction(int type, int compositeID, Object content)
+	{
+		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE)
+		{
+			return;
+		}
+		
+		if( Constants.ACTION_SET_SHOW_CONFIG_BLOCKS == type)
+		{
+			String[] blocks = getController().getShowConfigBlocks();
+			setBlockList(blocks);
+			
+			if(blocks.length > 0)
+			{
+				String s = blocks[0];
+				setTreeSelectedBlock(s);
+				getTableComposite().treeItemSelected(s);
+			}
+			else
+			{
+				getTableComposite().treeItemSelected(Constants.EMPTY_STRING);
+			}
+			
+		}
 	}
 	
 }

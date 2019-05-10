@@ -1,6 +1,7 @@
 package de.etas.tef.config.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,10 +24,12 @@ public class ConfigFileController extends AbstractController
 	// input file
 	private ConfigFile configFile = null;
 	private ConfigBlock selectedConfigBlock = null;
+	private List<ConfigBlock> showConfigBlocks = null;
 
 	public ConfigFileController()
 	{
 		worker = new InitFileWorker();
+		showConfigBlocks = new ArrayList<ConfigBlock>();
 	}
 	
 	@Override
@@ -61,23 +64,7 @@ public class ConfigFileController extends AbstractController
 	@Override
 	public String[] getAllBlocks()
 	{
-		List<ConfigBlock> blocks = configFile.getConfigBlocks();
-
-		if (null == blocks || blocks.isEmpty())
-		{
-			return Constants.EMPTY_STRING_ARRAY;
-		}
-
-		String[] result = new String[blocks.size()];
-
-		for (int i = 0; i < blocks.size(); i++)
-		{
-			result[i] = blocks.get(i).getBlockName();
-		}
-
-		Arrays.sort(result);
-
-		return result;
+		return getBlockNames(configFile.getConfigBlocks());
 	}
 
 	@Override
@@ -167,6 +154,51 @@ public class ConfigFileController extends AbstractController
 		{
 			paras.remove(selectedItems[i]);
 		}
+	}
+
+	@Override
+	public void setShowConfigBlocks(String text)
+	{
+		if( null == text )
+		{
+			return;
+		}
+
+		List<ConfigBlock> blocks = configFile.getConfigBlocks();
+		showConfigBlocks.clear();
+
+		for (int i = 0; i < blocks.size(); i++)
+		{
+			if (blocks.get(i).getBlockName().toLowerCase().contains(text.toLowerCase()))
+			{
+				showConfigBlocks.add(blocks.get(i));
+			}
+		}
+	}
+
+	@Override
+	public String[] getShowConfigBlocks()
+	{
+		return getBlockNames(showConfigBlocks);
+	}
+
+	private String[] getBlockNames(List<ConfigBlock> blocks)
+	{
+		if (null == blocks || blocks.isEmpty())
+		{
+			return Constants.EMPTY_STRING_ARRAY;
+		}
+
+		String[] result = new String[blocks.size()];
+
+		for (int i = 0; i < blocks.size(); i++)
+		{
+			result[i] = blocks.get(i).getBlockName();
+		}
+
+		Arrays.sort(result);
+
+		return result;
 	}
 
 	

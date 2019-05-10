@@ -10,8 +10,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.Constants;
 
 public class SearchComposite extends AbstractComposite
 {
@@ -48,7 +50,9 @@ public class SearchComposite extends AbstractComposite
 			@Override
 			public void modifyText(ModifyEvent event)
 			{
-				
+				String text = searchText.getText();
+				getController().setShowConfigBlocks(text);
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_SET_SHOW_CONFIG_BLOCKS, compositeID, null);
 			}
 		});
 		

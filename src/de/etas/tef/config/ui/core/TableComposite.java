@@ -134,7 +134,14 @@ public class TableComposite extends AbstractComposite
 
 	protected void treeItemSelected(String blockName)
 	{
+		if( null == blockName || blockName.isEmpty() )
+		{
+			updateParameters(Collections.emptyList());
+			return;
+		}
+		
 		getController().setSelectedBlock(blockName);
+		
 		ConfigBlock cb = getController().getSelectedConfigBlock();
 		
 		if( null != cb)
@@ -278,12 +285,13 @@ public class TableComposite extends AbstractComposite
 
 	public void updateParameters(List<KeyValuePair> values)
 	{
+		clearTable();
+
 		if( null == table || null == values || values.size() < 1 )
 		{
 			return;
 		}
 		
-		clearTable();
 		
 		for(int i = 0; i < values.size(); i++)
 		{

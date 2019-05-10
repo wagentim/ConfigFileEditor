@@ -51,7 +51,7 @@ public final class Constants
 	public static final int ACTION_NEW_FILE_SELECTED = 0x00;
 	public static final int ACTION_LOG_WRITE_INFO = 0x01;
 	public static final int ACTION_LOG_WRITE_ERROR = 0x02;
-//	public static final int ACTION_TARGET_NEW_FILE_SELECTED = 0x03;
+	public static final int ACTION_SET_SHOW_CONFIG_BLOCKS = 0x03;
 	public static final int ACTION_SOURCE_BLOCK_UPDATED = 0x06;
 //	public static final int ACTION_TARGET_BLOCK_UPDATED = 0x07;
 	public static final int ACTION_PARAMETER_UPDATE = 0x08;

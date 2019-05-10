@@ -14,4 +14,6 @@ public interface IController
 	void setSelectedBlock(String blockName);
 	IController getParent();
 	void setParent(IController parent);
+	void setShowConfigBlocks(String text);
+	String[] getShowConfigBlocks();
 }

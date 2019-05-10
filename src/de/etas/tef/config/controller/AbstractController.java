@@ -2,6 +2,7 @@ package de.etas.tef.config.controller;
 
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.helper.Constants;
 
 public abstract class AbstractController implements IController
 {
@@ -67,5 +68,10 @@ public abstract class AbstractController implements IController
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setShowConfigBlocks(String text)
+	{}
+	
+	public String[] getShowConfigBlocks() { return Constants.EMPTY_STRING_ARRAY;}
 
 }
