@@ -1,5 +1,8 @@
 package de.etas.tef.config.ui.core;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
@@ -11,6 +14,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Monitor;
@@ -43,6 +48,8 @@ public class MainScreen implements IActionListener
 	private static Image IMAGE_PIN;
 	private static Image IMAGE_EXIT;
 	private static Image IMAGE_ABOUT;
+	
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
 	public MainScreen()
 	{
@@ -62,6 +69,7 @@ public class MainScreen implements IActionListener
 		initMainScreen(shell);
 		initMenu(shell);
 		initMainComponents(shell);
+		initStatusBar(shell);
 //		new OptionComposite(shell, SWT.BORDER, controller, CompositeID.COMPOSITE_ALONE);
 
 		shell.open();
@@ -150,6 +158,23 @@ public class MainScreen implements IActionListener
 	    aboutItem.setImage(IMAGE_ABOUT);
 	    
 	    shell.setMenuBar(menuBar);
+	}
+	
+	private void initStatusBar(Shell shell)
+	{
+		Group statusBarGroup = new Group(shell, SWT.NONE);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.minimumHeight = 30;
+		statusBarGroup.setLayoutData(gd);
+		
+		statusBarGroup.setEnabled(false);
+		Label dateLabel = new Label(statusBarGroup, SWT.NONE);
+		dateLabel.setText(" " + sdf.format(new Date()) + " ");
+		dateLabel.setBounds(2, 10, 120, 16);
+		
+		Label statusLabel = new Label(statusBarGroup, SWT.NONE);
+		statusLabel.setText(" Here is a status message ");
+		statusLabel.setBounds(124, 10, 200, 16);
 	}
 	
 	protected void checkOptionSelection(int fromWhich)
