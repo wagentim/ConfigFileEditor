@@ -7,7 +7,6 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
@@ -20,32 +19,24 @@ import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.listener.IActionListener;
 
-public class TableMouseListener implements MouseListener, IActionListener
+public class TableListener extends CellEditingListener
 {
 
 	private TableEditor editor = null;
-	private final Table table;
-	private final IController controller;
 	private CellIndex cell = null;
 	private String newValue = Constants.EMPTY_STRING;
 	protected boolean isTextChanged = false;
 	protected boolean isLocked = true;
-	private final int compositeID;
 	
-	public TableMouseListener(Table table, IController controller, int compositeID)
+	public TableListener(Table table, IController controller, int compositeID)
 	{
-		this.table = table;
-		this.controller = controller;
-		this.compositeID = compositeID;
+		super(table, controller, compositeID);
 		
 		editor = new TableEditor(table);
 		editor.horizontalAlignment = SWT.LEFT;
 	    editor.grabHorizontal = true;
 	    editor.minimumWidth = 50;
-
-	    ActionManager.INSTANCE.addActionListener(this);
 	}
 	
 	protected TableEditor getTableEditor()
@@ -67,14 +58,14 @@ public class TableMouseListener implements MouseListener, IActionListener
         	return;
         }
         
-        final TableItem item = table.getItem(cell.getRow());
+        final TableItem item = getTable().getItem(cell.getRow());
         
         if (item == null || (isLocked && cell.getColumn() == 0))
         {
           return;
         }
         
-        Text newEditor = new Text(table, SWT.NONE);
+        Text newEditor = new Text(getTable(), SWT.NONE);
         String text = item.getText(cell.getColumn());
         
         newEditor.setText(text);
@@ -137,14 +128,14 @@ public class TableMouseListener implements MouseListener, IActionListener
 	
 	private CellIndex getDoubleClickPosIndex(Point pt)
 	{
-		int columnCount = table.getColumnCount();
-		int rowCount = table.getItemCount();
+		int columnCount = getTable().getColumnCount();
+		int rowCount = getTable().getItemCount();
 
 		for( int j = 0; j < columnCount; j++)
 		{
 			for (int i = 0; i < rowCount; i++)
 			{
-				Rectangle rect = table.getItem(i).getBounds(j);
+				Rectangle rect = getTable().getItem(i).getBounds(j);
 				if (rect.contains(pt))
 				{
 					return new CellIndex(i, j);
@@ -175,11 +166,6 @@ public class TableMouseListener implements MouseListener, IActionListener
 	
 	protected ConfigBlock getConfigBlock() {return null;}
 	
-	protected IController getController()
-	{
-		return controller;
-	}
-
 	@Override
 	public void receivedAction(int type, int compositeID, Object content)
 	{
@@ -190,9 +176,8 @@ public class TableMouseListener implements MouseListener, IActionListener
 		}
 	}
 	
-	protected int getCompositeID()
+	private Table getTable()
 	{
-		return this.compositeID;
+		return (Table)getComposite();
 	}
-
 }

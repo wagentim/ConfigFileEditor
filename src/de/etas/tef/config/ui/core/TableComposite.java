@@ -151,7 +151,7 @@ public class TableComposite extends AbstractComposite
 
 	protected void addTableMouseListener()
 	{
-		getTable().addMouseListener(new TableMouseListener(getTable(), getController(), getCompositeID()));
+		getTable().addMouseListener(new TableListener(getTable(), getController(), getCompositeID()));
 	}
 	
 	protected void setTreeSelectedBlock(String blockName)
