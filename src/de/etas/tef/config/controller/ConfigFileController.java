@@ -64,7 +64,12 @@ public class ConfigFileController extends AbstractController
 	@Override
 	public String[] getAllBlocks()
 	{
-		return getBlockNames(configFile.getConfigBlocks());
+		if( null != configFile )
+		{
+			return getBlockNames(configFile.getConfigBlocks());
+		}
+		
+		return Constants.EMPTY_STRING_ARRAY;
 	}
 
 	@Override
@@ -159,7 +164,7 @@ public class ConfigFileController extends AbstractController
 	@Override
 	public void setShowConfigBlocks(String text)
 	{
-		if( null == text )
+		if( null == text || null == configFile )
 		{
 			return;
 		}

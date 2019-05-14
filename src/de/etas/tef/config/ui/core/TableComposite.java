@@ -32,7 +32,6 @@ import de.etas.tef.config.helper.Constants;
 
 public class TableComposite extends AbstractComposite
 {
-	
 	private Table table;
 	private Button btnAdd;
 	private Button btnDelete;
@@ -56,7 +55,6 @@ public class TableComposite extends AbstractComposite
 		tableBackgroudColor = parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
 	}
 	
-
 	public Table getTable()
 	{
 		return table;

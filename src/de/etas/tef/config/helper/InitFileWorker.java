@@ -3,11 +3,13 @@ package de.etas.tef.config.helper;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.SortedMap;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
@@ -16,6 +18,34 @@ import de.etas.tef.config.entity.KeyValuePair;
 
 public class InitFileWorker implements IConfigFileWorker
 {
+	
+	private static final String CHARSET_ISO_8859_1 = "ISO-8859-1";
+	private static final String CHARSET_UTF_8 = "UTF-8";
+	
+	public static void testCharset(String fileName)
+	{
+		SortedMap<String, Charset> charsets = Charset.availableCharsets();
+		for (String k : charsets.keySet())
+		{
+			int line = 0;
+			boolean success = true;
+			try (BufferedReader b = Files.newBufferedReader(
+					Paths.get(fileName), charsets.get(k)))
+			{
+				while (b.ready())
+				{
+					b.readLine();
+					line++;
+				}
+			} catch (IOException e)
+			{
+				success = false;
+				System.out.println(k + " failed on line " + line);
+			}
+			if (success)
+				System.out.println("*************************  Successs " + k);
+		}
+	}
 	
 	@Override
 	public void readFile(String filePath, Object result) throws IOException
@@ -38,7 +68,7 @@ public class InitFileWorker implements IConfigFileWorker
 		
 		Path path = Paths.get(filePath);
 		
-		BufferedReader br = Files.newBufferedReader(path);
+		BufferedReader br = Files.newBufferedReader(path, Charset.forName(CHARSET_ISO_8859_1));
 		
 		String currentLine = null;
 		
@@ -239,7 +269,7 @@ public class InitFileWorker implements IConfigFileWorker
 		
 		Path path = Paths.get(filePath);
 		
-		BufferedWriter bw = Files.newBufferedWriter(path);
+		BufferedWriter bw = Files.newBufferedWriter(path, Charset.forName(CHARSET_UTF_8));
 		
 		String s = Constants.EMPTY_STRING;
 
