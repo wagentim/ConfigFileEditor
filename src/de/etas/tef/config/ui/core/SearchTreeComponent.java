@@ -1,12 +1,17 @@
 package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MenuAdapter;
+import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
@@ -22,6 +27,10 @@ public class SearchTreeComponent extends AbstractComposite
 	private TableComposite tableComposite;
 	private static Image IMAGE_BLOCK;
 	private static Image IMAGE_ROOT;
+	private static Image IMAGE_ADD;
+	private static Image IMAGE_REMOVE;
+	private TreeListener tl;
+	private Menu rightClickMenu;
 	
 	public SearchTreeComponent(Composite parent, int style, MainController controller, int compositeID)
 	{
@@ -33,7 +42,9 @@ public class SearchTreeComponent extends AbstractComposite
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
 		IMAGE_BLOCK = new Image(parent.getDisplay(), "icons/block.png");
 		IMAGE_ROOT = new Image(parent.getDisplay(), "icons/root.png");
-
+		IMAGE_ADD = new Image(parent.getDisplay(), "icons/add.png");
+		IMAGE_REMOVE = new Image(parent.getDisplay(), "icons/remove.png");
+		
 		initComponent(controller);
 	}
 
@@ -67,8 +78,42 @@ public class SearchTreeComponent extends AbstractComposite
 			}
 		});
 		
-		blockList.addMouseListener(new TreeListener(blockList, getController(), getCompositeID()));
-		blockList.addKeyListener(new TreeListener(blockList, getController(), getCompositeID()));
+		tl = new TreeListener(blockList, getController(), getCompositeID());
+		blockList.addMouseListener(tl);
+		blockList.addKeyListener(tl);
+		
+	}
+	
+	private void createRightMenu(Control control, SelectionListener listener)
+	{
+		rightClickMenu = new Menu(control);
+		control.setMenu(rightClickMenu);
+		
+		rightClickMenu.addMenuListener(new MenuAdapter()
+	    {
+	        public void menuShown(MenuEvent e)
+	        {
+	            MenuItem[] items = rightClickMenu.getItems();
+	            
+	            for (int i = 0; i < items.length; i++)
+	            {
+	                items[i].dispose();
+	            }
+	            
+	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
+	            newItem.setText(Constants.TXT_BTN_ADD);
+	            newItem.setImage(IMAGE_ADD);
+	            newItem.addSelectionListener(listener);
+	            
+	            
+	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
+	            
+	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
+	            deleteItem.setText(Constants.TXT_BTN_DELETE);
+	            deleteItem.setImage(IMAGE_REMOVE);
+	            deleteItem.addSelectionListener(listener);
+	        }
+	    });
 	}
 	
 	public void setBlockList(String[] blockList)
@@ -137,6 +182,25 @@ public class SearchTreeComponent extends AbstractComposite
 				getTableComposite().treeItemSelected(Constants.EMPTY_STRING);
 			}
 			
+		}
+		
+		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
+		{
+			boolean locked = (boolean)content;
+			
+			if( locked )
+			{
+				blockList.setMenu(null);
+				
+				if(null != rightClickMenu)
+				{
+					rightClickMenu.dispose();
+				}
+			}
+			else
+			{
+				createRightMenu(blockList, tl);
+			}
 		}
 	}
 	

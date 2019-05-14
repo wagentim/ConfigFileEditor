@@ -8,17 +8,21 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
 
-public abstract class CellEditingListener implements MouseListener, IActionListener, KeyListener
+public abstract class CellEditingListener implements MouseListener, IActionListener, KeyListener, SelectionListener
 {
 	
 	private final Composite composite;
@@ -113,7 +117,14 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
         
         Text newEditor = new Text(getComposite(), SWT.NONE);
         
-        newValue = oldValue = item.getText();
+        if( item instanceof TreeItem)
+        {
+        	newValue = oldValue = item.getText();
+        }
+        else if (item instanceof TableItem)
+        {
+        	newValue = oldValue = ((TableItem)item).getText(getCell().getColumn());
+        }
         
         newEditor.setText(oldValue);
         
@@ -165,6 +176,8 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
         setNewEditor(newEditor, item);
 	}
 	
+	protected abstract CellIndex getCell();
+
 	protected abstract void setNewValueByModify();
 	
 	protected abstract void setNewEditor(Text newEditor, Item item);
@@ -176,10 +189,10 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 	}
 
 	@Override
-	public void mouseUp(MouseEvent arg0)
+	public void mouseUp(MouseEvent event)
 	{
-
 	}
+
 
 	@Override
 	public void keyPressed(KeyEvent keyEvent)

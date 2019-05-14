@@ -2,6 +2,7 @@ package de.etas.tef.config.controller;
 
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 
 public interface IController
@@ -21,4 +22,5 @@ public interface IController
 	boolean isEditingLocked();
 	void setEditingLocked(boolean isEditingLocked);
 	void parameterAdded(KeyValuePair kvp);
+	ConfigFile getConfigFile();
 }

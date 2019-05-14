@@ -2,6 +2,7 @@ package de.etas.tef.config.controller;
 
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
 
@@ -93,4 +94,6 @@ public abstract class AbstractController implements IController
 
 	public void parameterAdded(KeyValuePair kvp)
 	{}
+	
+	public ConfigFile getConfigFile() {return null;}
 }

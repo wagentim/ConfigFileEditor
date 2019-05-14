@@ -9,14 +9,21 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.MenuAdapter;
+import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -39,8 +46,12 @@ public class TableComposite extends AbstractComposite
 	private Button btnLock;
 	protected Color tableBackgroudColor;
 	private Composite buttonComposite;
+	private Menu rightClickMenu;
 	
 	private SearchTreeComponent searchTree;
+	
+	private static Image IMAGE_ADD;
+	private static Image IMAGE_REMOVE;
 	
 	public TableComposite(Composite parent, int style, MainController controller, int compositeID)
 	{
@@ -50,9 +61,11 @@ public class TableComposite extends AbstractComposite
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		initMainComposite(this, controller);
-		initTableButtons(this);
 		
 		tableBackgroudColor = parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
+		
+		IMAGE_ADD = new Image(parent.getDisplay(), "icons/add.png");
+		IMAGE_REMOVE = new Image(parent.getDisplay(), "icons/remove.png");
 	}
 	
 	public Table getTable()
@@ -91,6 +104,8 @@ public class TableComposite extends AbstractComposite
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = Constants.HEIGHT_HINT;
 		table.setLayoutData(gd);
+		
+		TableListener tl = new TableListener(getTable(), getController(), getCompositeID());
 	    
 		for (int i = 0; i < Constants.TABLE_TITLES.length; i++) 
 		{
@@ -100,72 +115,15 @@ public class TableComposite extends AbstractComposite
 			column.setWidth(150);
 		}
 		
-		table.addMouseListener(new TableListener(getTable(), getController(), getCompositeID()));
-		table.addKeyListener(new TableListener(getTable(), getController(), getCompositeID()));
+		table.addMouseListener(tl);
+		table.addKeyListener(tl);
 		addTableSelectedListener();
 		sf.setWeights(new int[]{1, 2});
-	}
-	
-	protected void addTableSelectedListener()
-	{
-		getTable().addSelectionListener(new SelectionListener()
-		{
-			
-			@Override
-			public void widgetSelected(SelectionEvent event)
-			{
-				String text = getTable().getItem(getTable().getSelectionIndex()).getText(1);
-				
-				if( !((MainController)(getController().getParent())).isConnected() )
-				{
-					return;
-				}
-					
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_PARAMETER_SELECTED, getCompositeID(), text);
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0)
-			{
-			}
-		});
-	}
-
-	protected void treeItemSelected(String blockName)
-	{
-		if( null == blockName || blockName.isEmpty() )
-		{
-			updateParameters(Collections.emptyList());
-			return;
-		}
 		
-		getController().setSelectedBlock(blockName);
-		
-		ConfigBlock cb = getController().getSelectedConfigBlock();
-		
-		if( null != cb && cb.getBlockName().contentEquals(blockName))
-		{
-			updateParameters(cb.getAllParameters());
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, getCompositeID(), cb);
-		}
-	}
-
-	protected void setTreeSelectedBlock(String blockName)
-	{
-		searchTree.setTreeSelectedBlock(blockName);
-	}
-	
-	protected void setBlockList(String[] blockList)
-	{
-		searchTree.setBlockList(blockList);
-	}
-	
-	protected void initTableButtons(Composite comp)
-	{
 		buttonComposite = new Composite(comp, SWT.NONE);
 		buttonComposite.setLayout(new GridLayout(1, false));
 		
-		GridData gd = new GridData();
+		gd = new GridData();
 		gd.widthHint = Constants.BTN_DEFAULT_WIDTH;
 		
 		btnAdd = new Button(buttonComposite, SWT.PUSH);
@@ -227,6 +185,11 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
+				if( null == getController().getConfigFile() )
+				{
+					return;
+				}
+				
 				toSave();
 			}
 			
@@ -252,7 +215,25 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				getController().setEditingLocked(btnLock.getSelection());
+				boolean locked = btnLock.getSelection();
+				
+				getController().setEditingLocked(locked);
+				
+				if( locked )
+				{
+					table.setMenu(null);
+					
+					if(null != rightClickMenu)
+					{
+						rightClickMenu.dispose();
+					}
+				}
+				else
+				{
+					createRightMenu(table, tl);
+				}
+				
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOCK_SELECTION_CHANGED, getCompositeID(), locked);
 			}
 			
 			@Override
@@ -261,6 +242,88 @@ public class TableComposite extends AbstractComposite
 				
 			}
 		});
+	}
+	
+	protected void addTableSelectedListener()
+	{
+		getTable().addSelectionListener(new SelectionAdapter()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent event)
+			{
+				String text = getTable().getItem(getTable().getSelectionIndex()).getText(1);
+				
+				if( !((MainController)(getController().getParent())).isConnected() )
+				{
+					return;
+				}
+					
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_PARAMETER_SELECTED, getCompositeID(), text);
+			}
+			
+		});
+	}
+
+	protected void treeItemSelected(String blockName)
+	{
+		if( null == blockName || blockName.isEmpty() )
+		{
+			updateParameters(Collections.emptyList());
+			return;
+		}
+		
+		getController().setSelectedBlock(blockName);
+		
+		ConfigBlock cb = getController().getSelectedConfigBlock();
+		
+		if( null != cb && cb.getBlockName().contentEquals(blockName))
+		{
+			updateParameters(cb.getAllParameters());
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, getCompositeID(), cb);
+		}
+	}
+
+	protected void setTreeSelectedBlock(String blockName)
+	{
+		searchTree.setTreeSelectedBlock(blockName);
+	}
+	
+	protected void setBlockList(String[] blockList)
+	{
+		searchTree.setBlockList(blockList);
+	}
+	
+	private void createRightMenu(Control control, SelectionListener listener)
+	{
+		rightClickMenu = new Menu(table);
+		table.setMenu(rightClickMenu);
+		
+		rightClickMenu.addMenuListener(new MenuAdapter()
+	    {
+	        public void menuShown(MenuEvent e)
+	        {
+	            MenuItem[] items = rightClickMenu.getItems();
+	            
+	            for (int i = 0; i < items.length; i++)
+	            {
+	                items[i].dispose();
+	            }
+	            
+	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
+	            newItem.setText(Constants.TXT_BTN_ADD);
+	            newItem.setImage(IMAGE_ADD);
+	            newItem.addSelectionListener(listener);
+	            
+	            
+	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
+	            
+	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
+	            deleteItem.setText(Constants.TXT_BTN_DELETE);
+	            deleteItem.setImage(IMAGE_REMOVE);
+	            deleteItem.addSelectionListener(listener);
+	        }
+	    });
 	}
 
 	protected void deleteSelectedItems()
@@ -327,7 +390,9 @@ public class TableComposite extends AbstractComposite
 		
 		for(int i = items.length - 1; i >= 0; i--)
 		{
+			TableItem item = items[i];
 			table.remove(i);
+			item.dispose();
 		}
 	}
 
@@ -364,7 +429,7 @@ public class TableComposite extends AbstractComposite
 
 		if (null == fileSavePath)
 		{
-			fileSavePath = Constants.EMPTY_STRING;
+			return;
 		}
 
 		saveAction(fileSavePath);

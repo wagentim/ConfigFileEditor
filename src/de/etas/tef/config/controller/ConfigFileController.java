@@ -228,4 +228,8 @@ public class ConfigFileController extends AbstractController
 		selectedConfigBlock.addParameterInLast(kvp);
 	}
 	
+	public ConfigFile getConfigFile()
+	{
+		return configFile;
+	}
 }

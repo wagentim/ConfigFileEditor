@@ -34,4 +34,5 @@ public class AbstractComposite extends Composite implements IActionListener
 	public void receivedAction(int type, int compositeID, Object content)
 	{
 	}
+
 }

@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.KeyEvent;
 
 import de.etas.tef.config.controller.IController;
@@ -116,4 +117,25 @@ public class TableListener extends CellEditingListener
 	{
 		((TableEditor)editor).getItem().setText(cell.getColumn(), newValue);
 	}
+
+	@Override
+	public void widgetDefaultSelected(SelectionEvent arg0)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void widgetSelected(SelectionEvent event)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected CellIndex getCell()
+	{
+		return cell;
+	}
+
 }
