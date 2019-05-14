@@ -53,13 +53,10 @@ public final class Constants
 	public static final int ACTION_LOG_WRITE_ERROR = 0x02;
 	public static final int ACTION_SET_SHOW_CONFIG_BLOCKS = 0x03;
 	public static final int ACTION_SOURCE_BLOCK_UPDATED = 0x06;
-//	public static final int ACTION_TARGET_BLOCK_UPDATED = 0x07;
 	public static final int ACTION_PARAMETER_UPDATE = 0x08;
-//	public static final int ACTION_TARGET_PARAMETER_UPDATE = 0x09;
 	public static final int ACTION_CONNECT_SELECTED = 0x10;
 	public static final int ACTION_PARAMETER_UPDATED = 0x0A;
 	public static final int ACTION_TAKE_SOURCE_PARAMETERS_START = 0x0B;
-//	public static final int ACTION_TAKE_SOURCE_PARAMETERS_FINISHED = 0x0C;
 	public static final int ACTION_LEFT_SELECTED = 0x0D;
 	public static final int ACTION_GPIB_SOURCE_FINISHED = 0x0F;
 	public static final int ACTION_SOURCE_PARAMETER_SELECTED = 0x11;
@@ -68,6 +65,5 @@ public final class Constants
 	public static final int ACTION_SOURCE_SAVE_FILE_FINISHED = 0x14;
 	public static final int ACTION_BLOCK_SELECTED = 0x15;
 	public static final int ACTION_LOCK_SELECTION_CHANGED = 0x16;
-//	public static final int ACTION_DROP_TARGET_NEW_FILE_SELECTED = 0x17;
 	public static final int ACTION_DROP_NEW_FILE_SELECTED = 0x18;
 }

@@ -39,6 +39,7 @@ public class MainScreen implements IActionListener
 		shell.setImage(image);
 
 		initMainScreen(shell);
+		initMenu(shell);
 		initMainComponents(shell);
 		new OptionComposite(shell, SWT.BORDER, controller, CompositeID.COMPOSITE_ALONE);
 
@@ -51,6 +52,11 @@ public class MainScreen implements IActionListener
 			}
 		}
 		display.dispose();
+	}
+
+	private void initMenu(Shell shell)
+	{
+		
 	}
 
 	private void initMainComponents(Composite shell)

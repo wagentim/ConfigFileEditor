@@ -10,6 +10,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
@@ -155,6 +156,19 @@ public class TableMouseListener implements MouseListener, IActionListener
 	
 	protected void disposeEditor(CellIndex cell, String newValue)
 	{
+		Control oldEditor = getTableEditor().getEditor();
+
+		if (oldEditor != null)
+		{
+			oldEditor.dispose();
+			if (isTextChanged)
+			{
+				getController().parameterChanged(cell, newValue);
+				isTextChanged = false;
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, getCompositeID(), "Config Block: "
+						+ getConfigBlock().getBlockName() + " with new value: " + newValue + cell.toString());
+			}
+		}
 	}
 	
 	protected String getInfoText() {return Constants.EMPTY_STRING;}

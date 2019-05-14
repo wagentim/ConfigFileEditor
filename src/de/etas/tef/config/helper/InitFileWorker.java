@@ -210,7 +210,13 @@ public class InitFileWorker implements IConfigFileWorker
 		}
 		else
 		{
-			configBlock.setBlockName(currentLine.substring(1, currentLine.length() - 1));
+			String name = currentLine.substring(1, currentLine.length() - 1);
+			
+			if( name.contentEquals("CONNECT_NET_DRIVES"))
+			{
+				System.out.println("Stop");
+			}
+			configBlock.setBlockName(name);
 		}
 	}
 		

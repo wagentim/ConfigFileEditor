@@ -66,11 +66,8 @@ public class SelectComposite extends AbstractComposite
 		GridData gd = new GridData();
 		labelFileSelect.setLayoutData(gd);
 		Image image = new Image(this.getDisplay(), "icons/file_36.png");
-//		labelFileSelect.setText(Constants.TXT_LABEL_FILE);
 		labelFileSelect.setImage(image);
 	}
-	
-	protected void txtSelectListener(){}
 	
 	protected void setCurrFilePath()
 	{
@@ -80,6 +77,8 @@ public class SelectComposite extends AbstractComposite
 		{
 			currFilePath = Constants.EMPTY_STRING;
 		}
+		
+		this.txtFileSelect.setText(currFilePath);
 		
 		getController().setInputConfigFile(currFilePath);
 	}
