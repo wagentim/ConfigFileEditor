@@ -3,6 +3,7 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -19,6 +20,8 @@ public class SearchTreeComponent extends AbstractComposite
 	private Tree blockList;
 	private TreeItem root;
 	private TableComposite tableComposite;
+	private static Image IMAGE_BLOCK;
+	private static Image IMAGE_ROOT;
 	
 	public SearchTreeComponent(Composite parent, int style, MainController controller, int compositeID)
 	{
@@ -28,6 +31,8 @@ public class SearchTreeComponent extends AbstractComposite
 		layout.marginTop = 0;
 		this.setLayout(layout);
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
+		IMAGE_BLOCK = new Image(parent.getDisplay(), "icons/block.png");
+		IMAGE_ROOT = new Image(parent.getDisplay(), "icons/root.png");
 
 		initComponent(controller);
 	}
@@ -43,6 +48,7 @@ public class SearchTreeComponent extends AbstractComposite
 		
 		root = new TreeItem(blockList, SWT.NONE);
 		root.setText(Constants.TXT_CONFIG_FILE);
+		root.setImage(IMAGE_ROOT);
 		
 		blockList.addSelectionListener(new SelectionListener()
 		{
@@ -67,12 +73,12 @@ public class SearchTreeComponent extends AbstractComposite
 	public void setBlockList(String[] blockList)
 	{
 		root.removeAll();
-		root.setText(root.getText()); 
 		
 		for(int i = 0; i < blockList.length; i++)
 		{
 			TreeItem it = new TreeItem(root, SWT.NONE);
 			it.setText(blockList[i]);
+			it.setImage(IMAGE_BLOCK);
 		}
 		
 		root.setExpanded(true);
