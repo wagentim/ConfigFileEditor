@@ -16,7 +16,7 @@ public final class Constants
 	public static final String SYMBOL_RIGHT_PARENTHESES_ = ")"; 
 	
 	public static final int MAIN_SCREEN_WIDTH = 800;
-	public static final int MAIN_SCREEN_HEIGHT = 450;
+	public static final int MAIN_SCREEN_HEIGHT = 600;
 	
 	public static final int BTN_DEFAULT_WIDTH = 80;
 	public static final int LABEL_DEFAULT_WIDTH = 45;
@@ -35,7 +35,7 @@ public final class Constants
 	public static final String TXT_BTN_RUN = "Run";
 	public static final String TXT_BTN_ADD = "Add";
 	public static final String TXT_BTN_DELETE = "Delete";
-	public static final String TXT_BTN_SAVE = "Save";
+	public static final String TXT_BTN_SAVE = "Output";
 	public static final String TXT_PM_NUMBER = "PM_NUMBER";
 	public static final String TXT_BTN_CONNECT = "Connect";
 	public static final String TXT_BTN_ACCEPT_SOURCE = "Accept";
@@ -45,6 +45,7 @@ public final class Constants
 	public static final String TXT_GPIB_PM_NUMBER = "PM_NUMBER";
 	public static final String TXT_GPIB_ADRESS = "GPIB_ADRESS";
 	public static final String TXT_CONFIG_FILE = "Config File";
+	public static final String TXT_LOCK_EDITING = "Edit Lock";
 	public static final String[] TABLE_TITLES = {"Name", "Value"};
 	
 	

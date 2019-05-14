@@ -8,6 +8,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Text;
@@ -84,10 +85,22 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 	
 	protected abstract void updateWithNewValue();
 	
-	protected abstract Item getSelectedItem(MouseEvent event);
+	protected abstract Item getSelectedItem(TypedEvent event);
 
 	@Override
 	public void mouseDoubleClick(MouseEvent event)
+	{
+		boolean isEditingLocked = getController().isEditingLocked();
+		
+		if(isEditingLocked)
+		{
+			return;
+		}
+		
+		handleModification(event);
+	}
+	
+	protected void handleModification(TypedEvent event)
 	{
 		disposeEditor();
 
@@ -165,19 +178,28 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 	@Override
 	public void mouseUp(MouseEvent arg0)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent keyEvent)
 	{
+		if( keyEvent.keyCode == SWT.SPACE )
+		{
+			boolean isEditingLocked = getController().isEditingLocked();
+			
+			if(isEditingLocked)
+			{
+				return;
+			}
+			
+			handleModification(keyEvent);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	

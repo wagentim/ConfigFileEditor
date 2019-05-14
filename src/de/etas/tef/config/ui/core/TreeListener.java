@@ -3,14 +3,13 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TreeEditor;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.IController;
-import de.etas.tef.config.controller.MainController;
 
 public class TreeListener extends CellEditingListener
 {
@@ -37,10 +36,10 @@ public class TreeListener extends CellEditingListener
 	@Override
 	protected void updateWithNewValue()
 	{
-		((MainController)getController()).getController(getCompositeID()).updateBlockName(oldValue, newValue);
+		getController().updateBlockName(oldValue, newValue);
 	}
 
-	protected Item getSelectedItem(MouseEvent event)
+	protected Item getSelectedItem(TypedEvent event)
 	{
 		return getTree().getSelection()[0];
 	}

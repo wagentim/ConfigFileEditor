@@ -2,6 +2,7 @@ package de.etas.tef.config.controller;
 
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
 
 public abstract class AbstractController implements IController
@@ -80,5 +81,16 @@ public abstract class AbstractController implements IController
 	}
 	
 	public String[] getShowConfigBlocks() { return Constants.EMPTY_STRING_ARRAY;}
+	
+	public boolean isEditingLocked()
+	{
+		return true;
+	}
 
+	public void setEditingLocked(boolean isEditingLocked)
+	{
+	}
+
+	public void parameterAdded(KeyValuePair kvp)
+	{}
 }

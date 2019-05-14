@@ -67,8 +67,8 @@ public class SearchTreeComponent extends AbstractComposite
 			}
 		});
 		
-		blockList.addMouseListener(new TreeListener(blockList, controller, getCompositeID()));
-		blockList.addKeyListener(new TreeListener(blockList, controller, getCompositeID()));
+		blockList.addMouseListener(new TreeListener(blockList, getController(), getCompositeID()));
+		blockList.addKeyListener(new TreeListener(blockList, getController(), getCompositeID()));
 	}
 	
 	public void setBlockList(String[] blockList)

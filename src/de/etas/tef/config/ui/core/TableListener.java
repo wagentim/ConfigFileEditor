@@ -3,13 +3,15 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.KeyEvent;
 
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
@@ -61,7 +63,7 @@ public class TableListener extends CellEditingListener
 	@Override
 	protected void updateWithNewValue()
 	{
-		
+		getController().parameterChanged(cell, newValue);
 	}
 	
 	protected void disposeEditor()
@@ -71,23 +73,36 @@ public class TableListener extends CellEditingListener
 	}
 
 	@Override
-	protected Item getSelectedItem(MouseEvent event)
+	protected Item getSelectedItem(TypedEvent event)
 	{
-		Point pt = new Point(event.x, event.y);
-        cell = getDoubleClickPosIndex(pt);
-        
-        if( null == cell )
-        {
-        	return null;
-        }
-        
-        final TableItem item = getTable().getItem(cell.getRow());
-        
-        if (item == null || (isLocked && cell.getColumn() == 0))
-        {
-          return null;
-        }
-		return item;
+		if(event instanceof MouseEvent)
+		{
+			MouseEvent mevent =(MouseEvent)event;
+			Point pt = new Point(mevent.x, mevent.y);
+	        cell = getDoubleClickPosIndex(pt);
+	        
+	        if( null == cell )
+	        {
+	        	return null;
+	        }
+	        
+	        final TableItem item = getTable().getItem(cell.getRow());
+	        
+	        if (item == null)
+	        {
+	          return null;
+	        }
+			return item;
+		}
+		else if(event instanceof KeyEvent)
+		{
+			int row = getTable().getSelectionIndices()[0];
+			
+			cell = new CellIndex(row, 1);
+			return getTable().getItem(row);
+		}
+		
+		return null;
 	}
 
 	@Override

@@ -100,8 +100,8 @@ public class TableComposite extends AbstractComposite
 			column.setWidth(150);
 		}
 		
-		table.addMouseListener(new TableListener(getTable(), controller, getCompositeID()));
-		table.addKeyListener(new TableListener(getTable(), controller, getCompositeID()));
+		table.addMouseListener(new TableListener(getTable(), getController(), getCompositeID()));
+		table.addKeyListener(new TableListener(getTable(), getController(), getCompositeID()));
 		addTableSelectedListener();
 		sf.setWeights(new int[]{1, 2});
 	}
@@ -143,9 +143,9 @@ public class TableComposite extends AbstractComposite
 		
 		ConfigBlock cb = getController().getSelectedConfigBlock();
 		
-		if( null != cb)
+		if( null != cb && cb.getBlockName().contentEquals(blockName))
 		{
-			updateParameters(getController().getSelectedConfigBlock().getAllParameters());
+			updateParameters(cb.getAllParameters());
 			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, getCompositeID(), cb);
 		}
 	}
@@ -177,7 +177,15 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				addTableItem(null);
+				if ( null == getController().getSelectedConfigBlock())
+				{
+					return;
+				}
+				
+				KeyValuePair kvp = new KeyValuePair();
+				
+				addTableItem(kvp);
+				getController().parameterAdded(kvp);
 			}
 			
 			@Override
@@ -231,7 +239,7 @@ public class TableComposite extends AbstractComposite
 		});
 		
 		btnLock = new Button(buttonComposite, SWT.CHECK);
-		btnLock.setText("Edit Lock");
+		btnLock.setText(Constants.TXT_LOCK_EDITING);
 		gd = new GridData();
 		gd.widthHint = Constants.BTN_DEFAULT_WIDTH;
 		gd.heightHint = 80;
@@ -244,7 +252,7 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOCK_SELECTION_CHANGED, getCompositeID(), btnLock.getSelection());
+				getController().setEditingLocked(btnLock.getSelection());
 			}
 			
 			@Override
@@ -271,7 +279,6 @@ public class TableComposite extends AbstractComposite
 			if( done )
 			{
 				getController().deleteParameters(selectedItems, searchTree.getSelectedTreeItem().getText());
-		
 			}
 		}
 	}

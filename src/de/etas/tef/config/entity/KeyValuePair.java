@@ -4,8 +4,8 @@ import de.etas.tef.config.helper.Constants;
 
 public class KeyValuePair
 {
-	private String key = Constants.EMPTY_STRING;
-	private String value = Constants.EMPTY_STRING;
+	private String key = Constants.SYMBOL_INIT_FILE_COMMENT_DASH;
+	private String value = Constants.SYMBOL_INIT_FILE_COMMENT_DASH;
 	private String other = Constants.EMPTY_STRING;
 	private String forthValue = Constants.EMPTY_STRING;
 	

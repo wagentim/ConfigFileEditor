@@ -25,6 +25,7 @@ public class ConfigFileController extends AbstractController
 	private ConfigFile configFile = null;
 	private ConfigBlock selectedConfigBlock = null;
 	private List<ConfigBlock> showConfigBlocks = null;
+	private boolean isEditingLocked = true;
 
 	public ConfigFileController()
 	{
@@ -210,8 +211,21 @@ public class ConfigFileController extends AbstractController
 	public void updateBlockName(String oldValue, String newValue)
 	{
 		getSelectedConfigBlock().setBlockName(newValue);
-		System.out.println(getSelectedConfigBlock().getBlockName());
 	}
 
+	public boolean isEditingLocked()
+	{
+		return isEditingLocked;
+	}
+
+	public void setEditingLocked(boolean isEditingLocked)
+	{
+		this.isEditingLocked = isEditingLocked;
+	}
+
+	public void parameterAdded(KeyValuePair kvp)
+	{
+		selectedConfigBlock.addParameterInLast(kvp);
+	}
 	
 }
