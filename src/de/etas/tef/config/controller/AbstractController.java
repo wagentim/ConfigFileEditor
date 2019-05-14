@@ -72,6 +72,13 @@ public abstract class AbstractController implements IController
 	public void setShowConfigBlocks(String text)
 	{}
 	
+	@Override
+	public void updateBlockName(String oldValue, String newValue)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public String[] getShowConfigBlocks() { return Constants.EMPTY_STRING_ARRAY;}
 
 }

@@ -78,6 +78,8 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 		{
 			updateWithNewValue();
 		}
+		
+		editor.setEditor(null);
 	}
 	
 	protected abstract void updateWithNewValue();
@@ -112,6 +114,11 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 				{
 					disposeEditor();
 				}
+				else if(event.keyCode == SWT.ESC)
+				{
+					newValue = Constants.EMPTY_STRING;
+					disposeEditor();
+				}
 			}
 			
 			@Override
@@ -135,7 +142,7 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 				}
 				
 				newValue = text.getText();
-				getSelectedItem(null).setText(newValue);
+				setNewValueByModify();
 			}
 
 		});
@@ -144,6 +151,8 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
         newEditor.setFocus();
         setNewEditor(newEditor, item);
 	}
+	
+	protected abstract void setNewValueByModify();
 	
 	protected abstract void setNewEditor(Text newEditor, Item item);
 
@@ -161,10 +170,8 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0)
+	public void keyPressed(KeyEvent keyEvent)
 	{
-		
-		
 	}
 
 	@Override

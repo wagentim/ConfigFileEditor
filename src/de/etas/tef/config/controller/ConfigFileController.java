@@ -206,5 +206,12 @@ public class ConfigFileController extends AbstractController
 		return result;
 	}
 
+	@Override
+	public void updateBlockName(String oldValue, String newValue)
+	{
+		getSelectedConfigBlock().setBlockName(newValue);
+		System.out.println(getSelectedConfigBlock().getBlockName());
+	}
+
 	
 }

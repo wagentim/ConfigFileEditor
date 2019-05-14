@@ -100,7 +100,8 @@ public class TableComposite extends AbstractComposite
 			column.setWidth(150);
 		}
 		
-		addTableMouseListener();
+		table.addMouseListener(new TableListener(getTable(), controller, getCompositeID()));
+		table.addKeyListener(new TableListener(getTable(), controller, getCompositeID()));
 		addTableSelectedListener();
 		sf.setWeights(new int[]{1, 2});
 	}
@@ -149,11 +150,6 @@ public class TableComposite extends AbstractComposite
 		}
 	}
 
-	protected void addTableMouseListener()
-	{
-		getTable().addMouseListener(new TableListener(getTable(), getController(), getCompositeID()));
-	}
-	
 	protected void setTreeSelectedBlock(String blockName)
 	{
 		searchTree.setTreeSelectedBlock(blockName);

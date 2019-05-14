@@ -42,5 +42,4 @@ public class MainController extends AbstractController
 	{
 		return connected;
 	}
-
 }

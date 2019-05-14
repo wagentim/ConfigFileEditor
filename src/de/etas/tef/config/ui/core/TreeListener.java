@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 
 public class TreeListener extends CellEditingListener
 {
@@ -36,10 +37,9 @@ public class TreeListener extends CellEditingListener
 	@Override
 	protected void updateWithNewValue()
 	{
-		
+		((MainController)getController()).getController(getCompositeID()).updateBlockName(oldValue, newValue);
 	}
 
-	@Override
 	protected Item getSelectedItem(MouseEvent event)
 	{
 		return getTree().getSelection()[0];
@@ -49,5 +49,11 @@ public class TreeListener extends CellEditingListener
 	protected void setNewEditor(Text newEditor, Item item)
 	{
 		((TreeEditor)editor).setEditor(newEditor, (TreeItem)item);
+	}
+
+	@Override
+	protected void setNewValueByModify()
+	{
+		getTree().getSelection()[0].setText(newValue);
 	}
 }

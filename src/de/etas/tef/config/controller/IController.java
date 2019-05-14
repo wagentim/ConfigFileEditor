@@ -16,4 +16,5 @@ public interface IController
 	void setParent(IController parent);
 	void setShowConfigBlocks(String text);
 	String[] getShowConfigBlocks();
+	void updateBlockName(String oldValue, String newValue);
 }

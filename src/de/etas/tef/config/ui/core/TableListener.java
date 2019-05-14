@@ -3,7 +3,6 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.custom.TreeEditor;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -11,7 +10,6 @@ import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
@@ -63,7 +61,6 @@ public class TableListener extends CellEditingListener
 	@Override
 	protected void updateWithNewValue()
 	{
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -97,5 +94,11 @@ public class TableListener extends CellEditingListener
 	protected void setNewEditor(Text newEditor, Item item)
 	{
 		((TableEditor)editor).setEditor(newEditor, (TableItem)item, cell.getColumn());
+	}
+
+	@Override
+	protected void setNewValueByModify()
+	{
+		((TableEditor)editor).getItem().setText(cell.getColumn(), newValue);
 	}
 }
