@@ -125,6 +125,7 @@ public class SearchTreeComponent extends AbstractComposite
 			TreeItem it = new TreeItem(root, SWT.NONE);
 			it.setText(blockList[i]);
 			it.setImage(IMAGE_BLOCK);
+			
 		}
 		
 		root.setExpanded(true);

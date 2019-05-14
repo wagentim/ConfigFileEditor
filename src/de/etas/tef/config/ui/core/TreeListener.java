@@ -6,12 +6,14 @@ import org.eclipse.swt.custom.TreeEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
+import de.etas.tef.config.helper.Constants;
 
 public class TreeListener extends CellEditingListener
 {
@@ -69,7 +71,19 @@ public class TreeListener extends CellEditingListener
 	@Override
 	public void widgetSelected(SelectionEvent event)
 	{
-		
+		if(event.getSource() instanceof MenuItem)
+		{
+			String text = ((MenuItem)event.getSource()).getText();
+			
+			if( text.contentEquals(Constants.TXT_BTN_ADD) )
+			{
+				System.out.println("Add Menu Item selected");
+			}
+			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
+			{
+				System.out.println("Delete Menu Item selected");
+			}
+		}
 	}
 
 	@Override
