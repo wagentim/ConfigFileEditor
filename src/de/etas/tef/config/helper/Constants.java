@@ -75,4 +75,6 @@ public final class Constants
 	public static final int ACTION_LOG_WRITE_WARNING = 0x07;
 	public static final int ACTION_MENU_ADD = 0x09;
 	public static final int ACTION_MENU_DELETE = 0x0C;
+	public static final int ACTION_COPY_BLOCK = 0x0E;
+	public static final int ACTION_PASTE_BLOCK = 0x17;
 }

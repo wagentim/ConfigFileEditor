@@ -88,11 +88,17 @@ public class SearchTreeComponent extends AbstractComposite
 	    {
 	        public void menuShown(MenuEvent e)
 	        {
+	        	
 	            MenuItem[] items = rightClickMenu.getItems();
 	            
 	            for (int i = 0; i < items.length; i++)
 	            {
 	                items[i].dispose();
+	            }
+	            
+	            if(blockList.getSelectionCount() <= 0)
+	            {
+	            	return;
 	            }
 	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
@@ -227,27 +233,8 @@ public class SearchTreeComponent extends AbstractComposite
 		
 		if( Constants.ACTION_ADD_NEW_BLOCK == type )
 		{
-			ConfigBlock newBlock = (ConfigBlock)content;
 			
-			TreeItem selectedItem = getSelectedTreeItem();
-			TreeItem root = selectedItem.getParentItem();
-			
-			TreeItem parent;
-			int index;
-			
-			if( null == root )
-			{
-				parent = selectedItem;
-				index = 0;
-			}
-			else
-			{
-				parent = root;
-				index = parent.indexOf(selectedItem);
-			}
-			
-			addTreeItem(newBlock.getBlockName(), parent, index);
-			
+			addNewBlock((ConfigBlock)content);
 		}
 		
 		if( Constants.ACTION_DELETE_BLOCK == type )
@@ -273,5 +260,47 @@ public class SearchTreeComponent extends AbstractComposite
 			selected.dispose();
 			blockList.setSelection(root.getItem(0));
 		}
+		
+		if( Constants.ACTION_COPY_BLOCK == type )
+		{
+			getController().copyBlock(blockList.getSelection()[0].getText());
+		}
+		
+		if( Constants.ACTION_PASTE_BLOCK == type )
+		{
+			ConfigBlock newBlock = getController().getCopyBlock();
+			
+			if( null == newBlock )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Paste Block is NULL!");
+				return;
+			}
+			getController().addConfigBlock(newBlock);
+			addNewBlock(newBlock);
+		}
+	}
+	
+	private void addNewBlock(ConfigBlock content)
+	{
+		ConfigBlock newBlock = content;
+		
+		TreeItem selectedItem = getSelectedTreeItem();
+		TreeItem root = selectedItem.getParentItem();
+		
+		TreeItem parent;
+		int index;
+		
+		if( null == root )
+		{
+			parent = selectedItem;
+			index = 0;
+		}
+		else
+		{
+			parent = root;
+			index = parent.indexOf(selectedItem);
+		}
+		
+		addTreeItem(newBlock.getBlockName(), parent, index);
 	}
 }

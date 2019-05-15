@@ -53,8 +53,7 @@ public class KeyValuePair
 	@Override
 	public KeyValuePair clone() throws CloneNotSupportedException 
 	{
-        KeyValuePair clone = null;
-        clone = new KeyValuePair();
+        KeyValuePair clone = new KeyValuePair();
 		clone.setKey(this.getKey());
 		clone.setValue(this.getValue());
 		clone.setOther(this.getOther());

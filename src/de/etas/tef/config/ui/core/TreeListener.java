@@ -87,6 +87,14 @@ public class TreeListener extends CellEditingListener
 			{
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_DELETE_BLOCK, getCompositeID(), getTree().getSelection()[0].getText());
 			}
+			else if( text.contentEquals(Constants.TXT_COPY) )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_COPY_BLOCK, getCompositeID(), null);
+			}
+			else if( text.contentEquals(Constants.TXT_PASTE) )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_PASTE_BLOCK, getCompositeID(), null);
+			}
 		}
 	}
 

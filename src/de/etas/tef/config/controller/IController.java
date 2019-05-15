@@ -25,4 +25,6 @@ public interface IController
 	ConfigFile getConfigFile();
 	void addConfigBlock(ConfigBlock cb);
 	void removeBlock(String blockName);
+	void copyBlock(String blockName);
+	ConfigBlock getCopyBlock();
 }

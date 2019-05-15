@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.swt.widgets.TreeItem;
+
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
@@ -26,11 +28,13 @@ public class ConfigFileController extends AbstractController
 	private ConfigBlock selectedConfigBlock = null;
 	private List<ConfigBlock> showConfigBlocks = null;
 	private boolean isEditingLocked = true;
+	private MainController mainController;
 
-	public ConfigFileController()
+	public ConfigFileController(MainController mainController)
 	{
 		worker = new InitFileWorker();
 		showConfigBlocks = new ArrayList<ConfigBlock>();
+		this.mainController = mainController;
 	}
 	
 	@Override
@@ -249,5 +253,15 @@ public class ConfigFileController extends AbstractController
 		}
 		
 		configFile.getConfigBlocks().remove(selected);
+	}
+	
+	public void copyBlock(String blockName) 
+	{
+		mainController.setCopyBlock(getSelectedConfigBlock());
+	}
+	
+	public ConfigBlock getCopyBlock()
+	{
+		return mainController.getCopyBlock();
 	}
 }

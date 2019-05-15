@@ -75,6 +75,8 @@ public final class ConfigBlock
 			newList.add(parameters.get(i).clone());
 		}
 		
+		newObject.setParameters(newList);
+		
 		return newObject;
 	}
 

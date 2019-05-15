@@ -338,6 +338,11 @@ public class TableComposite extends AbstractComposite
 	                items[i].dispose();
 	            }
 	            
+	            if(table.getSelectionCount() <= 0)
+	            {
+	            	return;
+	            }
+	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            copyItem.setText(Constants.TXT_COPY);
 	            copyItem.setImage(ImageFactory.IMAGE_COPY);

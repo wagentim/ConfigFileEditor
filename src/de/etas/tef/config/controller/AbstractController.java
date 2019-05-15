@@ -1,5 +1,7 @@
 package de.etas.tef.config.controller;
 
+import org.eclipse.swt.widgets.TreeItem;
+
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
@@ -100,4 +102,8 @@ public abstract class AbstractController implements IController
 	public void addConfigBlock(ConfigBlock cb){}
 	
 	public void removeBlock(String blockName){}
+	
+	public void copyBlock(String blockName) {}
+	
+	public ConfigBlock getCopyBlock() {return null;}
 }
