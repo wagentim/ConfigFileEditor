@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.TableItem;
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
@@ -129,6 +130,7 @@ public class TableComposite extends AbstractComposite
 		btnAdd = new Button(buttonComposite, SWT.PUSH);
 		btnAdd.setText(Constants.TXT_BTN_ADD);
 		btnAdd.setLayoutData(gd);
+		btnAdd.setEnabled(false);
 		btnAdd.addSelectionListener(new SelectionListener()
 		{
 			
@@ -157,6 +159,7 @@ public class TableComposite extends AbstractComposite
 		btnDelete = new Button(buttonComposite, SWT.PUSH);
 		btnDelete.setText(Constants.TXT_BTN_DELETE);
 		btnDelete.setLayoutData(gd);
+		btnDelete.setEnabled(false);
 		btnDelete.addSelectionListener(new SelectionListener() 
 		{
 			
@@ -179,6 +182,7 @@ public class TableComposite extends AbstractComposite
 		btnSave = new Button(buttonComposite, SWT.PUSH);
 		btnSave.setText(Constants.TXT_BTN_SAVE);
 		btnSave.setLayoutData(gd);
+		btnSave.setEnabled(false);
 		btnSave.addSelectionListener(new SelectionListener()
 		{
 			
@@ -217,6 +221,14 @@ public class TableComposite extends AbstractComposite
 			{
 				boolean locked = btnLock.getSelection();
 				
+				ConfigFile cf = getController().getConfigFile();
+				
+				if( null == cf )
+				{
+					btnLock.setSelection(true);
+					return;
+				}
+				
 				getController().setEditingLocked(locked);
 				
 				if( locked )
@@ -233,8 +245,11 @@ public class TableComposite extends AbstractComposite
 					createRightMenu(table, tl);
 				}
 				
+				setButtonLocked(locked);
+				
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOCK_SELECTION_CHANGED, getCompositeID(), locked);
 			}
+
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0)
@@ -242,6 +257,13 @@ public class TableComposite extends AbstractComposite
 				
 			}
 		});
+	}
+
+	private void setButtonLocked(boolean locked)
+	{
+		btnAdd.setEnabled(!locked);
+		btnDelete.setEnabled(!locked);
+		btnSave.setEnabled(!locked);
 	}
 	
 	protected void addTableSelectedListener()
@@ -314,9 +336,6 @@ public class TableComposite extends AbstractComposite
 	            newItem.setText(Constants.TXT_BTN_ADD);
 	            newItem.setImage(IMAGE_ADD);
 	            newItem.addSelectionListener(listener);
-	            
-	            
-	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
 	            
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            deleteItem.setText(Constants.TXT_BTN_DELETE);

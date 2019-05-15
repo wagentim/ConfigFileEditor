@@ -46,6 +46,7 @@ public final class Constants
 	public static final String TXT_GPIB_ADRESS = "GPIB_ADRESS";
 	public static final String TXT_CONFIG_FILE = "Config File";
 	public static final String TXT_LOCK_EDITING = "Edit Lock";
+	public static final String TXT_TEMP = "TEMP";
 	public static final String[] TABLE_TITLES = {"Name", "Value"};
 	
 	
@@ -67,4 +68,7 @@ public final class Constants
 	public static final int ACTION_BLOCK_SELECTED = 0x15;
 	public static final int ACTION_LOCK_SELECTION_CHANGED = 0x16;
 	public static final int ACTION_DROP_NEW_FILE_SELECTED = 0x18;
+	public static final int ACTION_ADD_NEW_BLOCK = 0x04;
+	public static final int ACTION_DELETE_BLOCK = 0x05;
+	public static final int ACTION_LOG_WRITE_WARNING = 0x07;
 }

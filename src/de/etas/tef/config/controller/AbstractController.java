@@ -96,4 +96,8 @@ public abstract class AbstractController implements IController
 	{}
 	
 	public ConfigFile getConfigFile() {return null;}
+	
+	public void addConfigBlock(ConfigBlock cb){}
+	
+	public void removeBlock(String blockName){}
 }

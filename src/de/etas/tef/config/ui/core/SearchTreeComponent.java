@@ -15,7 +15,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
@@ -104,10 +106,7 @@ public class SearchTreeComponent extends AbstractComposite
 	            newItem.setText(Constants.TXT_BTN_ADD);
 	            newItem.setImage(IMAGE_ADD);
 	            newItem.addSelectionListener(listener);
-	            
-	            
-	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
-	            
+
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            deleteItem.setText(Constants.TXT_BTN_DELETE);
 	            deleteItem.setImage(IMAGE_REMOVE);
@@ -122,13 +121,28 @@ public class SearchTreeComponent extends AbstractComposite
 		
 		for(int i = 0; i < blockList.length; i++)
 		{
-			TreeItem it = new TreeItem(root, SWT.NONE);
-			it.setText(blockList[i]);
-			it.setImage(IMAGE_BLOCK);
+			String blockName = blockList[i];
 			
+			addTreeItem(blockName, root, -1);
 		}
 		
 		root.setExpanded(true);
+	}
+	
+	private void addTreeItem(String blockName, TreeItem parent, int index)
+	{
+		TreeItem it;
+		
+		if( index < 0 )
+		{
+			it = new TreeItem(parent, SWT.NONE);
+		}
+		else
+		{
+			it = new TreeItem(parent, SWT.NONE, index);
+		}
+		it.setText(blockName);
+		it.setImage(IMAGE_BLOCK);
 	}
 
 	public TreeItem getSelectedTreeItem()
@@ -203,6 +217,54 @@ public class SearchTreeComponent extends AbstractComposite
 				createRightMenu(blockList, tl);
 			}
 		}
+		
+		if( Constants.ACTION_ADD_NEW_BLOCK == type )
+		{
+			ConfigBlock newBlock = (ConfigBlock)content;
+			
+			TreeItem selectedItem = getSelectedTreeItem();
+			TreeItem root = selectedItem.getParentItem();
+			
+			TreeItem parent;
+			int index;
+			
+			if( null == root )
+			{
+				parent = selectedItem;
+				index = 0;
+			}
+			else
+			{
+				parent = root;
+				index = parent.indexOf(selectedItem);
+			}
+			
+			addTreeItem(newBlock.getBlockName(), parent, index);
+			
+		}
+		
+		if( Constants.ACTION_DELETE_BLOCK == type )
+		{
+			String blockName = (String)content;
+			
+			if( null == blockName || blockName.isEmpty() )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Delete node name is empty");
+				return;
+			}
+			
+			TreeItem selected = getSelectedTreeItem();
+			
+			if(null == selected.getParentItem())
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_WARNING, CompositeID.COMPOSITE_ALONE, "Cannot remove the root node");
+				return;
+			}
+			getController().removeBlock(blockName);
+			
+			TreeItem root = selected.getParentItem();
+			selected.dispose();
+			blockList.setSelection(root.getItem(0));
+		}
 	}
-	
 }

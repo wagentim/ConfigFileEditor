@@ -11,8 +11,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
+import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
 
 public class TreeListener extends CellEditingListener
@@ -64,7 +66,6 @@ public class TreeListener extends CellEditingListener
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -77,11 +78,14 @@ public class TreeListener extends CellEditingListener
 			
 			if( text.contentEquals(Constants.TXT_BTN_ADD) )
 			{
-				System.out.println("Add Menu Item selected");
+				ConfigBlock cb = new ConfigBlock();
+				cb.setBlockName(Constants.TXT_TEMP);
+				getController().addConfigBlock(cb);
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_ADD_NEW_BLOCK, getCompositeID(), cb);
 			}
 			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
 			{
-				System.out.println("Delete Menu Item selected");
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_DELETE_BLOCK, getCompositeID(), getTree().getSelection()[0].getText());
 			}
 		}
 	}

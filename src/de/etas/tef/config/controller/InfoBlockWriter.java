@@ -19,6 +19,7 @@ public class InfoBlockWriter implements IActionListener
 	private final Text commentBlock;
 	private final Color error;
 	private final Color info;
+	private final Color warning;
 	private final MainController controller;
 	
 	private String txt = Constants.EMPTY_STRING;
@@ -32,6 +33,7 @@ public class InfoBlockWriter implements IActionListener
 		this.infoBlock = infoBlock;
 		this.error = infoBlock.getDisplay().getSystemColor(SWT.COLOR_RED);
 		this.info = infoBlock.getDisplay().getSystemColor(SWT.COLOR_BLACK);
+		this.warning = infoBlock.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		this.controller = controller;
 		this.commentBlock = commentBlock;
 		ActionManager.INSTANCE.addActionListener(this);
@@ -62,6 +64,20 @@ public class InfoBlockWriter implements IActionListener
 		infoBlock.append(txt);
 		infoBlock.setStyleRange(sr);
 	}
+	
+	private void logWarning(String text)
+	{
+		txt = "[WARN] " + text + "\n";
+		
+		StyleRange sr = new StyleRange();
+		sr.start = infoBlock.getText().length();
+		sr.length = txt.length();
+		sr.foreground = warning;
+		sr.fontStyle = SWT.ITALIC;
+		infoBlock.append(txt);
+		infoBlock.setStyleRange(sr);
+	}
+
 
 	@Override
 	public void receivedAction(int type, int compositeID, Object content)
@@ -73,6 +89,10 @@ public class InfoBlockWriter implements IActionListener
 		else if (type == Constants.ACTION_LOG_WRITE_ERROR)
 		{
 			logError(content.toString());
+		}
+		else if (type == Constants.ACTION_LOG_WRITE_WARNING)
+		{
+			logWarning(content.toString());
 		}
 		else if(type == Constants.ACTION_NEW_FILE_SELECTED)
 		{

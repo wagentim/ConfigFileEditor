@@ -42,6 +42,16 @@ public final class ConfigFile
 		this.comments = comments;
 	}
 	
+	public void addConfigBlock(ConfigBlock cb)
+	{
+		if( null == cb )
+		{
+			return;
+		}
+		
+		getConfigBlocks().add(cb);
+	}
+	
 	public ConfigFile clone() throws CloneNotSupportedException
 	{
 		ConfigFile cf = new ConfigFile();

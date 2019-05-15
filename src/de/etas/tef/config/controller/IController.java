@@ -23,4 +23,6 @@ public interface IController
 	void setEditingLocked(boolean isEditingLocked);
 	void parameterAdded(KeyValuePair kvp);
 	ConfigFile getConfigFile();
+	void addConfigBlock(ConfigBlock cb);
+	void removeBlock(String blockName);
 }

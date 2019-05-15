@@ -232,4 +232,22 @@ public class ConfigFileController extends AbstractController
 	{
 		return configFile;
 	}
+	
+	public void addConfigBlock(ConfigBlock cb)
+	{
+		getConfigFile().addConfigBlock(cb);
+	}
+	
+	public void removeBlock(String blockName)
+	{
+		ConfigBlock selected = getSelectedConfigBlock();
+		
+		if( !blockName.equalsIgnoreCase(selected.getBlockName()) )
+		{
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Required Delete Block: " + blockName + " is not equal to current selected Block: " + selected.getBlockName());
+			return;
+		}
+		
+		configFile.getConfigBlocks().remove(selected);
+	}
 }
