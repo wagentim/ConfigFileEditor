@@ -3,19 +3,22 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.KeyEvent;
 
+import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
+import de.etas.tef.config.helper.Constants;
 
 public class TableListener extends CellEditingListener
 {
@@ -128,7 +131,19 @@ public class TableListener extends CellEditingListener
 	@Override
 	public void widgetSelected(SelectionEvent event)
 	{
-		// TODO Auto-generated method stub
+		if(event.getSource() instanceof MenuItem)
+		{
+			String text = ((MenuItem)event.getSource()).getText();
+			
+			if( text.contentEquals(Constants.TXT_BTN_ADD) )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_MENU_ADD, getCompositeID(), Constants.EMPTY_STRING);
+			}
+			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_MENU_DELETE, getCompositeID(), Constants.EMPTY_STRING);
+			}
+		}
 		
 	}
 

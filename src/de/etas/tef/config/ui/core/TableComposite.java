@@ -137,16 +137,10 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				if ( null == getController().getSelectedConfigBlock())
-				{
-					return;
-				}
-				
-				KeyValuePair kvp = new KeyValuePair();
-				
-				addTableItem(kvp);
-				getController().parameterAdded(kvp);
+				btnAddAction();
 			}
+
+			
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0)
@@ -166,11 +160,10 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent event) 
 			{
-				deleteSelectedItems();
-				treeItemSelected(searchTree.getSelectedTreeItem().getText().trim());
-				
+				System.out.println("Button Delete");
+				btnDeleteAction();
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) 
 			{
@@ -257,6 +250,25 @@ public class TableComposite extends AbstractComposite
 				
 			}
 		});
+	}
+	
+	private void btnAddAction()
+	{
+		if ( null == getController().getSelectedConfigBlock())
+		{
+			return;
+		}
+		
+		KeyValuePair kvp = new KeyValuePair();
+		
+		addTableItem(kvp);
+		getController().parameterAdded(kvp);
+	}
+	
+	private void btnDeleteAction()
+	{
+		deleteSelectedItems();
+		treeItemSelected(searchTree.getSelectedTreeItem().getText().trim());
 	}
 
 	private void setButtonLocked(boolean locked)
@@ -480,12 +492,22 @@ public class TableComposite extends AbstractComposite
 				updateParameters(Collections.emptyList());
 			}
 		}
-		else if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
+		
+		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
 		{
 			clearTable();
 			String[] allBlocks = getController().getAllBlocks();
 			setBlockList(allBlocks);
 		}
-		 
+		
+		if( type == Constants.ACTION_MENU_ADD )
+		{
+			btnAddAction();
+		}
+		
+		if( type == Constants.ACTION_MENU_DELETE )
+		{
+			btnDeleteAction();
+		}
 	}
 }
