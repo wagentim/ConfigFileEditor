@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -519,6 +520,30 @@ public class TableComposite extends AbstractComposite
 		if( type == Constants.ACTION_MENU_DELETE )
 		{
 			btnDeleteAction();
+		}
+		
+		if( type == Constants.ACTION_COPY_PARAMETER )
+		{
+			int[] selectedItems = table.getSelectionIndices();
+			
+			if( null == selectedItems || selectedItems.length <= 0 )
+			{
+				return;
+			}
+			
+			getController().copyParameters(selectedItems);
+		}
+		
+		if( type == Constants.ACTION_PASTE_PARAMETER )
+		{
+			List<KeyValuePair> copyParameters = getController().getCopyParameters();
+			
+			Iterator<KeyValuePair> it = copyParameters.iterator();
+			
+			while(it.hasNext())
+			{
+				addTableItem(it.next());
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package de.etas.tef.config.controller;
 
-import org.eclipse.swt.widgets.TreeItem;
+import java.util.Collections;
+import java.util.List;
 
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
@@ -106,4 +107,8 @@ public abstract class AbstractController implements IController
 	public void copyBlock(String blockName) {}
 	
 	public ConfigBlock getCopyBlock() {return null;}
+	
+	public void copyParameters(int[] selectedItems) {}
+	
+	public List<KeyValuePair> getCopyParameters(){return Collections.emptyList();}
 }

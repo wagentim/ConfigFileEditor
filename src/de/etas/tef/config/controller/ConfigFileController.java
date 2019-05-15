@@ -3,9 +3,8 @@ package de.etas.tef.config.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
-
-import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.CellIndex;
@@ -263,5 +262,41 @@ public class ConfigFileController extends AbstractController
 	public ConfigBlock getCopyBlock()
 	{
 		return mainController.getCopyBlock();
+	}
+	
+	public void copyParameters(int[] selectedItems) 
+	{
+		List<KeyValuePair> paras = getSelectedConfigBlock().getAllParameters();
+		List<KeyValuePair> result = new ArrayList<KeyValuePair>();
+		
+		for(int i = 0; i < selectedItems.length; i++)
+		{
+			try
+			{
+				result.add(paras.get(selectedItems[i]).clone());
+			}
+			catch (CloneNotSupportedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		mainController.copyParameters(result);
+		
+	}
+	
+	public List<KeyValuePair> getCopyParameters()
+	{
+		List<KeyValuePair> values = mainController.getCopyParameters();
+		ConfigBlock cb = getSelectedConfigBlock();
+		
+		Iterator<KeyValuePair> it = values.iterator();
+		
+		while(it.hasNext())
+		{
+			cb.addParameterInLast(it.next());
+		}
+		
+		return values;
 	}
 }

@@ -1,5 +1,7 @@
 package de.etas.tef.config.controller;
 
+import java.util.List;
+
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
@@ -27,4 +29,6 @@ public interface IController
 	void removeBlock(String blockName);
 	void copyBlock(String blockName);
 	ConfigBlock getCopyBlock();
+	void copyParameters(int[] selectedItems);
+	List<KeyValuePair> getCopyParameters();
 }

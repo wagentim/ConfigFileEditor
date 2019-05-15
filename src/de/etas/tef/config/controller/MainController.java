@@ -1,7 +1,10 @@
 package de.etas.tef.config.controller;
 
+import java.util.List;
+
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
@@ -10,6 +13,7 @@ public class MainController extends AbstractController
 	private final IController left;
 	private final IController right;
 	private ConfigBlock copyBlock = null;
+	private List<KeyValuePair> copyParameters = null;
 	
 	private boolean connected = false;
 	
@@ -63,5 +67,15 @@ public class MainController extends AbstractController
 	public ConfigBlock getCopyBlock()
 	{
 		return copyBlock;
+	}
+
+	public void copyParameters(List<KeyValuePair> result)
+	{
+		this.copyParameters = result;
+	}
+	
+	public List<KeyValuePair> getCopyParameters()
+	{
+		return this.copyParameters;
 	}
 }

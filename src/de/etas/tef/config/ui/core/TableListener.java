@@ -143,6 +143,15 @@ public class TableListener extends CellEditingListener
 			{
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_MENU_DELETE, getCompositeID(), Constants.EMPTY_STRING);
 			}
+			else if( text.contentEquals(Constants.TXT_COPY) )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_COPY_PARAMETER, getCompositeID(), null);
+			}
+			else if( text.contentEquals(Constants.TXT_PASTE) )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_PASTE_PARAMETER, getCompositeID(), null);
+			
+			}
 		}
 		
 	}

@@ -77,4 +77,6 @@ public final class Constants
 	public static final int ACTION_MENU_DELETE = 0x0C;
 	public static final int ACTION_COPY_BLOCK = 0x0E;
 	public static final int ACTION_PASTE_BLOCK = 0x17;
+	public static final int ACTION_COPY_PARAMETER = 0x19;
+	public static final int ACTION_PASTE_PARAMETER = 0x1A;
 }

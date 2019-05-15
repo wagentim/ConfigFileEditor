@@ -263,7 +263,9 @@ public class SearchTreeComponent extends AbstractComposite
 		
 		if( Constants.ACTION_COPY_BLOCK == type )
 		{
-			getController().copyBlock(blockList.getSelection()[0].getText());
+			String blockName = blockList.getSelection()[0].getText();
+			getController().copyBlock(blockName);
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is copied: " + blockName);
 		}
 		
 		if( Constants.ACTION_PASTE_BLOCK == type )
