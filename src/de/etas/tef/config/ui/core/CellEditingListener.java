@@ -208,7 +208,22 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 			
 			handleModification(keyEvent);
 		}
+		
+		if(((keyEvent.stateMask & SWT.CTRL) == SWT.CTRL) && ((keyEvent.keyCode == 'c') || (keyEvent.keyCode == 'C')) )
+		{
+			keyCopyPressed();
+		}
+		
+		if(((keyEvent.stateMask & SWT.CTRL) == SWT.CTRL) && ((keyEvent.keyCode == 'v') || (keyEvent.keyCode == 'V')) )
+		{
+			keyPastePressed();
+		}
+		
 	}
+
+	protected abstract void keyPastePressed();
+
+	protected abstract void keyCopyPressed();
 
 	@Override
 	public void keyReleased(KeyEvent arg0)

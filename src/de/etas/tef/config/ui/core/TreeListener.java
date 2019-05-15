@@ -89,18 +89,40 @@ public class TreeListener extends CellEditingListener
 			}
 			else if( text.contentEquals(Constants.TXT_COPY) )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_COPY_BLOCK, getCompositeID(), null);
+				sendCopyMessage();
 			}
 			else if( text.contentEquals(Constants.TXT_PASTE) )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_PASTE_BLOCK, getCompositeID(), null);
+				sendPasteMessage();
 			}
 		}
+	}
+	
+	private void sendCopyMessage()
+	{
+		ActionManager.INSTANCE.sendAction(Constants.ACTION_COPY_BLOCK, getCompositeID(), null);
+	}
+	
+	private void sendPasteMessage()
+	{
+		ActionManager.INSTANCE.sendAction(Constants.ACTION_PASTE_BLOCK, getCompositeID(), null);
 	}
 
 	@Override
 	protected CellIndex getCell()
 	{
 		return null;
+	}
+
+	@Override
+	protected void keyCopyPressed()
+	{
+		sendCopyMessage();
+	}
+
+	@Override
+	protected void keyPastePressed()
+	{
+		sendPasteMessage();
 	}
 }

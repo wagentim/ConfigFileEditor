@@ -263,7 +263,14 @@ public class SearchTreeComponent extends AbstractComposite
 		
 		if( Constants.ACTION_COPY_BLOCK == type )
 		{
-			String blockName = blockList.getSelection()[0].getText();
+			TreeItem cb = blockList.getSelection()[0];
+			
+			if( null == cb )
+			{
+				return;
+			}
+			
+			String blockName = cb.getText();
 			getController().copyBlock(blockName);
 			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is copied: " + blockName);
 		}
@@ -274,11 +281,11 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			if( null == newBlock )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Paste Block is NULL!");
 				return;
 			}
 			getController().addConfigBlock(newBlock);
 			addNewBlock(newBlock);
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is pasted: " + newBlock.getBlockName());
 		}
 	}
 	

@@ -532,11 +532,17 @@ public class TableComposite extends AbstractComposite
 			}
 			
 			getController().copyParameters(selectedItems);
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Parameters are copied");
 		}
 		
 		if( type == Constants.ACTION_PASTE_PARAMETER )
 		{
 			List<KeyValuePair> copyParameters = getController().getCopyParameters();
+			
+			if( null == copyParameters || copyParameters.isEmpty() )
+			{
+				return;
+			}
 			
 			Iterator<KeyValuePair> it = copyParameters.iterator();
 			
@@ -544,6 +550,7 @@ public class TableComposite extends AbstractComposite
 			{
 				addTableItem(it.next());
 			}
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Parameters are pasted");
 		}
 	}
 }

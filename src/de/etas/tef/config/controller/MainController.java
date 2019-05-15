@@ -1,5 +1,6 @@
 package de.etas.tef.config.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.etas.tef.config.action.ActionManager;
@@ -66,7 +67,9 @@ public class MainController extends AbstractController
 	
 	public ConfigBlock getCopyBlock()
 	{
-		return copyBlock;
+		ConfigBlock result = copyBlock;
+		copyBlock = null;
+		return result;
 	}
 
 	public void copyParameters(List<KeyValuePair> result)
@@ -76,6 +79,8 @@ public class MainController extends AbstractController
 	
 	public List<KeyValuePair> getCopyParameters()
 	{
-		return this.copyParameters;
+		List<KeyValuePair> result = this.copyParameters;
+		this.copyParameters = Collections.emptyList();
+		return result;
 	}
 }
