@@ -6,6 +6,7 @@ import java.util.Date;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
@@ -18,6 +19,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -96,6 +98,23 @@ public class MainScreen implements IActionListener
 	    MenuItem fileExitItem = new MenuItem(fileMenu, SWT.PUSH);
 	    fileExitItem.setText("E&xit");
 	    fileExitItem.setImage(IMAGE_EXIT);
+	    fileExitItem.addSelectionListener(new SelectionAdapter()
+		{
+	    	@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+	    		MessageBox mb = new MessageBox(shell, SWT.ICON_WARNING | SWT.YES | SWT.NO);
+	    		mb.setText("Exit Confirmation");
+				mb.setMessage("Do you really want to Exit?");
+
+				boolean done = mb.open() == SWT.YES;
+				
+				if( done )
+				{
+					System.exit(0);
+				}
+			}
+		});
 	    
 	    MenuItem functionMenuHeader = new MenuItem(menuBar, SWT.CASCADE);
 	    functionMenuHeader.setText("F&unction");
