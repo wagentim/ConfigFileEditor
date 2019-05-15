@@ -39,6 +39,7 @@ public class MainScreen implements IActionListener
 	private final MainController controller;
 	private MenuItem leftPaneItem;
 	private MenuItem rightPaneItem;
+	private Text commentBlock;
 	
 	private static boolean isLeftSelected = true;
 	private static boolean isRightSelected = false;
@@ -271,11 +272,11 @@ public class MainScreen implements IActionListener
 		txtInfoBlock.setLayoutData(gd);
 		txtInfoBlock.setEditable(false);
 		
-		Text commentBlock = new Text(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		commentBlock = new Text(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 3;
 		commentBlock.setLayoutData(gd);
-		commentBlock.setEditable(true);
+		commentBlock.setEditable(false);
 		
 		new InfoBlockWriter(txtInfoBlock, commentBlock, controller);
 
@@ -328,6 +329,13 @@ public class MainScreen implements IActionListener
 			{
 				configCompositeSashForm.setWeights(new int[]{ 1, 0 });
 			}
+		}
+		
+		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
+		{
+			boolean locked = (boolean)content;
+			
+			commentBlock.setEditable(!locked);
 		}
 	}
 }
