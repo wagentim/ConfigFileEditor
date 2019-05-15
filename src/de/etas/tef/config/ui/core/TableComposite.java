@@ -493,7 +493,7 @@ public class TableComposite extends AbstractComposite
 			}
 		}
 		
-		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
+		if( type == Constants.ACTION_NEW_FILE_SELECTED )
 		{
 			clearTable();
 			String[] allBlocks = getController().getAllBlocks();

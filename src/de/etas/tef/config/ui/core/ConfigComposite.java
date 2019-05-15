@@ -29,6 +29,7 @@ public class ConfigComposite extends AbstractComposite
 		
 		new SelectComposite(this, SWT.NONE, controller, getCompositeID());
 		new TableComposite(this, SWT.NONE, controller, getCompositeID());
+		
 		initDropFunction(this);
 	}
 	
@@ -52,15 +53,13 @@ public class ConfigComposite extends AbstractComposite
 				{
 					return;
 				}
+				
 				String filePath = fileList[0];
 				
 				if(!filePath.toLowerCase().trim().endsWith(".ini"))
 				{
 					return;
 				}
-				
-				
-				getController().setInputConfigFile(filePath);
 				
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_DROP_NEW_FILE_SELECTED, getCompositeID(), filePath);
 			}

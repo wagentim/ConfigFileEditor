@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
 public class SelectComposite extends AbstractComposite
@@ -69,18 +70,20 @@ public class SelectComposite extends AbstractComposite
 		labelFileSelect.setImage(image);
 	}
 	
-	protected void setCurrFilePath()
+	protected void setCurrFilePath(String currFilePath)
 	{
-		String currFilePath = fileSelector(this.getShell());
 		
-		if ( null == currFilePath )
+		if ( null == currFilePath || currFilePath.isEmpty())
 		{
-			currFilePath = Constants.EMPTY_STRING;
+			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "No File is selected!");
+			return;
 		}
 		
-		this.txtFileSelect.setText(currFilePath);
+		txtFileSelect.setText(currFilePath);
 		
 		getController().setInputConfigFile(currFilePath);
+		
+		ActionManager.INSTANCE.sendAction(Constants.ACTION_NEW_FILE_SELECTED, getCompositeID(), currFilePath);
 	}
 	
 	protected void initText(Composite comp)
@@ -108,8 +111,7 @@ public class SelectComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				setCurrFilePath();
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_NEW_FILE_SELECTED, getCompositeID(), Constants.EMPTY_STRING);
+				setCurrFilePath(fileSelector(getShell()));
 			}
 			
 			@Override
@@ -130,5 +132,14 @@ public class SelectComposite extends AbstractComposite
 	@Override
 	public void receivedAction(int type, int compositeID, Object content)
 	{
+		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE )
+		{
+			return;
+		}
+		
+		if( type == Constants.ACTION_DROP_NEW_FILE_SELECTED )
+		{
+			setCurrFilePath((String)content);
+		}
 	}
 }
