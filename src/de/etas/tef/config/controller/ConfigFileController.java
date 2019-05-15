@@ -3,6 +3,7 @@ package de.etas.tef.config.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -288,6 +289,12 @@ public class ConfigFileController extends AbstractController
 	public List<KeyValuePair> getCopyParameters()
 	{
 		List<KeyValuePair> values = mainController.getCopyParameters();
+		
+		if( null == values )
+		{
+			return Collections.emptyList();
+		}
+		
 		ConfigBlock cb = getSelectedConfigBlock();
 		
 		Iterator<KeyValuePair> it = values.iterator();
