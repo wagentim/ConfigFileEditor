@@ -5,7 +5,6 @@ import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -20,6 +19,7 @@ import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.ImageFactory;
 
 public class SearchTreeComponent extends AbstractComposite
 {
@@ -27,10 +27,7 @@ public class SearchTreeComponent extends AbstractComposite
 	private Tree blockList;
 	private TreeItem root;
 	private TableComposite tableComposite;
-	private static Image IMAGE_BLOCK;
-	private static Image IMAGE_ROOT;
-	private static Image IMAGE_ADD;
-	private static Image IMAGE_REMOVE;
+
 	private TreeListener tl;
 	private Menu rightClickMenu;
 	
@@ -42,10 +39,6 @@ public class SearchTreeComponent extends AbstractComposite
 		layout.marginTop = 0;
 		this.setLayout(layout);
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
-		IMAGE_BLOCK = new Image(parent.getDisplay(), "icons/block.png");
-		IMAGE_ROOT = new Image(parent.getDisplay(), "icons/root.png");
-		IMAGE_ADD = new Image(parent.getDisplay(), "icons/add.png");
-		IMAGE_REMOVE = new Image(parent.getDisplay(), "icons/remove.png");
 		
 		initComponent(controller);
 	}
@@ -61,7 +54,7 @@ public class SearchTreeComponent extends AbstractComposite
 		
 		root = new TreeItem(blockList, SWT.NONE);
 		root.setText(Constants.TXT_CONFIG_FILE);
-		root.setImage(IMAGE_ROOT);
+		root.setImage(ImageFactory.IMAGE_ROOT);
 		
 		blockList.addSelectionListener(new SelectionListener()
 		{
@@ -102,15 +95,29 @@ public class SearchTreeComponent extends AbstractComposite
 	                items[i].dispose();
 	            }
 	            
+	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
+	            copyItem.setText(Constants.TXT_COPY);
+	            copyItem.setImage(ImageFactory.IMAGE_COPY);
+	            copyItem.addSelectionListener(listener);
+	            
+	            MenuItem pasteItem = new MenuItem(rightClickMenu, SWT.NONE);
+	            pasteItem.setText(Constants.TXT_PASTE);
+	            pasteItem.setImage(ImageFactory.IMAGE_PASTE);
+	            pasteItem.addSelectionListener(listener);
+	            
+	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
+	            
 	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            newItem.setText(Constants.TXT_BTN_ADD);
-	            newItem.setImage(IMAGE_ADD);
+	            newItem.setImage(ImageFactory.IMAGE_ADD);
 	            newItem.addSelectionListener(listener);
 
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            deleteItem.setText(Constants.TXT_BTN_DELETE);
-	            deleteItem.setImage(IMAGE_REMOVE);
+	            deleteItem.setImage(ImageFactory.IMAGE_REMOVE);
 	            deleteItem.addSelectionListener(listener);
+	            
+	            
 	        }
 	    });
 	}
@@ -142,7 +149,7 @@ public class SearchTreeComponent extends AbstractComposite
 			it = new TreeItem(parent, SWT.NONE, index);
 		}
 		it.setText(blockName);
-		it.setImage(IMAGE_BLOCK);
+		it.setImage(ImageFactory.IMAGE_BLOCK);
 	}
 
 	public TreeItem getSelectedTreeItem()

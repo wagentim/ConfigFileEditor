@@ -48,6 +48,8 @@ public final class Constants
 	public static final String TXT_LOCK_EDITING = "Edit Lock";
 	public static final String TXT_TEMP = "TEMP";
 	public static final String[] TABLE_TITLES = {"Name", "Value"};
+	public static final String TXT_COPY = "Copy";
+	public static final String TXT_PASTE = "Paste";
 	
 	
 	public static final int ACTION_NEW_FILE_SELECTED = 0x00;
