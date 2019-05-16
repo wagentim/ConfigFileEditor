@@ -290,6 +290,9 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
+				getController().setFocusedElement(Constants.FOCUS_PARAMETER);
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_PARAMETER_SELECTED, getCompositeID(), getTable().getSelectionIndex());
+
 				String text = getTable().getItem(getTable().getSelectionIndex()).getText(1);
 				
 				if( !((MainController)(getController().getParent())).isConnected() )
@@ -298,7 +301,6 @@ public class TableComposite extends AbstractComposite
 				}
 					
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_PARAMETER_SELECTED, getCompositeID(), text);
-				getController().setFocusedElement(Constants.FOCUS_PARAMETER);
 			}
 			
 		});
@@ -515,7 +517,7 @@ public class TableComposite extends AbstractComposite
 			}
 		}
 		
-		if( type == Constants.ACTION_NEW_FILE_SELECTED )
+		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
 		{
 			clearTable();
 			String[] allBlocks = getController().getAllBlocks();
@@ -561,6 +563,17 @@ public class TableComposite extends AbstractComposite
 				addTableItem(it.next());
 			}
 			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Parameters are pasted");
+		}
+		
+		if( Constants.ACTION_COMMENT_SAVED == type && getController().getFocusedElement() == Constants.FOCUS_PARAMETER )
+		{
+			List<KeyValuePair> paras = getController().getSelectedConfigBlock().getAllParameters();
+			int index = table.getSelectionIndex();
+			
+			if(index >= 0)
+			{
+				paras.get(index).setComment((String) content);
+			}
 		}
 	}
 }

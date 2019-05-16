@@ -13,9 +13,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -42,6 +43,7 @@ public class MainScreen implements IActionListener
 	private MenuItem connectItem;
 	private StyledText txtInfoBlock;
 	private SashForm main;
+	private Label dateLabel;
 	
 	
 	public final Image IMAGE_TITLE;
@@ -50,6 +52,7 @@ public class MainScreen implements IActionListener
 	public final Image IMAGE_ABOUT;
 	public final Image IMAGE_CONNECT;
 	public final Image IMAGE_DISCONNECT;
+	public final Image IMAGE_TIME;
 
 	
 	private static boolean isLeftSelected = true;
@@ -77,6 +80,7 @@ public class MainScreen implements IActionListener
 		IMAGE_ABOUT = new Image(display, "icons/about.png");
 		IMAGE_CONNECT = new Image(display, "icons/connect.png");
 		IMAGE_DISCONNECT = new Image(display, "icons/disconnect.png");
+		IMAGE_TIME = new Image(display, "icons/time.png");
 		
 		Shell shell = new Shell(display);
 		shell.setText(Constants.TXT_APP_TITLE);
@@ -85,7 +89,20 @@ public class MainScreen implements IActionListener
 		initMainScreen(shell);
 		initMenu(shell);
 		initMainComponents(shell);
+		
 		initStatusBar(shell);
+		
+		Runnable timer = new Runnable()
+		{
+			public void run()
+			{
+				dateLabel.setText(" " + sdf.format(new Date()) + " ");
+				display.timerExec(1000, this);
+			}
+		};
+		display.timerExec(1000, timer);
+		
+//		initDaemonThread();
 //		new OptionComposite(shell, SWT.BORDER, controller, CompositeID.COMPOSITE_ALONE);
 
 		shell.open();
@@ -97,6 +114,38 @@ public class MainScreen implements IActionListener
 			}
 		}
 		display.dispose();
+	}
+
+	private void initDaemonThread()
+	{
+		Thread updateTimeThread = new Thread()
+		{
+			public void run()
+			{
+				while (true)
+				{
+					Display.getDefault().syncExec(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							dateLabel.setText(getTime());
+						}
+					});
+
+					try
+					{
+						sleep(1000);
+					}
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		updateTimeThread.setDaemon(true);
+		updateTimeThread.start();
 	}
 
 	private void initMenu(Shell shell)
@@ -247,21 +296,31 @@ public class MainScreen implements IActionListener
 	    shell.setMenuBar(menuBar);
 	}
 	
+	private String getTime()
+	{
+		return (" " + sdf.format(new Date()) + " ");
+	}
+	
 	private void initStatusBar(Shell shell)
 	{
-		Group statusBarGroup = new Group(shell, SWT.NONE);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.minimumHeight = 30;
-		statusBarGroup.setLayoutData(gd);
 		
-		statusBarGroup.setEnabled(false);
-		Label dateLabel = new Label(statusBarGroup, SWT.NONE);
-		dateLabel.setText(" " + sdf.format(new Date()) + " ");
-		dateLabel.setBounds(2, 10, 120, 16);
-		
-		Label statusLabel = new Label(statusBarGroup, SWT.NONE);
-		statusLabel.setText(" Here is a status message ");
-		statusLabel.setBounds(124, 10, 200, 16);
+		Composite statusbar = new Composite(shell, SWT.BORDER);
+
+        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.heightHint = 16;
+        statusbar.setLayoutData(gridData);
+        RowLayout layout = new RowLayout();
+        layout.marginLeft = layout.marginTop = 0;
+        statusbar.setLayout(layout);
+        
+        Label image = new Label(statusbar, SWT.NONE);
+        image.setImage(IMAGE_TIME);
+        
+        dateLabel = new Label(statusbar, SWT.BOLD);
+        dateLabel.setLayoutData(new RowData(150, -1));
+        dateLabel.setText(" "+sdf.format(new Date())+" ");
+        
+        new Label(statusbar, SWT.SEPARATOR | SWT.VERTICAL);
 	}
 	
 	protected void checkOptionSelection(int fromWhich)

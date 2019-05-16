@@ -8,6 +8,7 @@ public class KeyValuePair
 	private String value = Constants.SYMBOL_INIT_FILE_COMMENT_DASH;
 	private String other = Constants.EMPTY_STRING;
 	private String forthValue = Constants.EMPTY_STRING;
+	private String comment = Constants.EMPTY_STRING;
 	
 	public String getKey()
 	{
@@ -41,13 +42,19 @@ public class KeyValuePair
 		this.other = other;
 	}
 	
-	
-	
 	@Override
 	public String toString()
 	{
 		return "KeyValuePair [key=" + key + ", value=" + value + ", other=" + other + ", forthValue=" + forthValue
-				+ "]";
+				+ ", comment=" + comment + "]";
+	}
+	public String getComment()
+	{
+		return comment;
+	}
+	public void setComment(String comment)
+	{
+		this.comment = comment;
 	}
 	
 	@Override
@@ -58,6 +65,7 @@ public class KeyValuePair
 		clone.setValue(this.getValue());
 		clone.setOther(this.getOther());
 		clone.setForthValue(this.getForthValue());
+		clone.setComment(this.getComment());
         return clone;
     }
 	public String getForthValue()

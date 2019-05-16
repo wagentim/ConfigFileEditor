@@ -16,7 +16,7 @@ public final class Constants
 	public static final String SYMBOL_RIGHT_PARENTHESES_ = ")"; 
 	
 	public static final int MAIN_SCREEN_WIDTH = 800;
-	public static final int MAIN_SCREEN_HEIGHT = 600;
+	public static final int MAIN_SCREEN_HEIGHT = 700;
 	
 	public static final int BTN_DEFAULT_WIDTH = 80;
 	public static final int LABEL_DEFAULT_WIDTH = 45;
@@ -80,6 +80,7 @@ public final class Constants
 	public static final int ACTION_COPY_PARAMETER = 0x19;
 	public static final int ACTION_PASTE_PARAMETER = 0x1A;
 	public static final int ACTION_COMMENT_SAVED = 0x1B;
+	public static final int ACTION_PARAMETER_SELECTED = 0x1C;
 	
 	public static final int FOCUS_NONE = 0x00;
 	public static final int FOCUS_BLOCK = 0x01;

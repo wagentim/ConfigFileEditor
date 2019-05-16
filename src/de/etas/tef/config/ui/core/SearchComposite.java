@@ -13,12 +13,14 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 
 public class SearchComposite extends AbstractComposite
 {
 	
 	protected IController controller;
+	private Text searchText;
 	
 	public SearchComposite(Composite parent, int style, MainController controller, int compositeID)
 	{
@@ -38,7 +40,7 @@ public class SearchComposite extends AbstractComposite
 		gd = new GridData();
 		label.setLayoutData(gd);
 		
-		Text searchText = new Text(this, SWT.NONE);
+		searchText = new Text(this, SWT.NONE);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.verticalSpan = gd.horizontalSpan = 0;
 		searchText.setLayoutData(gd);
@@ -57,5 +59,19 @@ public class SearchComposite extends AbstractComposite
 		});
 		
 		this.controller = controller;
+	}
+	
+	@Override
+	public void receivedAction(int type, int compositeID, Object content)
+	{
+		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE)
+		{
+			return;
+		}
+		
+		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
+		{
+			searchText.setText(Constants.EMPTY_STRING);
+		}
 	}
 }

@@ -37,7 +37,7 @@ public class ConfigComposite extends AbstractComposite
 		new TableComposite(sf, SWT.NONE, controller, getCompositeID());
 		new CommentComposite(sf, SWT.NONE, controller, getCompositeID());
 		
-		sf.setWeights(new int[]{3,1});
+		sf.setWeights(new int[]{2,1});
 		
 		initDropFunction(this);
 	}
