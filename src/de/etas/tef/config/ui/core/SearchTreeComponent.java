@@ -78,6 +78,7 @@ public class SearchTreeComponent extends AbstractComposite
 			{
 				String s = getSelectedTreeItem().getText();
 				treeItemSelected(s);
+				getController().setFocusedElement(Constants.FOCUS_BLOCK);
 			}
 			
 			@Override
@@ -317,7 +318,7 @@ public class SearchTreeComponent extends AbstractComposite
 		{
 			TreeItem cb = blockList.getSelection()[0];
 			
-			if( null == cb )
+			if( null == cb || null == cb.getParentItem() )
 			{
 				return;
 			}
@@ -338,6 +339,11 @@ public class SearchTreeComponent extends AbstractComposite
 			getController().addConfigBlock(newBlock);
 			addNewBlock(newBlock);
 			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is pasted: " + newBlock.getBlockName());
+		}
+		
+		if( Constants.ACTION_COMMENT_SAVED == type && getController().getFocusedElement() == Constants.FOCUS_BLOCK )
+		{
+			getController().getSelectedConfigBlock().setComments((String) content);
 		}
 	}
 	

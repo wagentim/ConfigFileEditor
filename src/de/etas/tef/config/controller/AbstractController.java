@@ -111,4 +111,9 @@ public abstract class AbstractController implements IController
 	public void copyParameters(int[] selectedItems) {}
 	
 	public List<KeyValuePair> getCopyParameters(){return Collections.emptyList();}
+	
+	public void setConfigFile(ConfigFile configFile){}
+	
+	public int getFocusedElement(){return Constants.FOCUS_NONE;}
+	public void setFocusedElement(int element){}
 }

@@ -31,4 +31,7 @@ public interface IController
 	ConfigBlock getCopyBlock();
 	void copyParameters(int[] selectedItems);
 	List<KeyValuePair> getCopyParameters();
+	void setConfigFile(ConfigFile configFile);
+	int getFocusedElement();
+	void setFocusedElement(int element);
 }

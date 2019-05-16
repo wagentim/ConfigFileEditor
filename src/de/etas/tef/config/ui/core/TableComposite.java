@@ -165,7 +165,6 @@ public class TableComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent event) 
 			{
-				System.out.println("Button Delete");
 				btnDeleteAction();
 			}
 
@@ -223,8 +222,8 @@ public class TableComposite extends AbstractComposite
 				
 				if( null == cf )
 				{
-					btnLock.setSelection(true);
-					return;
+					cf = new ConfigFile();
+					getController().setConfigFile(cf);
 				}
 				
 				getController().setEditingLocked(locked);
@@ -299,6 +298,7 @@ public class TableComposite extends AbstractComposite
 				}
 					
 				ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_PARAMETER_SELECTED, getCompositeID(), text);
+				getController().setFocusedElement(Constants.FOCUS_PARAMETER);
 			}
 			
 		});

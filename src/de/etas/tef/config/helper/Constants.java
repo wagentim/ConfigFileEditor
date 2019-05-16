@@ -79,4 +79,10 @@ public final class Constants
 	public static final int ACTION_PASTE_BLOCK = 0x17;
 	public static final int ACTION_COPY_PARAMETER = 0x19;
 	public static final int ACTION_PASTE_PARAMETER = 0x1A;
+	public static final int ACTION_COMMENT_SAVED = 0x1B;
+	
+	public static final int FOCUS_NONE = 0x00;
+	public static final int FOCUS_BLOCK = 0x01;
+	public static final int FOCUS_PARAMETER = 0x02;
+	
 }

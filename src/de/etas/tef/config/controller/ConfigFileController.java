@@ -29,6 +29,8 @@ public class ConfigFileController extends AbstractController
 	private List<ConfigBlock> showConfigBlocks = null;
 	private boolean isEditingLocked = true;
 	private MainController mainController;
+	
+	private int lastFocusedElement = Constants.FOCUS_NONE; 
 
 	public ConfigFileController(MainController mainController)
 	{
@@ -46,7 +48,7 @@ public class ConfigFileController extends AbstractController
 			return;
 		}
 		
-		configFile = parserConfigFile(filePath);
+		setConfigFile(parserConfigFile(filePath));
 	}
 
 	private ConfigFile parserConfigFile(String inputFile)
@@ -96,6 +98,11 @@ public class ConfigFileController extends AbstractController
 				break;
 			}
 		}
+	}
+	
+	public void setConfigFile(ConfigFile cf)
+	{
+		this.configFile = cf;
 	}
 
 	@Override
@@ -305,5 +312,14 @@ public class ConfigFileController extends AbstractController
 		}
 		
 		return values;
+	}
+	
+	public int getFocusedElement()
+	{
+		return lastFocusedElement;
+	}
+	public void setFocusedElement(int element)
+	{
+		this.lastFocusedElement = element;
 	}
 }
