@@ -38,11 +38,16 @@ public class InfoBlockWriter implements IActionListener
 		this.commentBlock = commentBlock;
 		ActionManager.INSTANCE.addActionListener(this);
 	}
+	
+	private void moveToLastLine()
+	{
+		infoBlock.setTopIndex(infoBlock.getLineCount());
+	}
 
 	private void logError(String text)
 	{
 		txt = "[ERROR] " + text + "\n";
-		
+
 		StyleRange sr = new StyleRange();
 		sr.start = infoBlock.getText().length();
 		sr.length = txt.length();
@@ -50,6 +55,7 @@ public class InfoBlockWriter implements IActionListener
 		sr.fontStyle = SWT.ITALIC;
 		infoBlock.append(txt);
 		infoBlock.setStyleRange(sr);
+		moveToLastLine();
 	}
 
 	private void logInfo(String text)
@@ -63,6 +69,7 @@ public class InfoBlockWriter implements IActionListener
 		sr.fontStyle = SWT.ITALIC;
 		infoBlock.append(txt);
 		infoBlock.setStyleRange(sr);
+		moveToLastLine();
 	}
 	
 	private void logWarning(String text)
@@ -76,6 +83,7 @@ public class InfoBlockWriter implements IActionListener
 		sr.fontStyle = SWT.ITALIC;
 		infoBlock.append(txt);
 		infoBlock.setStyleRange(sr);
+		moveToLastLine();
 	}
 
 
