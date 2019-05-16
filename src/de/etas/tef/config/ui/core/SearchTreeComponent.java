@@ -63,7 +63,7 @@ public class SearchTreeComponent extends AbstractComposite
 			public void widgetSelected(SelectionEvent event)
 			{
 				String s = getSelectedTreeItem().getText();
-				getTableComposite().treeItemSelected(s.trim());
+				treeItemSelected(s);
 			}
 			
 			@Override
@@ -77,6 +77,11 @@ public class SearchTreeComponent extends AbstractComposite
 		blockList.addMouseListener(tl);
 		blockList.addKeyListener(tl);
 		
+	}
+	
+	private void treeItemSelected(String name)
+	{
+		getTableComposite().treeItemSelected(name.trim());
 	}
 	
 	private void createRightMenu(Control control, SelectionListener listener)
@@ -187,8 +192,41 @@ public class SearchTreeComponent extends AbstractComposite
 		this.tableComposite = tableComposite;
 	}
 	
+	private TreeItem getTreeItem(String name)
+	{
+		TreeItem[] items = root.getItems();
+		
+		for(int i = 0; i < items.length; i++)
+		{
+			TreeItem ti = items[i];
+			
+			if(name.equals(ti.getText()))
+			{
+				return ti;
+			}
+		}
+		
+		return null;
+	}
+	
 	public void receivedAction(int type, int compositeID, Object content)
 	{
+		if( type == Constants.ACTION_SOURCE_PARAMETER_SELECTED && compositeID != getCompositeID() && ((MainController)getController().getParent()).isConnected())
+		{
+			String blockName = (String)content;
+			
+			TreeItem ti = getTreeItem(blockName);
+			
+			if( null == ti )
+			{
+				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "Connected, but cannot find block: " + blockName);
+				return;
+			}
+			
+			blockList.setSelection(ti);
+			treeItemSelected(blockName);
+		}
+		
 		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE)
 		{
 			return;

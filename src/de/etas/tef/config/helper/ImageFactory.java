@@ -16,5 +16,7 @@ public final class ImageFactory
 	public static final Image IMAGE_ABOUT = new Image(MainScreen.display, "icons/about.png");
 	public static final Image IMAGE_COPY = new Image(MainScreen.display, "icons/copy.png");
 	public static final Image IMAGE_PASTE = new Image(MainScreen.display, "icons/paste.png");
+	public static final Image IMAGE_CONNECT = new Image(MainScreen.display, "icons/connect.png");
+	public static final Image IMAGE_DISCONNECT = new Image(MainScreen.display, "icons/disconnect.png");
 	
 }

@@ -44,9 +44,11 @@ public class MainScreen implements IActionListener
 	
 	private static boolean isLeftSelected = true;
 	private static boolean isRightSelected = false;
+	private static boolean isConnected = false;
 	
 	private static final int fromLeft = 0x00;
 	private static final int fromRight = 0x01;
+	private static final int fromConnect = 0x02;
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 	
@@ -115,7 +117,28 @@ public class MainScreen implements IActionListener
 	    functionMenuHeader.setMenu(functionMenu);
 	    
 	    MenuItem connectItem = new MenuItem(functionMenu, SWT.PUSH);
-	    connectItem.setText("&Connect");
+	    connectItem.setText("&Disconnect");
+	    connectItem.setImage(ImageFactory.IMAGE_DISCONNECT);
+	    connectItem.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+				isConnected = !isConnected;
+				checkOptionSelection(fromConnect);
+				connectItem.setImage(isConnected ? ImageFactory.IMAGE_CONNECT : ImageFactory.IMAGE_DISCONNECT);
+				connectItem.setText(isConnected ? "Connet" : "Disconnect");
+				controller.setConnected(isConnected);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	    
 	    leftPaneItem = new MenuItem(functionMenu, SWT.PUSH);
 	    leftPaneItem.setText("&Left Pane");
@@ -192,14 +215,11 @@ public class MainScreen implements IActionListener
 	{
 		if(isLeftSelected && isRightSelected)
 		{
-//			btnConnect.setEnabled(true);
 		}
 		else 
 		{
-//			btnConnect.setSelection(false);
-//			((MainController)getController()).setConnected(false);
-//			btnConnect.setEnabled(false);
-//			
+			isConnected = false;
+			
 			if( !isLeftSelected && !isRightSelected)
 			{
 				switch(fromWhich)
@@ -207,15 +227,6 @@ public class MainScreen implements IActionListener
 					case fromLeft: isRightSelected = true; break;
 					case fromRight: isLeftSelected = true; break;
 				}
-				
-//				if(Constants.ACTION_LEFT_SELECTED == currentAction)
-//				{
-//					btnRight.setSelection(true);
-//				}
-//				else
-//				{
-//					btnLeft.setSelection(true);
-//				}
 			}
 		}
 		
