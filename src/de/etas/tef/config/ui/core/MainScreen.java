@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.InfoBlockWriter;
@@ -39,7 +38,11 @@ public class MainScreen implements IActionListener
 	private final MainController controller;
 	private MenuItem leftPaneItem;
 	private MenuItem rightPaneItem;
-	private Text commentBlock;
+	private MenuItem showInfoPaneItem;
+	private MenuItem connectItem;
+	private StyledText txtInfoBlock;
+	private SashForm main;
+	
 	
 	public final Image IMAGE_TITLE;
 	public final Image IMAGE_PIN;
@@ -52,6 +55,7 @@ public class MainScreen implements IActionListener
 	private static boolean isLeftSelected = true;
 	private static boolean isRightSelected = false;
 	private static boolean isConnected = false;
+	private static boolean isInfoPaneShow = false;
 	
 	private static final int fromLeft = 0x00;
 	private static final int fromRight = 0x01;
@@ -132,7 +136,7 @@ public class MainScreen implements IActionListener
 	    Menu functionMenu = new Menu(shell, SWT.DROP_DOWN);
 	    functionMenuHeader.setMenu(functionMenu);
 	    
-	    MenuItem connectItem = new MenuItem(functionMenu, SWT.PUSH);
+	    connectItem = new MenuItem(functionMenu, SWT.PUSH);
 	    connectItem.setText("&Disconnect");
 	    connectItem.setImage(IMAGE_DISCONNECT);
 	    connectItem.addSelectionListener(new SelectionListener()
@@ -143,7 +147,6 @@ public class MainScreen implements IActionListener
 			{
 				isConnected = !isConnected;
 				checkOptionSelection(fromConnect);
-				connectItem.setImage(isConnected ? IMAGE_CONNECT : IMAGE_DISCONNECT);
 				connectItem.setText(isConnected ? "Connet" : "Disconnect");
 				controller.setConnected(isConnected);
 			}
@@ -156,8 +159,14 @@ public class MainScreen implements IActionListener
 			}
 		});
 	    
-	    leftPaneItem = new MenuItem(functionMenu, SWT.PUSH);
-	    leftPaneItem.setText("&Left Pane");
+	    MenuItem windowMenuHeader = new MenuItem(menuBar, SWT.CASCADE);
+	    windowMenuHeader.setText("Window");
+	    
+	    Menu windowMenu = new Menu(shell, SWT.DROP_DOWN);
+	    windowMenuHeader.setMenu(windowMenu);
+	    
+	    leftPaneItem = new MenuItem(windowMenu, SWT.PUSH);
+	    leftPaneItem.setText("Show/Hide Left Pane");
 	    leftPaneItem.setImage(IMAGE_PIN);
 	    leftPaneItem.addSelectionListener(new SelectionListener()
 		{
@@ -177,8 +186,8 @@ public class MainScreen implements IActionListener
 			}
 		});
 	    
-	    rightPaneItem = new MenuItem(functionMenu, SWT.PUSH);
-	    rightPaneItem.setText("&Right Pane");
+	    rightPaneItem = new MenuItem(windowMenu, SWT.PUSH);
+	    rightPaneItem.setText("Show/Hide Right Pane");
 	    rightPaneItem.addSelectionListener(new SelectionListener()
 		{
 			
@@ -197,6 +206,35 @@ public class MainScreen implements IActionListener
 			}
 		});
 	    
+	    showInfoPaneItem = new MenuItem(windowMenu, SWT.PUSH);
+	    showInfoPaneItem.setText("&Show/Hide Info Pane");
+	    showInfoPaneItem.setImage(IMAGE_ABOUT);
+	    showInfoPaneItem.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent event)
+			{
+				isInfoPaneShow = !isInfoPaneShow;
+				txtInfoBlock.setVisible(isInfoPaneShow);
+				if(isInfoPaneShow)
+				{
+					main.setWeights(new int[]{5, 1});
+				}
+				else
+				{
+					main.setWeights(new int[]{1, 0});
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	    
 	    MenuItem aboutMenuHeader = new MenuItem(menuBar, SWT.CASCADE);
 	    aboutMenuHeader.setText("&?");
 
@@ -205,7 +243,6 @@ public class MainScreen implements IActionListener
 
 	    MenuItem aboutItem = new MenuItem(aboutMenu, SWT.PUSH);
 	    aboutItem.setText("&About");
-	    aboutItem.setImage(IMAGE_ABOUT);
 	    
 	    shell.setMenuBar(menuBar);
 	}
@@ -264,12 +301,14 @@ public class MainScreen implements IActionListener
 			rightPaneItem.setImage(null);
 		}
 		
+		connectItem.setImage(isConnected ? IMAGE_CONNECT : IMAGE_DISCONNECT);
+		
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_COMPOSITE_CHANGED, CompositeID.COMPOSITE_ALONE, new boolean[] {isLeftSelected, isRightSelected});
 	}
 
 	private void initMainComponents(Composite shell)
 	{
-		SashForm main = new SashForm(shell, SWT.VERTICAL);
+		main = new SashForm(shell, SWT.VERTICAL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		main.setLayoutData(gd);
 
@@ -280,26 +319,17 @@ public class MainScreen implements IActionListener
 		leftConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller, CompositeID.COMPOSITE_LEFT);
 		rightConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller, CompositeID.COMPOSITE_RIGHT);
 		
-		SashForm sfComment = new SashForm(main, SWT.HORIZONTAL);
-		gd = new GridData(GridData.FILL_BOTH);
-		sfComment.setLayoutData(gd);
-
-		StyledText txtInfoBlock = new StyledText(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		txtInfoBlock = new StyledText(main, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 3;
 		txtInfoBlock.setLayoutData(gd);
 		txtInfoBlock.setEditable(false);
+		txtInfoBlock.setVisible(false);
 		
-		commentBlock = new Text(sfComment, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		gd = new GridData(GridData.FILL_BOTH);
-		gd.horizontalSpan = 3;
-		commentBlock.setLayoutData(gd);
-		commentBlock.setEditable(false);
-		
-		new InfoBlockWriter(txtInfoBlock, commentBlock, controller);
+		new InfoBlockWriter(txtInfoBlock, controller);
 
 		main.setWeights(new int[]
-		{ 4, 1 });
+		{ 1, 0 });
 		
 		rightConfigComposite.setVisible(false);
 		configCompositeSashForm.setWeights(new int[] {1, 0});
@@ -347,13 +377,6 @@ public class MainScreen implements IActionListener
 			{
 				configCompositeSashForm.setWeights(new int[]{ 1, 0 });
 			}
-		}
-		
-		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
-		{
-			boolean locked = (boolean)content;
-			
-			commentBlock.setEditable(!locked);
 		}
 	}
 }

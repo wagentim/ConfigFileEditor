@@ -1,6 +1,7 @@
 package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetAdapter;
@@ -28,7 +29,15 @@ public class ConfigComposite extends AbstractComposite
 		this.setLayoutData(cgd);
 		
 		new SelectComposite(this, SWT.NONE, controller, getCompositeID());
-		new TableComposite(this, SWT.NONE, controller, getCompositeID());
+		
+		SashForm sf = new SashForm(this, SWT.VERTICAL);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		sf.setLayoutData(gd);
+		
+		new TableComposite(sf, SWT.NONE, controller, getCompositeID());
+		new CommentComposite(sf, SWT.NONE, controller, getCompositeID());
+		
+		sf.setWeights(new int[]{3,1});
 		
 		initDropFunction(this);
 	}

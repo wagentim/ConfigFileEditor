@@ -6,7 +6,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
@@ -16,7 +15,6 @@ import de.etas.tef.config.listener.IActionListener;
 public class InfoBlockWriter implements IActionListener
 {
 	private final StyledText infoBlock;
-	private final Text commentBlock;
 	private final Color error;
 	private final Color info;
 	private final Color warning;
@@ -24,7 +22,7 @@ public class InfoBlockWriter implements IActionListener
 	
 	private String txt = Constants.EMPTY_STRING;
 
-	public InfoBlockWriter(final StyledText infoBlock, final Text commentBlock, MainController controller)
+	public InfoBlockWriter(final StyledText infoBlock, MainController controller)
 	{
 		if (null == infoBlock)
 		{
@@ -35,7 +33,6 @@ public class InfoBlockWriter implements IActionListener
 		this.info = infoBlock.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		this.warning = infoBlock.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		this.controller = controller;
-		this.commentBlock = commentBlock;
 		ActionManager.INSTANCE.addActionListener(this);
 	}
 	
@@ -126,10 +123,6 @@ public class InfoBlockWriter implements IActionListener
 			{
 				logInfo("Source File is Disconnected to Target File");
 			}
-		}
-		else if (type == Constants.ACTION_BLOCK_SELECTED)
-		{
-			commentBlock.setText(((ConfigBlock)content).getComments());
 		}
 	}
 }
