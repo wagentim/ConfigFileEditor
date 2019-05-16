@@ -9,6 +9,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,7 +29,6 @@ import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.helper.ImageFactory;
 import de.etas.tef.config.listener.IActionListener;
 
 public class MainScreen implements IActionListener
@@ -40,7 +40,14 @@ public class MainScreen implements IActionListener
 	private MenuItem leftPaneItem;
 	private MenuItem rightPaneItem;
 	private Text commentBlock;
-	public static Display display = new Display();
+	
+	public final Image IMAGE_TITLE;
+	public final Image IMAGE_PIN;
+	public final Image IMAGE_EXIT;
+	public final Image IMAGE_ABOUT;
+	public final Image IMAGE_CONNECT;
+	public final Image IMAGE_DISCONNECT;
+
 	
 	private static boolean isLeftSelected = true;
 	private static boolean isRightSelected = false;
@@ -57,10 +64,19 @@ public class MainScreen implements IActionListener
 	{
 		controller = new MainController();
 		ActionManager.INSTANCE.addActionListener(this);
-
+		
+		Display display = new Display();
+		
+		IMAGE_TITLE = new Image(display, "icons/file_24.png");
+		IMAGE_PIN = new Image(display, "icons/pin.png");
+		IMAGE_EXIT = new Image(display, "icons/exit.png");
+		IMAGE_ABOUT = new Image(display, "icons/about.png");
+		IMAGE_CONNECT = new Image(display, "icons/connect.png");
+		IMAGE_DISCONNECT = new Image(display, "icons/disconnect.png");
+		
 		Shell shell = new Shell(display);
 		shell.setText(Constants.TXT_APP_TITLE);
-		shell.setImage(ImageFactory.IMAGE_TITLE);
+		shell.setImage(IMAGE_TITLE);
 		
 		initMainScreen(shell);
 		initMenu(shell);
@@ -91,7 +107,7 @@ public class MainScreen implements IActionListener
 
 	    MenuItem fileExitItem = new MenuItem(fileMenu, SWT.PUSH);
 	    fileExitItem.setText("E&xit");
-	    fileExitItem.setImage(ImageFactory.IMAGE_EXIT);
+	    fileExitItem.setImage(IMAGE_EXIT);
 	    fileExitItem.addSelectionListener(new SelectionAdapter()
 		{
 	    	@Override
@@ -118,7 +134,7 @@ public class MainScreen implements IActionListener
 	    
 	    MenuItem connectItem = new MenuItem(functionMenu, SWT.PUSH);
 	    connectItem.setText("&Disconnect");
-	    connectItem.setImage(ImageFactory.IMAGE_DISCONNECT);
+	    connectItem.setImage(IMAGE_DISCONNECT);
 	    connectItem.addSelectionListener(new SelectionListener()
 		{
 			
@@ -127,7 +143,7 @@ public class MainScreen implements IActionListener
 			{
 				isConnected = !isConnected;
 				checkOptionSelection(fromConnect);
-				connectItem.setImage(isConnected ? ImageFactory.IMAGE_CONNECT : ImageFactory.IMAGE_DISCONNECT);
+				connectItem.setImage(isConnected ? IMAGE_CONNECT : IMAGE_DISCONNECT);
 				connectItem.setText(isConnected ? "Connet" : "Disconnect");
 				controller.setConnected(isConnected);
 			}
@@ -142,7 +158,7 @@ public class MainScreen implements IActionListener
 	    
 	    leftPaneItem = new MenuItem(functionMenu, SWT.PUSH);
 	    leftPaneItem.setText("&Left Pane");
-	    leftPaneItem.setImage(ImageFactory.IMAGE_PIN);
+	    leftPaneItem.setImage(IMAGE_PIN);
 	    leftPaneItem.addSelectionListener(new SelectionListener()
 		{
 			
@@ -189,7 +205,7 @@ public class MainScreen implements IActionListener
 
 	    MenuItem aboutItem = new MenuItem(aboutMenu, SWT.PUSH);
 	    aboutItem.setText("&About");
-	    aboutItem.setImage(ImageFactory.IMAGE_ABOUT);
+	    aboutItem.setImage(IMAGE_ABOUT);
 	    
 	    shell.setMenuBar(menuBar);
 	}
@@ -232,7 +248,7 @@ public class MainScreen implements IActionListener
 		
 		if(isLeftSelected)
 		{
-			leftPaneItem.setImage(ImageFactory.IMAGE_PIN);
+			leftPaneItem.setImage(IMAGE_PIN);
 		}
 		else
 		{
@@ -241,7 +257,7 @@ public class MainScreen implements IActionListener
 		
 		if(isRightSelected)
 		{
-			rightPaneItem.setImage(ImageFactory.IMAGE_PIN);
+			rightPaneItem.setImage(IMAGE_PIN);
 		}
 		else
 		{

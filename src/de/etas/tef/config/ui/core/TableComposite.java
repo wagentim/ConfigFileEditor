@@ -16,6 +16,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,7 +38,6 @@ import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.helper.ImageFactory;
 
 public class TableComposite extends AbstractComposite
 {
@@ -50,6 +50,11 @@ public class TableComposite extends AbstractComposite
 	private Composite buttonComposite;
 	private Menu rightClickMenu;
 	
+	public final Image IMAGE_ADD;
+	public final Image IMAGE_REMOVE;
+	public final Image IMAGE_COPY;
+	public final Image IMAGE_PASTE;
+	
 	private SearchTreeComponent searchTree;
 	
 	public TableComposite(Composite parent, int style, MainController controller, int compositeID)
@@ -60,6 +65,11 @@ public class TableComposite extends AbstractComposite
 		this.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		initMainComposite(this, controller);
+		
+		IMAGE_ADD = new Image(parent.getDisplay(), "icons/add.png");
+		IMAGE_REMOVE = new Image(parent.getDisplay(), "icons/remove.png");
+		IMAGE_COPY = new Image(parent.getDisplay(), "icons/copy.png");
+		IMAGE_PASTE = new Image(parent.getDisplay(), "icons/paste.png");
 		
 		tableBackgroudColor = parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
 	}
@@ -346,24 +356,24 @@ public class TableComposite extends AbstractComposite
 	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            copyItem.setText(Constants.TXT_COPY);
-	            copyItem.setImage(ImageFactory.IMAGE_COPY);
+	            copyItem.setImage(IMAGE_COPY);
 	            copyItem.addSelectionListener(listener);
 	            
 	            MenuItem pasteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            pasteItem.setText(Constants.TXT_PASTE);
-	            pasteItem.setImage(ImageFactory.IMAGE_PASTE);
+	            pasteItem.setImage(IMAGE_PASTE);
 	            pasteItem.addSelectionListener(listener);
 	            
 	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
 	            
 	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            newItem.setText(Constants.TXT_BTN_ADD);
-	            newItem.setImage(ImageFactory.IMAGE_ADD);
+	            newItem.setImage(IMAGE_ADD);
 	            newItem.addSelectionListener(listener);
 	            
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            deleteItem.setText(Constants.TXT_BTN_DELETE);
-	            deleteItem.setImage(ImageFactory.IMAGE_REMOVE);
+	            deleteItem.setImage(IMAGE_REMOVE);
 	            deleteItem.addSelectionListener(listener);
 	        }
 	    });
