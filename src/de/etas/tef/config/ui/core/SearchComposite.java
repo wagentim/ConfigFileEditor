@@ -34,9 +34,9 @@ public class SearchComposite extends AbstractComposite
 		this.setLayout(layout);
 		this.setLayoutData(gd);
 		
-		Image image = new Image(this.getDisplay(), "icons/search_24.png");
+//		Image image = new Image(this.getDisplay(), "icons/search_24.png");
 		Label label = new Label(this, SWT.NONE);
-		label.setImage(image);
+//		label.setImage(image);
 		gd = new GridData();
 		label.setLayoutData(gd);
 		

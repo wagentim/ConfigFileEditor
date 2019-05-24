@@ -46,13 +46,13 @@ public class MainScreen implements IActionListener
 	private Label dateLabel;
 	
 	
-	public final Image IMAGE_TITLE;
-	public final Image IMAGE_PIN;
-	public final Image IMAGE_EXIT;
-	public final Image IMAGE_ABOUT;
-	public final Image IMAGE_CONNECT;
-	public final Image IMAGE_DISCONNECT;
-	public final Image IMAGE_TIME;
+//	public final Image IMAGE_TITLE;
+//	public final Image IMAGE_PIN;
+//	public final Image IMAGE_EXIT;
+//	public final Image IMAGE_ABOUT;
+//	public final Image IMAGE_CONNECT;
+//	public final Image IMAGE_DISCONNECT;
+//	public final Image IMAGE_TIME;
 
 	
 	private static boolean isLeftSelected = true;
@@ -74,17 +74,17 @@ public class MainScreen implements IActionListener
 		
 		Display display = new Display();
 		
-		IMAGE_TITLE = new Image(display, "icons/file_24.png");
-		IMAGE_PIN = new Image(display, "icons/pin.png");
-		IMAGE_EXIT = new Image(display, "icons/exit.png");
-		IMAGE_ABOUT = new Image(display, "icons/about.png");
-		IMAGE_CONNECT = new Image(display, "icons/connect.png");
-		IMAGE_DISCONNECT = new Image(display, "icons/disconnect.png");
-		IMAGE_TIME = new Image(display, "icons/time.png");
+//		IMAGE_TITLE = new Image(display, "icons/file_24.png");
+//		IMAGE_PIN = new Image(display, "icons/pin.png");
+//		IMAGE_EXIT = new Image(display, "icons/exit.png");
+//		IMAGE_ABOUT = new Image(display, "icons/about.png");
+//		IMAGE_CONNECT = new Image(display, "icons/connect.png");
+//		IMAGE_DISCONNECT = new Image(display, "icons/disconnect.png");
+//		IMAGE_TIME = new Image(display, "icons/time.png");
 		
 		Shell shell = new Shell(display);
 		shell.setText(Constants.TXT_APP_TITLE);
-		shell.setImage(IMAGE_TITLE);
+//		shell.setImage(IMAGE_TITLE);
 		
 		initMainScreen(shell);
 		initMenu(shell);
@@ -160,7 +160,7 @@ public class MainScreen implements IActionListener
 
 	    MenuItem fileExitItem = new MenuItem(fileMenu, SWT.PUSH);
 	    fileExitItem.setText("E&xit");
-	    fileExitItem.setImage(IMAGE_EXIT);
+//	    fileExitItem.setImage(IMAGE_EXIT);
 	    fileExitItem.addSelectionListener(new SelectionAdapter()
 		{
 	    	@Override
@@ -187,7 +187,7 @@ public class MainScreen implements IActionListener
 	    
 	    connectItem = new MenuItem(functionMenu, SWT.PUSH);
 	    connectItem.setText("&Disconnect");
-	    connectItem.setImage(IMAGE_DISCONNECT);
+//	    connectItem.setImage(IMAGE_DISCONNECT);
 	    connectItem.addSelectionListener(new SelectionListener()
 		{
 			
@@ -216,7 +216,7 @@ public class MainScreen implements IActionListener
 	    
 	    leftPaneItem = new MenuItem(windowMenu, SWT.PUSH);
 	    leftPaneItem.setText("Show/Hide Left Pane");
-	    leftPaneItem.setImage(IMAGE_PIN);
+//	    leftPaneItem.setImage(IMAGE_PIN);
 	    leftPaneItem.addSelectionListener(new SelectionListener()
 		{
 			
@@ -257,7 +257,7 @@ public class MainScreen implements IActionListener
 	    
 	    showInfoPaneItem = new MenuItem(windowMenu, SWT.PUSH);
 	    showInfoPaneItem.setText("&Show/Hide Info Pane");
-	    showInfoPaneItem.setImage(IMAGE_ABOUT);
+//	    showInfoPaneItem.setImage(IMAGE_ABOUT);
 	    showInfoPaneItem.addSelectionListener(new SelectionListener()
 		{
 			
@@ -314,7 +314,7 @@ public class MainScreen implements IActionListener
         statusbar.setLayout(layout);
         
         Label image = new Label(statusbar, SWT.NONE);
-        image.setImage(IMAGE_TIME);
+//        image.setImage(IMAGE_TIME);
         
         dateLabel = new Label(statusbar, SWT.BOLD);
         dateLabel.setLayoutData(new RowData(150, -1));
@@ -344,23 +344,23 @@ public class MainScreen implements IActionListener
 		
 		if(isLeftSelected)
 		{
-			leftPaneItem.setImage(IMAGE_PIN);
+//			leftPaneItem.setImage(IMAGE_PIN);
 		}
 		else
 		{
-			leftPaneItem.setImage(null);
+//			leftPaneItem.setImage(null);
 		}
 		
 		if(isRightSelected)
 		{
-			rightPaneItem.setImage(IMAGE_PIN);
+//			rightPaneItem.setImage(IMAGE_PIN);
 		}
 		else
 		{
 			rightPaneItem.setImage(null);
 		}
 		
-		connectItem.setImage(isConnected ? IMAGE_CONNECT : IMAGE_DISCONNECT);
+//		connectItem.setImage(isConnected ? IMAGE_CONNECT : IMAGE_DISCONNECT);
 		
 		ActionManager.INSTANCE.sendAction(Constants.ACTION_COMPOSITE_CHANGED, CompositeID.COMPOSITE_ALONE, new boolean[] {isLeftSelected, isRightSelected});
 	}

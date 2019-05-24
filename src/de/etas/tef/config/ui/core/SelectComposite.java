@@ -66,8 +66,8 @@ public class SelectComposite extends AbstractComposite
 		labelFileSelect = new Label(comp, SWT.NULL);
 		GridData gd = new GridData();
 		labelFileSelect.setLayoutData(gd);
-		Image image = new Image(this.getDisplay(), "icons/file_36.png");
-		labelFileSelect.setImage(image);
+//		Image image = new Image(this.getDisplay(), "icons/file_36.png");
+//		labelFileSelect.setImage(image);
 	}
 	
 	protected void setCurrFilePath(String currFilePath)
