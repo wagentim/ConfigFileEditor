@@ -3,6 +3,7 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -21,10 +22,12 @@ public class SearchComposite extends AbstractComposite
 	
 	protected IController controller;
 	private Text searchText;
+	private Color WHITE;
 	
 	public SearchComposite(Composite parent, int style, MainController controller, int compositeID)
 	{
 		super(parent, style, controller, compositeID);
+		WHITE = parent.getDisplay().getSystemColor(SWT.COLOR_WHITE);
 		
 		GridLayout layout = new GridLayout(2, false);
 		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = 0; 
@@ -33,12 +36,14 @@ public class SearchComposite extends AbstractComposite
 		gd.minimumHeight = 30;
 		this.setLayout(layout);
 		this.setLayoutData(gd);
+		this.setBackground(WHITE);
 		
-//		Image image = new Image(this.getDisplay(), "icons/search_24.png");
+		Image image = new Image(this.getDisplay(), SearchComposite.class.getClassLoader().getResourceAsStream("icons/search.png"));
 		Label label = new Label(this, SWT.NONE);
-//		label.setImage(image);
+		label.setImage(image);
 		gd = new GridData();
 		label.setLayoutData(gd);
+		label.setBackground(WHITE);
 		
 		searchText = new Text(this, SWT.NONE);
 		gd = new GridData(GridData.FILL_BOTH);

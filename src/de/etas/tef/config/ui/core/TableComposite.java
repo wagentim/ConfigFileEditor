@@ -50,10 +50,10 @@ public class TableComposite extends AbstractComposite
 	private Composite buttonComposite;
 	private Menu rightClickMenu;
 	
-//	public final Image IMAGE_ADD;
-//	public final Image IMAGE_REMOVE;
-//	public final Image IMAGE_COPY;
-//	public final Image IMAGE_PASTE;
+	public final Image IMAGE_ADD;
+	public final Image IMAGE_REMOVE;
+	public final Image IMAGE_COPY;
+	public final Image IMAGE_PASTE;
 	
 	private SearchTreeComponent searchTree;
 	
@@ -66,10 +66,10 @@ public class TableComposite extends AbstractComposite
 		
 		initMainComposite(this, controller);
 		
-//		IMAGE_ADD = new Image(parent.getDisplay(), "icons/add.png");
-//		IMAGE_REMOVE = new Image(parent.getDisplay(), "icons/remove.png");
-//		IMAGE_COPY = new Image(parent.getDisplay(), "icons/copy.png");
-//		IMAGE_PASTE = new Image(parent.getDisplay(), "icons/paste.png");
+		IMAGE_ADD = new Image(parent.getDisplay(), TableComposite.class.getClassLoader().getResourceAsStream("icons/add.png"));
+		IMAGE_REMOVE = new Image(parent.getDisplay(), TableComposite.class.getClassLoader().getResourceAsStream("icons/remove.png"));
+		IMAGE_COPY = new Image(parent.getDisplay(), TableComposite.class.getClassLoader().getResourceAsStream("icons/copy.png"));
+		IMAGE_PASTE = new Image(parent.getDisplay(), TableComposite.class.getClassLoader().getResourceAsStream("icons/paste.png"));
 		
 		tableBackgroudColor = parent.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
 	}
@@ -358,24 +358,24 @@ public class TableComposite extends AbstractComposite
 	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            copyItem.setText(Constants.TXT_COPY);
-//	            copyItem.setImage(IMAGE_COPY);
+	            copyItem.setImage(IMAGE_COPY);
 	            copyItem.addSelectionListener(listener);
 	            
 	            MenuItem pasteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            pasteItem.setText(Constants.TXT_PASTE);
-//	            pasteItem.setImage(IMAGE_PASTE);
+	            pasteItem.setImage(IMAGE_PASTE);
 	            pasteItem.addSelectionListener(listener);
 	            
 	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
 	            
 	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            newItem.setText(Constants.TXT_BTN_ADD);
-//	            newItem.setImage(IMAGE_ADD);
+	            newItem.setImage(IMAGE_ADD);
 	            newItem.addSelectionListener(listener);
 	            
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            deleteItem.setText(Constants.TXT_BTN_DELETE);
-//	            deleteItem.setImage(IMAGE_REMOVE);
+	            deleteItem.setImage(IMAGE_REMOVE);
 	            deleteItem.addSelectionListener(listener);
 	        }
 	    });

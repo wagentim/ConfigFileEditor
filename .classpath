@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry including="OK.png|about.png|add.png|block.png|connect.png|copy.png|disconnect.png|exit.png|file_24.png|file_36.png|paste.png|pin.png|remove.png|root.png|search.png|search_24.png|time.png" kind="src" path="icons"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
