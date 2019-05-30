@@ -102,9 +102,6 @@ public class MainScreen implements IActionListener
 		};
 		display.timerExec(1000, timer);
 		
-//		initDaemonThread();
-//		new OptionComposite(shell, SWT.BORDER, controller, CompositeID.COMPOSITE_ALONE);
-
 		shell.open();
 		while (!shell.isDisposed())
 		{
