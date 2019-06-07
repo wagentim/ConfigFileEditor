@@ -26,7 +26,7 @@ public class SearchTreeComponent extends AbstractComposite
 
 	private Tree blockList;
 	private TreeItem root;
-	private TableComposite tableComposite;
+	private ContentComposite tableComposite;
 
 	private TreeListener tl;
 	private Menu rightClickMenu;
@@ -197,12 +197,12 @@ public class SearchTreeComponent extends AbstractComposite
 		}
 	}
 
-	public TableComposite getTableComposite()
+	public ContentComposite getTableComposite()
 	{
 		return tableComposite;
 	}
 
-	public void setTableComposite(TableComposite tableComposite)
+	public void setTableComposite(ContentComposite tableComposite)
 	{
 		this.tableComposite = tableComposite;
 	}

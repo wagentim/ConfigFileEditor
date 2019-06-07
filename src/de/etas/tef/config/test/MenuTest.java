@@ -100,7 +100,8 @@ public class MenuTest {
 	    }
 	  }
 
-	  public static void main(String[] args) {
-	    MenuTest menuExample = new MenuTest();
+	  public static void main(String[] args) 
+	  {
+	    new MenuTest();
 	  }
 	}

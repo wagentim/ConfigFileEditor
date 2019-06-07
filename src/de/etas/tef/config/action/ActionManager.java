@@ -5,6 +5,14 @@ import java.util.List;
 
 import de.etas.tef.config.listener.IActionListener;
 
+/**
+ * Event Dispatcher. {@link IActionListener} must register itself here for Event notification.
+ * 
+ * Singleton Pattern
+ * 
+ * @author UIH9FE
+ *
+ */
 public class ActionManager
 {
 	public static ActionManager INSTANCE = new ActionManager();

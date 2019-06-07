@@ -9,6 +9,8 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -85,6 +87,44 @@ public class MainScreen implements IActionListener
 		Shell shell = new Shell(display);
 		shell.setText(Constants.TXT_APP_TITLE);
 		shell.setImage(IMAGE_TITLE);
+		
+		shell.addShellListener(new ShellListener()
+		{
+			
+			@Override
+			public void shellIconified(ShellEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void shellDeiconified(ShellEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void shellDeactivated(ShellEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void shellClosed(ShellEvent arg0)
+			{
+				System.exit(0);
+			}
+			
+			@Override
+			public void shellActivated(ShellEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		initMainScreen(shell);
 		initMenu(shell);

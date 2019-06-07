@@ -34,7 +34,7 @@ public class ConfigComposite extends AbstractComposite
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		sf.setLayoutData(gd);
 		
-		new TableComposite(sf, SWT.NONE, controller, getCompositeID());
+		new ContentComposite(sf, SWT.NONE, controller, getCompositeID());
 		new CommentComposite(sf, SWT.NONE, controller, getCompositeID());
 		
 		sf.setWeights(new int[]{2,1});

@@ -9,6 +9,12 @@ import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
 
+/**
+ *  
+ * 
+ * @author UIH9FE
+ *
+ */
 public abstract class AbstractController implements IController
 {
 	private IController parent = null;
