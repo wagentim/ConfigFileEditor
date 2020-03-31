@@ -7,10 +7,10 @@ import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Color;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
+import de.etas.tef.editor.action.ActionManager;
 
 public class InfoBlockWriter implements IActionListener
 {

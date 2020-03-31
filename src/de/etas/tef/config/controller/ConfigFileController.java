@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
@@ -17,6 +16,7 @@ import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.helper.IConfigFileWorker;
 import de.etas.tef.config.helper.InitFileWorker;
 import de.etas.tef.config.helper.Validator;
+import de.etas.tef.editor.action.ActionManager;
 
 public class ConfigFileController extends AbstractController
 {

@@ -3,16 +3,17 @@ package de.etas.tef.config.controller;
 import java.util.Collections;
 import java.util.List;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.editor.action.ActionManager;
 
 public class MainController extends AbstractController
 {
 	private final IController left;
 	private final IController right;
+	private GitController gitController = null;
 	private ConfigBlock copyBlock = null;
 	private List<KeyValuePair> copyParameters = null;
 	
@@ -26,6 +27,16 @@ public class MainController extends AbstractController
 		this.right.setParent(this);
 	}
 	
+	public GitController getGitController()
+	{
+		return gitController;
+	}
+
+	public void setGitController(GitController gitController)
+	{
+		this.gitController = gitController;
+	}
+
 	public IController getController(int compositeID)
 	{
 		switch (compositeID)

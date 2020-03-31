@@ -11,11 +11,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.editor.action.ActionManager;
 
 public class SearchComposite extends AbstractComposite
 {

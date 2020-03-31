@@ -31,13 +31,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.editor.action.ActionManager;
 
 public class ContentComposite extends AbstractComposite
 {

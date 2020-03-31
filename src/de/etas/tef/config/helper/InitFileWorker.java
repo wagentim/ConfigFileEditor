@@ -11,10 +11,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedMap;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
+import de.etas.tef.editor.action.ActionManager;
 
 public class InitFileWorker implements IConfigFileWorker
 {

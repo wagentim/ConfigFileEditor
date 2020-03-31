@@ -11,11 +11,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.editor.action.ActionManager;
 
 public class TreeListener extends CellEditingListener
 {

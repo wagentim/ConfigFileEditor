@@ -12,9 +12,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.editor.action.ActionManager;
 
 public class ConfigComposite extends AbstractComposite
 {

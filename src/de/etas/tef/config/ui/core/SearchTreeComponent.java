@@ -15,11 +15,11 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
+import de.etas.tef.editor.action.ActionManager;
 
 public class SearchTreeComponent extends AbstractComposite
 {

@@ -2,10 +2,10 @@ package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.widgets.Composite;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.listener.IActionListener;
+import de.etas.tef.editor.action.ActionManager;
 
 public class AbstractComposite extends Composite implements IActionListener
 {

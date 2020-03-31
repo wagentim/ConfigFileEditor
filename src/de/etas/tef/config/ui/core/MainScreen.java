@@ -26,12 +26,12 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
-import de.etas.tef.config.action.ActionManager;
 import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IActionListener;
+import de.etas.tef.editor.action.ActionManager;
 
 public class MainScreen implements IActionListener
 {
