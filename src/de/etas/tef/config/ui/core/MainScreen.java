@@ -30,10 +30,10 @@ import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.listener.IActionListener;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.config.listener.IMessageListener;
+import de.etas.tef.editor.message.MessageManager;
 
-public class MainScreen implements IActionListener
+public class MainScreen implements IMessageListener
 {
 	private ConfigComposite leftConfigComposite = null;
 	private ConfigComposite rightConfigComposite = null;
@@ -72,7 +72,7 @@ public class MainScreen implements IActionListener
 	public MainScreen()
 	{
 		controller = new MainController();
-		ActionManager.INSTANCE.addActionListener(this);
+		MessageManager.INSTANCE.addMessageListener(this);
 		
 		Display display = new Display();
 		
@@ -399,7 +399,7 @@ public class MainScreen implements IActionListener
 		
 		connectItem.setImage(isConnected ? IMAGE_CONNECT : IMAGE_DISCONNECT);
 		
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_COMPOSITE_CHANGED, CompositeID.COMPOSITE_ALONE, new boolean[] {isLeftSelected, isRightSelected});
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_COMPOSITE_CHANGED, CompositeID.COMPOSITE_ALONE, new boolean[] {isLeftSelected, isRightSelected});
 	}
 
 	private void initMainComponents(Composite shell)

@@ -15,7 +15,7 @@ import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class TreeListener extends CellEditingListener
 {
@@ -81,11 +81,11 @@ public class TreeListener extends CellEditingListener
 				ConfigBlock cb = new ConfigBlock();
 				cb.setBlockName(Constants.TXT_TEMP);
 				getController().addConfigBlock(cb);
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_ADD_NEW_BLOCK, getCompositeID(), cb);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_ADD_NEW_BLOCK, getCompositeID(), cb);
 			}
 			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_DELETE_BLOCK, getCompositeID(), getTree().getSelection()[0].getText());
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_DELETE_BLOCK, getCompositeID(), getTree().getSelection()[0].getText());
 			}
 			else if( text.contentEquals(Constants.TXT_COPY) )
 			{
@@ -100,12 +100,12 @@ public class TreeListener extends CellEditingListener
 	
 	private void sendCopyMessage()
 	{
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_COPY_BLOCK, getCompositeID(), null);
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_COPY_BLOCK, getCompositeID(), null);
 	}
 	
 	private void sendPasteMessage()
 	{
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_PASTE_BLOCK, getCompositeID(), null);
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_PASTE_BLOCK, getCompositeID(), null);
 	}
 
 	@Override

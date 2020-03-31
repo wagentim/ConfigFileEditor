@@ -16,7 +16,7 @@ import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.helper.IConfigFileWorker;
 import de.etas.tef.config.helper.InitFileWorker;
 import de.etas.tef.config.helper.Validator;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class ConfigFileController extends AbstractController
 {
@@ -44,7 +44,7 @@ public class ConfigFileController extends AbstractController
 	{
 		if( !Validator.INSTANCE().validFile(filePath, false) )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "Input File is Wrong!!");
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "Input File is Wrong!!");
 			return;
 		}
 		
@@ -61,7 +61,7 @@ public class ConfigFileController extends AbstractController
 		}
 		catch (IOException e)
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "I/O Error by parsing inputFile: " + inputFile);
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "I/O Error by parsing inputFile: " + inputFile);
 			e.printStackTrace();
 		}
 		
@@ -149,7 +149,7 @@ public class ConfigFileController extends AbstractController
 		}
 		catch (IOException e)
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Error by writing data to file: " + filePath);
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Error by writing data to file: " + filePath);
 			e.printStackTrace();
 		}
 	}
@@ -159,7 +159,7 @@ public class ConfigFileController extends AbstractController
 	{
 		if( null == text || text.isEmpty() || null == selectedItems|| selectedItems.length < 1)
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "ERROR by deleting the parameters");
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "ERROR by deleting the parameters");
 			return;
 		}
 		
@@ -255,7 +255,7 @@ public class ConfigFileController extends AbstractController
 		
 		if( !blockName.equalsIgnoreCase(selected.getBlockName()) )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Required Delete Block: " + blockName + " is not equal to current selected Block: " + selected.getBlockName());
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Required Delete Block: " + blockName + " is not equal to current selected Block: " + selected.getBlockName());
 			return;
 		}
 		

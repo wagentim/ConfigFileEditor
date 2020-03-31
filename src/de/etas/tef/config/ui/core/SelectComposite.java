@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class SelectComposite extends AbstractComposite
 {
@@ -75,7 +75,7 @@ public class SelectComposite extends AbstractComposite
 		
 		if ( null == currFilePath || currFilePath.isEmpty())
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "No File is selected!");
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "No File is selected!");
 			return;
 		}
 		
@@ -83,7 +83,7 @@ public class SelectComposite extends AbstractComposite
 		
 		getController().setInputConfigFile(currFilePath);
 		
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_NEW_FILE_SELECTED, getCompositeID(), currFilePath);
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_NEW_FILE_SELECTED, getCompositeID(), currFilePath);
 	}
 	
 	protected void initText(Composite comp)

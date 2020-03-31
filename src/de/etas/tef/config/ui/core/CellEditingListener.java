@@ -19,10 +19,10 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.listener.IActionListener;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.config.listener.IMessageListener;
+import de.etas.tef.editor.message.MessageManager;
 
-public abstract class CellEditingListener implements MouseListener, IActionListener, KeyListener, SelectionListener
+public abstract class CellEditingListener implements MouseListener, IMessageListener, KeyListener, SelectionListener
 {
 	
 	private final Composite composite;
@@ -42,7 +42,7 @@ public abstract class CellEditingListener implements MouseListener, IActionListe
 		
 		editor = getNewEditor();
 		
-		ActionManager.INSTANCE.addActionListener(this);
+		MessageManager.INSTANCE.addMessageListener(this);
 	}
 
 	protected Composite getComposite()

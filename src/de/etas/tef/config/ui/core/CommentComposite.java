@@ -18,7 +18,7 @@ import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class CommentComposite extends AbstractComposite
 {
@@ -90,7 +90,7 @@ public class CommentComposite extends AbstractComposite
 	
 	private void saveAction()
 	{
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_COMMENT_SAVED, getCompositeID(), commentBlock.getText());
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_COMMENT_SAVED, getCompositeID(), commentBlock.getText());
 	}
 	
 	@Override

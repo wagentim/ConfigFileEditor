@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class ConfigComposite extends AbstractComposite
 {
@@ -70,7 +70,7 @@ public class ConfigComposite extends AbstractComposite
 					return;
 				}
 				
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_DROP_NEW_FILE_SELECTED, getCompositeID(), filePath);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_DROP_NEW_FILE_SELECTED, getCompositeID(), filePath);
 			}
 		});
 	}

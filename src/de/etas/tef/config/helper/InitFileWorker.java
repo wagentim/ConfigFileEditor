@@ -14,7 +14,7 @@ import java.util.SortedMap;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class InitFileWorker implements IConfigFileWorker
 {
@@ -52,7 +52,7 @@ public class InitFileWorker implements IConfigFileWorker
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "Cannot find file: " + filePath);
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "Cannot find file: " + filePath);
 			
 			return;
 		}
@@ -105,7 +105,7 @@ public class InitFileWorker implements IConfigFileWorker
 				}
 				else
 				{
-					ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing File Comments in line: " + lineCount);
+					MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing File Comments in line: " + lineCount);
 					break;
 				}
 			}
@@ -210,7 +210,7 @@ public class InitFileWorker implements IConfigFileWorker
 						}
 						else
 						{
-							ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing Parameter in line: " + lineCount);
+							MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing Parameter in line: " + lineCount);
 						}
 					}
 					else
@@ -235,7 +235,7 @@ public class InitFileWorker implements IConfigFileWorker
 		
 		if( index < 1 )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by parsing block name in line: " + lineCount);
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by parsing block name in line: " + lineCount);
 			configBlock.setBlockName(currentLine.substring(1, currentLine.length()));
 		}
 		else
@@ -251,7 +251,7 @@ public class InitFileWorker implements IConfigFileWorker
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )
 		{
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Cannot find file: " + filePath);
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Cannot find file: " + filePath);
 			
 			return;
 		}

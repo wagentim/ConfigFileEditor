@@ -19,7 +19,7 @@ import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class SearchTreeComponent extends AbstractComposite
 {
@@ -234,7 +234,7 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			if( null == ti )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "Connected, but cannot find block: " + blockName);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "Connected, but cannot find block: " + blockName);
 				return;
 			}
 			
@@ -296,7 +296,7 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			if( null == blockName || blockName.isEmpty() )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Delete node name is empty");
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Delete node name is empty");
 				return;
 			}
 			
@@ -304,7 +304,7 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			if(null == selected.getParentItem())
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_WARNING, CompositeID.COMPOSITE_ALONE, "Cannot remove the root node");
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_WARNING, CompositeID.COMPOSITE_ALONE, "Cannot remove the root node");
 				return;
 			}
 			getController().removeBlock(blockName);
@@ -325,7 +325,7 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			String blockName = cb.getText();
 			getController().copyBlock(blockName);
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is copied: " + blockName);
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is copied: " + blockName);
 		}
 		
 		if( Constants.ACTION_PASTE_BLOCK == type )
@@ -338,7 +338,7 @@ public class SearchTreeComponent extends AbstractComposite
 			}
 			getController().addConfigBlock(newBlock);
 			addNewBlock(newBlock);
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is pasted: " + newBlock.getBlockName());
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is pasted: " + newBlock.getBlockName());
 		}
 		
 		if( Constants.ACTION_COMMENT_SAVED == type && getController().getFocusedElement() == Constants.FOCUS_BLOCK )

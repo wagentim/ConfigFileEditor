@@ -9,10 +9,10 @@ import org.eclipse.swt.graphics.Color;
 
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.config.listener.IActionListener;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.config.listener.IMessageListener;
+import de.etas.tef.editor.message.MessageManager;
 
-public class InfoBlockWriter implements IActionListener
+public class InfoBlockWriter implements IMessageListener
 {
 	private final StyledText infoBlock;
 	private final Color error;
@@ -33,7 +33,7 @@ public class InfoBlockWriter implements IActionListener
 		this.info = infoBlock.getDisplay().getSystemColor(SWT.COLOR_BLACK);
 		this.warning = infoBlock.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		this.controller = controller;
-		ActionManager.INSTANCE.addActionListener(this);
+		MessageManager.INSTANCE.addMessageListener(this);
 	}
 	
 	private void moveToLastLine()

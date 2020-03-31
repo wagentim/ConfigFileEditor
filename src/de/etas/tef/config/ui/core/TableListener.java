@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class TableListener extends CellEditingListener
 {
@@ -137,11 +137,11 @@ public class TableListener extends CellEditingListener
 			
 			if( text.contentEquals(Constants.TXT_BTN_ADD) )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_MENU_ADD, getCompositeID(), Constants.EMPTY_STRING);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_MENU_ADD, getCompositeID(), Constants.EMPTY_STRING);
 			}
 			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
 			{
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_MENU_DELETE, getCompositeID(), Constants.EMPTY_STRING);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_MENU_DELETE, getCompositeID(), Constants.EMPTY_STRING);
 			}
 			else if( text.contentEquals(Constants.TXT_COPY) )
 			{
@@ -157,12 +157,12 @@ public class TableListener extends CellEditingListener
 	
 	private void sendCopyMessage()
 	{
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_COPY_PARAMETER, getCompositeID(), null);
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_COPY_PARAMETER, getCompositeID(), null);
 	}
 	
 	private void sendPasteMessage()
 	{
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_PASTE_PARAMETER, getCompositeID(), null);
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_PASTE_PARAMETER, getCompositeID(), null);
 	}
 
 	@Override

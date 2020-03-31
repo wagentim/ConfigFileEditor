@@ -37,7 +37,7 @@ import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class ContentComposite extends AbstractComposite
 {
@@ -247,7 +247,7 @@ public class ContentComposite extends AbstractComposite
 				
 				setButtonLocked(locked);
 				
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_LOCK_SELECTION_CHANGED, getCompositeID(), locked);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOCK_SELECTION_CHANGED, getCompositeID(), locked);
 			}
 
 			
@@ -294,7 +294,7 @@ public class ContentComposite extends AbstractComposite
 			public void widgetSelected(SelectionEvent event)
 			{
 				getController().setFocusedElement(Constants.FOCUS_PARAMETER);
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_PARAMETER_SELECTED, getCompositeID(), getTable().getSelectionIndex());
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_PARAMETER_SELECTED, getCompositeID(), getTable().getSelectionIndex());
 
 				String text = getTable().getItem(getTable().getSelectionIndex()).getText(1);
 				
@@ -303,7 +303,7 @@ public class ContentComposite extends AbstractComposite
 					return;
 				}
 					
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_SOURCE_PARAMETER_SELECTED, getCompositeID(), text);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_SOURCE_PARAMETER_SELECTED, getCompositeID(), text);
 			}
 			
 		});
@@ -324,7 +324,7 @@ public class ContentComposite extends AbstractComposite
 		if( null != cb && cb.getBlockName().contentEquals(blockName))
 		{
 			updateParameters(cb.getAllParameters());
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_BLOCK_SELECTED, getCompositeID(), cb);
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_BLOCK_SELECTED, getCompositeID(), cb);
 		}
 	}
 
@@ -496,7 +496,7 @@ public class ContentComposite extends AbstractComposite
 	protected void saveAction(String targetFilePath)
 	{
 		getController().saveFile(targetFilePath);
-		ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, getCompositeID(), "Source Write to: " + targetFilePath + " finished!");
+		MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_INFO, getCompositeID(), "Source Write to: " + targetFilePath + " finished!");
 	}
 	
 	@Override
@@ -547,7 +547,7 @@ public class ContentComposite extends AbstractComposite
 			}
 			
 			getController().copyParameters(selectedItems);
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Parameters are copied");
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Parameters are copied");
 		}
 		
 		if( type == Constants.ACTION_PASTE_PARAMETER )
@@ -565,7 +565,7 @@ public class ContentComposite extends AbstractComposite
 			{
 				addTableItem(it.next());
 			}
-			ActionManager.INSTANCE.sendAction(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Parameters are pasted");
+			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Parameters are pasted");
 		}
 		
 		if( Constants.ACTION_COMMENT_SAVED == type && getController().getFocusedElement() == Constants.FOCUS_PARAMETER )

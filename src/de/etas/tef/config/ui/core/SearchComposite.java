@@ -15,7 +15,7 @@ import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.editor.message.MessageManager;
 
 public class SearchComposite extends AbstractComposite
 {
@@ -59,7 +59,7 @@ public class SearchComposite extends AbstractComposite
 			{
 				String text = searchText.getText();
 				getController().setShowConfigBlocks(text);
-				ActionManager.INSTANCE.sendAction(Constants.ACTION_SET_SHOW_CONFIG_BLOCKS, compositeID, null);
+				MessageManager.INSTANCE.sendMessage(Constants.ACTION_SET_SHOW_CONFIG_BLOCKS, compositeID, null);
 			}
 		});
 		

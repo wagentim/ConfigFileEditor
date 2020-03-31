@@ -4,10 +4,10 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.listener.IActionListener;
-import de.etas.tef.editor.action.ActionManager;
+import de.etas.tef.config.listener.IMessageListener;
+import de.etas.tef.editor.message.MessageManager;
 
-public class AbstractComposite extends Composite implements IActionListener
+public class AbstractComposite extends Composite implements IMessageListener
 {
 	
 	private final MainController controller;
@@ -18,7 +18,7 @@ public class AbstractComposite extends Composite implements IActionListener
 		super(parent, style);
 		this.controller = controller;
 		this.compositeID = compositeID;
-		ActionManager.INSTANCE.addActionListener(this);
+		MessageManager.INSTANCE.addMessageListener(this);
 	}
 	
 	protected IController getController()
