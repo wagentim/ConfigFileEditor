@@ -1,6 +1,8 @@
 package de.etas.tef.config.ui.core;
 
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
@@ -19,6 +21,16 @@ public abstract class AbstractComposite extends Composite implements IMessageLis
 		this.controller = controller;
 		MessageManager.INSTANCE.addMessageListener(this);
 		defaultBackgroundColor = controller.getColorFactory().getColorWhite();
+	}
+	
+	protected void initComposite() 
+	{
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = 0;
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		this.setLayout(layout);
+		this.setLayoutData(gd);
+		this.setBackground(defaultBackgroundColor);
 	}
 
 }

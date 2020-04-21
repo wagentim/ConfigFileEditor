@@ -9,7 +9,6 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
@@ -30,15 +29,10 @@ public class ConfigMainComposite extends AbstractComposite
 	protected void initComposite()
 	{
 		// setting for the composite
-		GridLayout layout = new GridLayout(1, false);
-		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = 0;
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		this.setLayout(layout);
-		this.setLayoutData(gd);
-		this.setBackground(defaultBackgroundColor);
+		super.initComposite();
 		
 		svBelow = new SashForm(this, SWT.VERTICAL);
-		gd = new GridData(GridData.FILL_BOTH);
+		GridData gd = new GridData(GridData.FILL_BOTH);
 		svBelow.setLayoutData(gd);
 		
 		sfAbove = new SashForm(svBelow, SWT.HORIZONTAL);

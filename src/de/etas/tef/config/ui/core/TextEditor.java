@@ -9,9 +9,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
@@ -46,17 +44,12 @@ public abstract class TextEditor extends AbstractComposite
 	protected void initMainComposite()
 	{
 		// setting for the composite
-		GridLayout layout = new GridLayout(1, false);
-		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = 0;
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		this.setLayout(layout);
-		this.setLayoutData(gd);
-		this.setBackground(defaultBackgroundColor);
+		super.initComposite();
 		
 		// setting for the table composite
 		text = new Text(this, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP | SWT.BORDER);
 		
-		gd = new GridData(GridData.FILL_BOTH);
+		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = Constants.HEIGHT_HINT;
 		text.setLayoutData(gd);
 		

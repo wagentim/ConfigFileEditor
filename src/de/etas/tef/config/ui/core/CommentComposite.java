@@ -1,7 +1,5 @@
 package de.etas.tef.config.ui.core;
 
-import java.util.List;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -15,7 +13,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.Constants;
 
 public class CommentComposite extends AbstractComposite

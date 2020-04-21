@@ -38,15 +38,10 @@ public abstract class CustomTree extends AbstractComposite
 
 	protected void initComponent()
 	{
-		GridLayout layout = new GridLayout(1, false);
-		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = 0;
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		this.setLayout(layout);
-		this.setLayoutData(gd);
-		this.setBackground(defaultBackgroundColor);
+		super.initComposite();
 		
 		tree = new Tree(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		gd = new GridData(GridData.FILL_BOTH);
+		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = Constants.HEIGHT_HINT;
 		tree.setLayoutData(gd);
 		
