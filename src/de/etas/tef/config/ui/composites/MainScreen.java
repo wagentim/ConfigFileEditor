@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.core.IImageConstants;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.listener.IMessageListener;
 import de.etas.tef.editor.message.MessageManager;
 
@@ -56,7 +56,7 @@ public class MainScreen implements IMessageListener
 		
 		
 		Shell shell = new Shell(display);
-		shell.setText(Constants.TXT_APP_TITLE);
+		shell.setText(IConstants.TXT_APP_TITLE);
 		shell.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_TITLE));
 		
 		shell.addShellListener(new ShellListener()
@@ -274,15 +274,19 @@ public class MainScreen implements IMessageListener
 	
 	private void initMainComponents(Composite shell)
 	{
-		main = new SashForm(shell, SWT.VERTICAL);
+		main = new SashForm(shell, SWT.HORIZONTAL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		main.setLayoutData(gd);
-
-		configCompositeSashForm = new SashForm(main, SWT.HORIZONTAL);
-		gd = new GridData(GridData.FILL_BOTH);
-		configCompositeSashForm.setLayoutData(gd);
 		
-		new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
+		new FileListTree(main, SWT.BORDER, controller);
+
+//		configCompositeSashForm = new SashForm(main, SWT.HORIZONTAL);
+//		gd = new GridData(GridData.FILL_BOTH);
+//		configCompositeSashForm.setLayoutData(gd);
+		
+		new ConfigMainComposite(main, SWT.BORDER, controller);
+		
+		main.setWeights(new int[] { 1, 3 });
 //		
 //		leftConfigComposite = new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
 //		rightConfigComposite = new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
@@ -308,9 +312,9 @@ public class MainScreen implements IMessageListener
 		Monitor primary = shell.getDisplay().getPrimaryMonitor();
 		Rectangle area = primary.getClientArea();
 		shell.pack();
-		shell.setBounds((Math.abs(area.width - Constants.MAIN_SCREEN_WIDTH)) / 2,
-				Math.abs((area.height - Constants.MAIN_SCREEN_HEIGHT)) / 2, Constants.MAIN_SCREEN_WIDTH,
-				Constants.MAIN_SCREEN_HEIGHT);
+		shell.setBounds((Math.abs(area.width - IConstants.MAIN_SCREEN_WIDTH)) / 2,
+				Math.abs((area.height - IConstants.MAIN_SCREEN_HEIGHT)) / 2, IConstants.MAIN_SCREEN_WIDTH,
+				IConstants.MAIN_SCREEN_HEIGHT);
 
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginTop = 10;
@@ -323,7 +327,7 @@ public class MainScreen implements IMessageListener
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		if (Constants.ACTION_COMPOSITE_CHANGED == type)
+		if (IConstants.ACTION_COMPOSITE_CHANGED == type)
 		{
 			boolean[] value = (boolean[])content;
 			

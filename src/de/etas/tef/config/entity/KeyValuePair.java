@@ -1,14 +1,14 @@
 package de.etas.tef.config.entity;
 
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public class KeyValuePair
 {
-	private String key = Constants.SYMBOL_INIT_FILE_COMMENT_DASH;
-	private String value = Constants.SYMBOL_INIT_FILE_COMMENT_DASH;
-	private String other = Constants.EMPTY_STRING;
-	private String forthValue = Constants.EMPTY_STRING;
-	private String comment = Constants.EMPTY_STRING;
+	private String key = IConstants.SYMBOL_INIT_FILE_COMMENT_DASH;
+	private String value = IConstants.SYMBOL_INIT_FILE_COMMENT_DASH;
+	private String other = IConstants.EMPTY_STRING;
+	private String forthValue = IConstants.EMPTY_STRING;
+	private String comment = IConstants.EMPTY_STRING;
 	
 	public String getKey()
 	{
@@ -29,8 +29,8 @@ public class KeyValuePair
 	
 	public void clean()
 	{
-		setKey(Constants.EMPTY_STRING);
-		setValue(Constants.EMPTY_STRING);
+		setKey(IConstants.EMPTY_STRING);
+		setValue(IConstants.EMPTY_STRING);
 	}
 	
 		public String getOther()

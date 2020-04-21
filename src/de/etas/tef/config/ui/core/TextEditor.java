@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 /**
  * Using Table composite to implement basic text editor functions
@@ -50,7 +50,7 @@ public abstract class TextEditor extends AbstractComposite
 		text = new Text(this, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP | SWT.BORDER);
 		
 		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = Constants.HEIGHT_HINT;
+		gd.heightHint = IConstants.HEIGHT_HINT;
 		text.setLayoutData(gd);
 		
 	}
@@ -77,21 +77,21 @@ public abstract class TextEditor extends AbstractComposite
 	            }
 	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            copyItem.setText(Constants.TXT_COPY);
+	            copyItem.setText(IConstants.TXT_COPY);
 	            copyItem.addSelectionListener(listener);
 	            
 	            MenuItem pasteItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            pasteItem.setText(Constants.TXT_PASTE);
+	            pasteItem.setText(IConstants.TXT_PASTE);
 	            pasteItem.addSelectionListener(listener);
 	            
 	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
 	            
 	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            newItem.setText(Constants.TXT_BTN_ADD);
+	            newItem.setText(IConstants.TXT_BTN_ADD);
 	            newItem.addSelectionListener(listener);
 	            
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            deleteItem.setText(Constants.TXT_BTN_DELETE);
+	            deleteItem.setText(IConstants.TXT_BTN_DELETE);
 	            deleteItem.addSelectionListener(listener);
 	        }
 	    });
@@ -100,8 +100,8 @@ public abstract class TextEditor extends AbstractComposite
 	protected String fileSave(Shell shell)
 	{
 		FileDialog fd = new FileDialog(shell, SWT.APPLICATION_MODAL | SWT.SAVE);
-		fd.setFilterExtensions(Constants.CONFIG_FILE_EXTENSION);
-		fd.setFilterNames(Constants.CONFIG_FILE_NAME);
+		fd.setFilterExtensions(IConstants.CONFIG_FILE_EXTENSION);
+		fd.setFilterNames(IConstants.CONFIG_FILE_NAME);
 		String result = fd.open();
 		if( null != result )
 		{

@@ -8,7 +8,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Color;
 
 import de.etas.tef.config.entity.ConfigBlock;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.listener.IMessageListener;
 import de.etas.tef.editor.message.MessageManager;
 
@@ -20,7 +20,7 @@ public class InfoBlockWriter implements IMessageListener
 	private final Color warning;
 	private final MainController controller;
 	
-	private String txt = Constants.EMPTY_STRING;
+	private String txt = IConstants.EMPTY_STRING;
 
 	public InfoBlockWriter(final StyledText infoBlock, MainController controller)
 	{
@@ -87,25 +87,25 @@ public class InfoBlockWriter implements IMessageListener
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		if ((type == Constants.ACTION_LOG_WRITE_INFO))
+		if ((type == IConstants.ACTION_LOG_WRITE_INFO))
 		{
 			logInfo(content.toString());
 		} 
-		else if (type == Constants.ACTION_LOG_WRITE_ERROR)
+		else if (type == IConstants.ACTION_LOG_WRITE_ERROR)
 		{
 			logError(content.toString());
 		}
-		else if (type == Constants.ACTION_LOG_WRITE_WARNING)
+		else if (type == IConstants.ACTION_LOG_WRITE_WARNING)
 		{
 			logWarning(content.toString());
 		}
-		else if(type == Constants.ACTION_NEW_FILE_SELECTED)
+		else if(type == IConstants.ACTION_NEW_FILE_SELECTED)
 		{
 		}
-		else if (type == Constants.ACTION_PARAMETER_UPDATE)
+		else if (type == IConstants.ACTION_PARAMETER_UPDATE)
 		{
 		}
-		else if (type == Constants.ACTION_CONNECT_SELECTED)
+		else if (type == IConstants.ACTION_CONNECT_SELECTED)
 		{
 			if ((boolean)content)
 			{

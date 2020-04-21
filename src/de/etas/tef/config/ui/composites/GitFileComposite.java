@@ -1,5 +1,6 @@
 package de.etas.tef.config.ui.composites;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
@@ -11,7 +12,14 @@ public class GitFileComposite extends AbstractComposite
 	public GitFileComposite(Composite parent, int style, MainController controller)
 	{
 		super(parent, style, controller);
-		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected void initComposite()
+	{
+		super.initComposite();
+		
+		new FileListTree(this, SWT.NONE, controller);
 	}
 
 	@Override

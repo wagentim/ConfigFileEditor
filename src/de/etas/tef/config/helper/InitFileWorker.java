@@ -83,13 +83,13 @@ public class InitFileWorker implements IConfigFileWorker
 			
 			if( TAG_FILE_NEW == status )
 			{
-				if( currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_DASH) || 
-						currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)
+				if( currentLine.startsWith(IConstants.SYMBOL_INIT_FILE_COMMENT_DASH) || 
+						currentLine.startsWith(IConstants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)
 						)
 				{
 					status = TAG_FILE_COMMENT_START;
 				}
-				else if ( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
+				else if ( currentLine.startsWith(IConstants.SYMBOL_LEFT_BRACKET) )
 				{
 					status = TAG_BLOCK_NAME_START;
 					cb = new ConfigBlock();
@@ -110,8 +110,8 @@ public class InitFileWorker implements IConfigFileWorker
 			
 			if( TAG_BLOCK_COMMENT_START == status )
 			{
-				if( currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_DASH) || 
-						currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)  ||
+				if( currentLine.startsWith(IConstants.SYMBOL_INIT_FILE_COMMENT_DASH) || 
+						currentLine.startsWith(IConstants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)  ||
 							currentLine.isEmpty())
 				{
 					String s = cb.getComments();
@@ -125,7 +125,7 @@ public class InitFileWorker implements IConfigFileWorker
 					
 					cb.setComments(s);
 				}
-				else if ( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
+				else if ( currentLine.startsWith(IConstants.SYMBOL_LEFT_BRACKET) )
 				{
 					status = TAG_BLOCK_NAME_START;
 				}
@@ -141,7 +141,7 @@ public class InitFileWorker implements IConfigFileWorker
 					cf.getConfigBlocks().add(cb);
 					continue;
 				}
-				else if ( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
+				else if ( currentLine.startsWith(IConstants.SYMBOL_LEFT_BRACKET) )
 				{
 					status = TAG_BLOCK_NAME_START;
 				}
@@ -177,7 +177,7 @@ public class InitFileWorker implements IConfigFileWorker
 				{
 					continue;
 				}
-				else if( currentLine.startsWith(Constants.SYMBOL_LEFT_BRACKET) )
+				else if( currentLine.startsWith(IConstants.SYMBOL_LEFT_BRACKET) )
 				{
 					cb = new ConfigBlock();
 					cf.getConfigBlocks().add(cb);
@@ -187,12 +187,12 @@ public class InitFileWorker implements IConfigFileWorker
 				}
 				else
 				{
-					int split = currentLine.indexOf(Constants.SYMBOL_EQUAL);
+					int split = currentLine.indexOf(IConstants.SYMBOL_EQUAL);
 					
 					if( split < 0 )
 					{
-						if( currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_DASH) || 
-								currentLine.startsWith(Constants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)
+						if( currentLine.startsWith(IConstants.SYMBOL_INIT_FILE_COMMENT_DASH) || 
+								currentLine.startsWith(IConstants.SYMBOL_INIT_FILE_COMMENT_SEMICOLON)
 								)
 						{
 							status = TAG_BLOCK_COMMENT_START;
@@ -228,7 +228,7 @@ public class InitFileWorker implements IConfigFileWorker
 	
 	private void parserBlockName(String currentLine, int lineCount, ConfigBlock configBlock)
 	{
-		int index = currentLine.indexOf(Constants.SYMBOL_RIGHT_BRACKET);
+		int index = currentLine.indexOf(IConstants.SYMBOL_RIGHT_BRACKET);
 		
 		if( index < 1 )
 		{
@@ -262,7 +262,7 @@ public class InitFileWorker implements IConfigFileWorker
 		
 		BufferedWriter bw = Files.newBufferedWriter(path, Charset.forName(CHARSET_UTF_8));
 		
-		String s = Constants.EMPTY_STRING;
+		String s = IConstants.EMPTY_STRING;
 
 		try
 		{
@@ -294,9 +294,9 @@ public class InitFileWorker implements IConfigFileWorker
 				
 				sb = new StringBuffer();
 				
-				sb.append(Constants.SYMBOL_LEFT_BRACKET);
+				sb.append(IConstants.SYMBOL_LEFT_BRACKET);
 				sb.append(cb.getBlockName());
-				sb.append(Constants.SYMBOL_RIGHT_BRACKET);
+				sb.append(IConstants.SYMBOL_RIGHT_BRACKET);
 				sb.append(System.lineSeparator());
 				
 				Iterator<KeyValuePair> iter = cb.getAllParameters().iterator();
@@ -306,7 +306,7 @@ public class InitFileWorker implements IConfigFileWorker
 					KeyValuePair pair = iter.next();
 					
 					sb.append(pair.getKey());
-					sb.append(Constants.SYMBOL_EQUAL);
+					sb.append(IConstants.SYMBOL_EQUAL);
 					sb.append(pair.getValue());
 					sb.append(System.lineSeparator());
 				}

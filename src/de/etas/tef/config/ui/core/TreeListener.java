@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.entity.ConfigBlock;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public class TreeListener extends CellEditingListener
 {
@@ -76,19 +76,19 @@ public class TreeListener extends CellEditingListener
 		{
 			String text = ((MenuItem)event.getSource()).getText();
 			
-			if( text.contentEquals(Constants.TXT_BTN_ADD) )
+			if( text.contentEquals(IConstants.TXT_BTN_ADD) )
 			{
 				ConfigBlock cb = new ConfigBlock();
-				cb.setBlockName(Constants.TXT_TEMP);
+				cb.setBlockName(IConstants.TXT_TEMP);
 			}
-			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
+			else if( text.contentEquals(IConstants.TXT_BTN_DELETE) )
 			{
 			}
-			else if( text.contentEquals(Constants.TXT_COPY) )
+			else if( text.contentEquals(IConstants.TXT_COPY) )
 			{
 				sendCopyMessage();
 			}
-			else if( text.contentEquals(Constants.TXT_PASTE) )
+			else if( text.contentEquals(IConstants.TXT_PASTE) )
 			{
 				sendPasteMessage();
 			}

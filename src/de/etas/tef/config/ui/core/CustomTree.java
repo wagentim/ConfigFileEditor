@@ -6,7 +6,6 @@ import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -16,7 +15,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public abstract class CustomTree extends AbstractComposite
 {
@@ -42,11 +41,11 @@ public abstract class CustomTree extends AbstractComposite
 		
 		tree = new Tree(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = Constants.HEIGHT_HINT;
+		gd.heightHint = IConstants.HEIGHT_HINT;
 		tree.setLayoutData(gd);
 		
 		root = new TreeItem(tree, SWT.NONE);
-		root.setText(Constants.TXT_CONFIG_FILE);
+		root.setText(getRootNodeName());
 		
 		tree.addSelectionListener(new SelectionListener()
 		{
@@ -63,8 +62,9 @@ public abstract class CustomTree extends AbstractComposite
 				
 			}
 		});
-		
 	}
+	
+	protected abstract String getRootNodeName();
 	
 	private void createRightMenu(Control control, SelectionListener listener)
 	{
@@ -89,21 +89,21 @@ public abstract class CustomTree extends AbstractComposite
 	            }
 	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            copyItem.setText(Constants.TXT_COPY);
+	            copyItem.setText(IConstants.TXT_COPY);
 	            copyItem.addSelectionListener(listener);
 	            
 	            MenuItem pasteItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            pasteItem.setText(Constants.TXT_PASTE);
+	            pasteItem.setText(IConstants.TXT_PASTE);
 	            pasteItem.addSelectionListener(listener);
 	            
 	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
 	            
 	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            newItem.setText(Constants.TXT_BTN_ADD);
+	            newItem.setText(IConstants.TXT_BTN_ADD);
 	            newItem.addSelectionListener(listener);
 
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            deleteItem.setText(Constants.TXT_BTN_DELETE);
+	            deleteItem.setText(IConstants.TXT_BTN_DELETE);
 	            deleteItem.addSelectionListener(listener);
 	            
 	            
@@ -178,12 +178,12 @@ public abstract class CustomTree extends AbstractComposite
 	
 	public void receivedAction(int type, int compositeID, Object content)
 	{
-		if( Constants.ACTION_SET_SHOW_CONFIG_BLOCKS == type)
+		if( IConstants.ACTION_SET_SHOW_CONFIG_BLOCKS == type)
 		{
 			
 		}
 		
-		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
+		if( IConstants.ACTION_LOCK_SELECTION_CHANGED == type)
 		{
 			boolean locked = (boolean)content;
 			
@@ -202,13 +202,13 @@ public abstract class CustomTree extends AbstractComposite
 			}
 		}
 		
-		if( Constants.ACTION_ADD_NEW_BLOCK == type )
+		if( IConstants.ACTION_ADD_NEW_BLOCK == type )
 		{
 			
 			addNewBlock((ConfigBlock)content);
 		}
 		
-		if( Constants.ACTION_DELETE_BLOCK == type )
+		if( IConstants.ACTION_DELETE_BLOCK == type )
 		{
 			String blockName = (String)content;
 			
@@ -229,7 +229,7 @@ public abstract class CustomTree extends AbstractComposite
 			tree.setSelection(root.getItem(0));
 		}
 		
-		if( Constants.ACTION_COPY_BLOCK == type )
+		if( IConstants.ACTION_COPY_BLOCK == type )
 		{
 			TreeItem cb = tree.getSelection()[0];
 			
@@ -241,7 +241,7 @@ public abstract class CustomTree extends AbstractComposite
 			String blockName = cb.getText();
 		}
 		
-		if( Constants.ACTION_PASTE_BLOCK == type )
+		if( IConstants.ACTION_PASTE_BLOCK == type )
 		{
 			ConfigBlock newBlock = controller.getCopyBlock();
 			

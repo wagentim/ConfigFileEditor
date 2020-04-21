@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public final class ConfigFile
 {
-	private String filePath = Constants.EMPTY_STRING;
+	private String filePath = IConstants.EMPTY_STRING;
 	private List<ConfigBlock> configBlocks = Collections.emptyList();
-	private String comments = Constants.EMPTY_STRING;
+	private String comments = IConstants.EMPTY_STRING;
 	
 	public ConfigFile()
 	{

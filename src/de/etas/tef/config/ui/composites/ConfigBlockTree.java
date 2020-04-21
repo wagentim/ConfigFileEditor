@@ -2,6 +2,7 @@ package de.etas.tef.config.ui.composites;
 
 import org.eclipse.swt.widgets.Composite;
 
+import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.ui.core.CustomTree;
 
@@ -18,6 +19,12 @@ public class ConfigBlockTree extends CustomTree
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	protected String getRootNodeName()
+	{
+		return IConstants.TXT_INI_FILE_DEFAULT;
 	}
 
 }

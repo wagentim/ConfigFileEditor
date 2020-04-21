@@ -1,6 +1,6 @@
 package de.etas.tef.config.helper;
 
-public final class Constants
+public interface IConstants
 {
 	public static final int EMPTY_INT = -1;
 	public static final String[] EMPTY_STRING_ARRAY = {};

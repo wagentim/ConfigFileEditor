@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.CellIndex;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public class TableListener extends CellEditingListener
 {
@@ -135,17 +135,17 @@ public class TableListener extends CellEditingListener
 		{
 			String text = ((MenuItem)event.getSource()).getText();
 			
-			if( text.contentEquals(Constants.TXT_BTN_ADD) )
+			if( text.contentEquals(IConstants.TXT_BTN_ADD) )
 			{
 			}
-			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
+			else if( text.contentEquals(IConstants.TXT_BTN_DELETE) )
 			{
 			}
-			else if( text.contentEquals(Constants.TXT_COPY) )
+			else if( text.contentEquals(IConstants.TXT_COPY) )
 			{
 				sendCopyMessage();
 			}
-			else if( text.contentEquals(Constants.TXT_PASTE) )
+			else if( text.contentEquals(IConstants.TXT_PASTE) )
 			{
 				sendPasteMessage();
 			}

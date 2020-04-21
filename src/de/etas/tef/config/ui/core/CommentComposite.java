@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public class CommentComposite extends AbstractComposite
 {
@@ -40,7 +40,7 @@ public class CommentComposite extends AbstractComposite
 		
 		btnCommentSave = new Button(group, SWT.PUSH);
 		gd = new GridData(SWT.RIGHT, SWT.TOP, true, false, 1, 1);
-		gd.widthHint = Constants.BTN_DEFAULT_WIDTH;
+		gd.widthHint = IConstants.BTN_DEFAULT_WIDTH;
 		btnCommentSave.setLayoutData(gd);
 		btnCommentSave.setText("Save");
 		btnCommentSave.setEnabled(false);
@@ -90,25 +90,25 @@ public class CommentComposite extends AbstractComposite
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
+		if( IConstants.ACTION_LOCK_SELECTION_CHANGED == type)
 		{
 			boolean locked = (boolean)content;
 			commentBlock.setEditable(!locked);
 			btnCommentSave.setEnabled(!locked);
 		}
 		
-		if( Constants.ACTION_BLOCK_SELECTED == type)
+		if( IConstants.ACTION_BLOCK_SELECTED == type)
 		{
 		}
 		
-		if( Constants.ACTION_PARAMETER_SELECTED == type)
+		if( IConstants.ACTION_PARAMETER_SELECTED == type)
 		{
 			
 		}
 		
-		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
+		if( type == IConstants.ACTION_NEW_FILE_SELECTED || type == IConstants.ACTION_DROP_NEW_FILE_SELECTED)
 		{
-			commentBlock.setText(Constants.EMPTY_STRING);
+			commentBlock.setText(IConstants.EMPTY_STRING);
 		}
 	}
 

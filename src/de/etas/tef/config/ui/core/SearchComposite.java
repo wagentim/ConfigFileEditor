@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public class SearchComposite extends AbstractComposite
 {
@@ -64,9 +64,9 @@ public class SearchComposite extends AbstractComposite
 	public void receivedAction(int type, Object content)
 	{
 		
-		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
+		if( type == IConstants.ACTION_NEW_FILE_SELECTED || type == IConstants.ACTION_DROP_NEW_FILE_SELECTED)
 		{
-			searchText.setText(Constants.EMPTY_STRING);
+			searchText.setText(IConstants.EMPTY_STRING);
 		}
 	}
 }

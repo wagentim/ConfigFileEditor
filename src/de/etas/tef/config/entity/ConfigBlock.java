@@ -3,14 +3,14 @@ package de.etas.tef.config.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 
 public final class ConfigBlock
 {
-	private String blockName = Constants.EMPTY_STRING;
+	private String blockName = IConstants.EMPTY_STRING;
 	private int index = -1;
 	private List<KeyValuePair> parameters = null;
-	private String comments = Constants.EMPTY_STRING;
+	private String comments = IConstants.EMPTY_STRING;
 	
 	public ConfigBlock()
 	{
@@ -105,10 +105,10 @@ public final class ConfigBlock
 		StringBuffer sb = new StringBuffer();
 		
 		sb.append(getBlockName());
-		sb.append(Constants.SYMBOL_SPACE);
-		sb.append(Constants.SYMBOL_LEFT_PARENTHESES_);
+		sb.append(IConstants.SYMBOL_SPACE);
+		sb.append(IConstants.SYMBOL_LEFT_PARENTHESES_);
 		sb.append(getParameters().size());
-		sb.append(Constants.SYMBOL_RIGHT_PARENTHESES_);
+		sb.append(IConstants.SYMBOL_RIGHT_PARENTHESES_);
 		
 		return sb.toString();
 	}

@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.CellIndex;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.listener.IMessageListener;
 import de.etas.tef.editor.message.MessageManager;
 
@@ -29,8 +29,8 @@ public abstract class CellEditingListener implements MouseListener, IMessageList
 	private final MainController controller;
 
 	protected ControlEditor editor = null;
-	protected String newValue = Constants.EMPTY_STRING;
-	protected String oldValue = Constants.EMPTY_STRING;
+	protected String newValue = IConstants.EMPTY_STRING;
+	protected String oldValue = IConstants.EMPTY_STRING;
 	protected boolean isLocked = true;
 	
 	public CellEditingListener(Composite composite, MainController controller)
@@ -130,7 +130,7 @@ public abstract class CellEditingListener implements MouseListener, IMessageList
 				}
 				else if(event.keyCode == SWT.ESC)
 				{
-					newValue = Constants.EMPTY_STRING;
+					newValue = IConstants.EMPTY_STRING;
 					disposeEditor();
 				}
 			}

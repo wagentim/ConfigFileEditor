@@ -15,7 +15,7 @@ import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.helper.CompositeID;
-import de.etas.tef.config.helper.Constants;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.editor.message.MessageManager;
 
 public class FileExec
@@ -83,7 +83,7 @@ public class FileExec
 						}
 						else if(s.startsWith("--") || s.startsWith(";") )
 						{
-							sb.append(s + Constants.SYMBOL_NEW_LINE);
+							sb.append(s + IConstants.SYMBOL_NEW_LINE);
 						}
 					}
 					else
@@ -103,7 +103,7 @@ public class FileExec
 							}
 							else if(s.startsWith("--") || s.startsWith(";") )
 							{
-								sb.append(s + Constants.SYMBOL_NEW_LINE);
+								sb.append(s + IConstants.SYMBOL_NEW_LINE);
 							}
 						}
 						else
@@ -168,7 +168,7 @@ public class FileExec
 			return;
 		}
 		
-		String s = Constants.EMPTY_STRING;
+		String s = IConstants.EMPTY_STRING;
 
 		try
 		{
@@ -179,7 +179,7 @@ public class FileExec
 			if( null != s && !s.isEmpty())
 			{
 				bw.write(s);
-				bw.write(Constants.SYMBOL_NEW_LINE);
+				bw.write(IConstants.SYMBOL_NEW_LINE);
 				bw.flush();
 			}
 			Collection<ConfigBlock> values = configFile.getConfigBlocks();
@@ -197,7 +197,7 @@ public class FileExec
 				if( null != s && !s.isEmpty())
 				{
 					bw.write(s);
-					bw.write(Constants.SYMBOL_NEW_LINE);
+					bw.write(IConstants.SYMBOL_NEW_LINE);
 				}
 				
 				sb = new StringBuffer();
@@ -220,7 +220,7 @@ public class FileExec
 				}
 				
 				bw.write(sb.toString());
-				bw.write(Constants.SYMBOL_NEW_LINE);
+				bw.write(IConstants.SYMBOL_NEW_LINE);
 				bw.flush();
 			}
 		} 

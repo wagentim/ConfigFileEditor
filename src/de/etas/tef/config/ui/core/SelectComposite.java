@@ -14,9 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.helper.CompositeID;
-import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.message.MessageManager;
+import de.etas.tef.config.helper.IConstants;
 
 public class SelectComposite extends AbstractComposite
 {
@@ -97,9 +95,9 @@ public class SelectComposite extends AbstractComposite
 		c.setLayout(new GridLayout(1, false));
 		
 		btnFileSelect = new Button(c, SWT.PUSH);
-		btnFileSelect.setText(Constants.TXT_BTN_SELECT);
+		btnFileSelect.setText(IConstants.TXT_BTN_SELECT);
 		GridData gd = new GridData();
-		gd.widthHint = Constants.BTN_DEFAULT_WIDTH;
+		gd.widthHint = IConstants.BTN_DEFAULT_WIDTH;
 		btnFileSelect.setLayoutData(gd);
 		btnFileSelect.addSelectionListener(new SelectionListener()
 		{
@@ -120,8 +118,8 @@ public class SelectComposite extends AbstractComposite
 	protected String fileSelector(Shell shell)
 	{
 		FileDialog fd = new FileDialog(shell, SWT.APPLICATION_MODAL | SWT.OPEN);
-		fd.setFilterExtensions(Constants.CONFIG_FILE_EXTENSION);
-		fd.setFilterNames(Constants.CONFIG_FILE_NAME);
+		fd.setFilterExtensions(IConstants.CONFIG_FILE_EXTENSION);
+		fd.setFilterNames(IConstants.CONFIG_FILE_NAME);
 		return fd.open();
 	}
 
@@ -129,7 +127,7 @@ public class SelectComposite extends AbstractComposite
 	public void receivedAction(int type, Object content)
 	{
 		// TODO Auto-generated method stub
-		if( type == Constants.ACTION_DROP_NEW_FILE_SELECTED )
+		if( type == IConstants.ACTION_DROP_NEW_FILE_SELECTED )
 		{
 			setCurrFilePath((String)content);
 		}
