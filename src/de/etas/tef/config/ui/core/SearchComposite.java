@@ -11,22 +11,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.config.controller.IController;
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.message.MessageManager;
 
 public class SearchComposite extends AbstractComposite
 {
 	
-	protected IController controller;
+	protected MainController controller;
 	private Text searchText;
 	private Color WHITE;
 	
-	public SearchComposite(Composite parent, int style, MainController controller, int compositeID)
+	public SearchComposite(Composite parent, int style, MainController controller)
 	{
-		super(parent, style, controller, compositeID);
+		super(parent, style, controller);
 		WHITE = parent.getDisplay().getSystemColor(SWT.COLOR_WHITE);
 		
 		GridLayout layout = new GridLayout(2, false);
@@ -57,9 +54,6 @@ public class SearchComposite extends AbstractComposite
 			@Override
 			public void modifyText(ModifyEvent event)
 			{
-				String text = searchText.getText();
-				getController().setShowConfigBlocks(text);
-				MessageManager.INSTANCE.sendMessage(Constants.ACTION_SET_SHOW_CONFIG_BLOCKS, compositeID, null);
 			}
 		});
 		
@@ -67,12 +61,8 @@ public class SearchComposite extends AbstractComposite
 	}
 	
 	@Override
-	public void receivedAction(int type, int compositeID, Object content)
+	public void receivedAction(int type, Object content)
 	{
-		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE)
-		{
-			return;
-		}
 		
 		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
 		{

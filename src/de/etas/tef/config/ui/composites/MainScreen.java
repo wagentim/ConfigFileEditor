@@ -1,4 +1,4 @@
-package de.etas.tef.config.ui.core;
+package de.etas.tef.config.ui.composites;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +11,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,17 +27,16 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.helper.CompositeID;
+import de.etas.tef.config.core.IImageConstants;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IMessageListener;
 import de.etas.tef.editor.message.MessageManager;
 
 public class MainScreen implements IMessageListener
 {
-	private ConfigComposite leftConfigComposite = null;
-	private ConfigComposite rightConfigComposite = null;
-	private SashForm configCompositeSashForm = null;
 	private final MainController controller;
+	
+	private SashForm configCompositeSashForm = null;
 	private MenuItem leftPaneItem;
 	private MenuItem rightPaneItem;
 	private MenuItem showInfoPaneItem;
@@ -46,47 +44,20 @@ public class MainScreen implements IMessageListener
 	private StyledText txtInfoBlock;
 	private SashForm main;
 	private Label dateLabel;
-	
-	
-	public final Image IMAGE_TITLE;
-	public final Image IMAGE_PIN;
-	public final Image IMAGE_EXIT;
-	public final Image IMAGE_ABOUT;
-	public final Image IMAGE_CONNECT;
-	public final Image IMAGE_DISCONNECT;
-	public final Image IMAGE_TIME;
 
-	
-	private static boolean isLeftSelected = true;
-	private static boolean isRightSelected = false;
-	private static boolean isConnected = false;
-	private static boolean isInfoPaneShow = false;
-	
-	private static final int fromLeft = 0x00;
-	private static final int fromRight = 0x01;
-	private static final int fromConnect = 0x02;
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 	
 
-	public MainScreen()
+	public MainScreen(final Display display, final MainController controller)
 	{
-		controller = new MainController();
+		this.controller = controller;
 		MessageManager.INSTANCE.addMessageListener(this);
 		
-		Display display = new Display();
-		
-		IMAGE_TITLE = new Image(display, MainScreen.class.getClassLoader().getResourceAsStream("icons/file_24.png"));
-		IMAGE_PIN = new Image(display, MainScreen.class.getClassLoader().getResourceAsStream("icons/pin.png"));
-		IMAGE_EXIT = new Image(display, MainScreen.class.getClassLoader().getResourceAsStream("icons/exit.png"));
-		IMAGE_ABOUT = new Image(display, MainScreen.class.getClassLoader().getResourceAsStream("icons/about.png"));
-		IMAGE_CONNECT = new Image(display, MainScreen.class.getClassLoader().getResourceAsStream("icons/connect.png"));
-		IMAGE_DISCONNECT = new Image(display, MainScreen.class.getClassLoader().getResourceAsStream("icons/disconnect.png"));
-		IMAGE_TIME = new Image(display, MainScreen.class.getClassLoader().getResourceAsStream("icons/connect.png"));
 		
 		Shell shell = new Shell(display);
 		shell.setText(Constants.TXT_APP_TITLE);
-		shell.setImage(IMAGE_TITLE);
+		shell.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_TITLE));
 		
 		shell.addShellListener(new ShellListener()
 		{
@@ -127,7 +98,7 @@ public class MainScreen implements IMessageListener
 		});
 		
 		initMainScreen(shell);
-		initMenu(shell);
+//		initMenu(shell);
 		initMainComponents(shell);
 		
 		initStatusBar(shell);
@@ -153,38 +124,6 @@ public class MainScreen implements IMessageListener
 		display.dispose();
 	}
 
-	private void initDaemonThread()
-	{
-		Thread updateTimeThread = new Thread()
-		{
-			public void run()
-			{
-				while (true)
-				{
-					Display.getDefault().syncExec(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							dateLabel.setText(getTime());
-						}
-					});
-
-					try
-					{
-						sleep(1000);
-					}
-					catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		};
-		updateTimeThread.setDaemon(true);
-		updateTimeThread.start();
-	}
-
 	private void initMenu(Shell shell)
 	{
 		Menu menuBar = new Menu(shell, SWT.BAR);
@@ -197,7 +136,7 @@ public class MainScreen implements IMessageListener
 
 	    MenuItem fileExitItem = new MenuItem(fileMenu, SWT.PUSH);
 	    fileExitItem.setText("E&xit");
-	    fileExitItem.setImage(IMAGE_EXIT);
+	    fileExitItem.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_EXIT));
 	    fileExitItem.addSelectionListener(new SelectionAdapter()
 		{
 	    	@Override
@@ -224,17 +163,12 @@ public class MainScreen implements IMessageListener
 	    
 	    connectItem = new MenuItem(functionMenu, SWT.PUSH);
 	    connectItem.setText("&Disconnect");
-	    connectItem.setImage(IMAGE_DISCONNECT);
 	    connectItem.addSelectionListener(new SelectionListener()
 		{
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				isConnected = !isConnected;
-				checkOptionSelection(fromConnect);
-				connectItem.setText(isConnected ? "Connet" : "Disconnect");
-				controller.setConnected(isConnected);
 			}
 			
 			@Override
@@ -253,15 +187,12 @@ public class MainScreen implements IMessageListener
 	    
 	    leftPaneItem = new MenuItem(windowMenu, SWT.PUSH);
 	    leftPaneItem.setText("Show/Hide Left Pane");
-	    leftPaneItem.setImage(IMAGE_PIN);
 	    leftPaneItem.addSelectionListener(new SelectionListener()
 		{
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				isLeftSelected = !isLeftSelected;
-				checkOptionSelection(fromLeft);
 			}
 			
 			@Override
@@ -280,8 +211,6 @@ public class MainScreen implements IMessageListener
 			@Override
 			public void widgetSelected(SelectionEvent arg0)
 			{
-				isRightSelected = !isRightSelected;
-				checkOptionSelection(fromRight);
 			}
 			
 			@Override
@@ -294,23 +223,12 @@ public class MainScreen implements IMessageListener
 	    
 	    showInfoPaneItem = new MenuItem(windowMenu, SWT.PUSH);
 	    showInfoPaneItem.setText("&Show/Hide Info Pane");
-	    showInfoPaneItem.setImage(IMAGE_ABOUT);
 	    showInfoPaneItem.addSelectionListener(new SelectionListener()
 		{
 			
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
-				isInfoPaneShow = !isInfoPaneShow;
-				txtInfoBlock.setVisible(isInfoPaneShow);
-				if(isInfoPaneShow)
-				{
-					main.setWeights(new int[]{5, 1});
-				}
-				else
-				{
-					main.setWeights(new int[]{1, 0});
-				}
 			}
 			
 			@Override
@@ -333,11 +251,6 @@ public class MainScreen implements IMessageListener
 	    shell.setMenuBar(menuBar);
 	}
 	
-	private String getTime()
-	{
-		return (" " + sdf.format(new Date()) + " ");
-	}
-	
 	private void initStatusBar(Shell shell)
 	{
 		
@@ -351,7 +264,6 @@ public class MainScreen implements IMessageListener
         statusbar.setLayout(layout);
         
         Label image = new Label(statusbar, SWT.NONE);
-        image.setImage(IMAGE_TIME);
         
         dateLabel = new Label(statusbar, SWT.BOLD);
         dateLabel.setLayoutData(new RowData(150, -1));
@@ -360,48 +272,6 @@ public class MainScreen implements IMessageListener
         new Label(statusbar, SWT.SEPARATOR | SWT.VERTICAL);
 	}
 	
-	protected void checkOptionSelection(int fromWhich)
-	{
-		if(isLeftSelected && isRightSelected)
-		{
-		}
-		else 
-		{
-			isConnected = false;
-			
-			if( !isLeftSelected && !isRightSelected)
-			{
-				switch(fromWhich)
-				{
-					case fromLeft: isRightSelected = true; break;
-					case fromRight: isLeftSelected = true; break;
-				}
-			}
-		}
-		
-		if(isLeftSelected)
-		{
-			leftPaneItem.setImage(IMAGE_PIN);
-		}
-		else
-		{
-			leftPaneItem.setImage(null);
-		}
-		
-		if(isRightSelected)
-		{
-			rightPaneItem.setImage(IMAGE_PIN);
-		}
-		else
-		{
-			rightPaneItem.setImage(null);
-		}
-		
-		connectItem.setImage(isConnected ? IMAGE_CONNECT : IMAGE_DISCONNECT);
-		
-		MessageManager.INSTANCE.sendMessage(Constants.ACTION_COMPOSITE_CHANGED, CompositeID.COMPOSITE_ALONE, new boolean[] {isLeftSelected, isRightSelected});
-	}
-
 	private void initMainComponents(Composite shell)
 	{
 		main = new SashForm(shell, SWT.VERTICAL);
@@ -412,23 +282,25 @@ public class MainScreen implements IMessageListener
 		gd = new GridData(GridData.FILL_BOTH);
 		configCompositeSashForm.setLayoutData(gd);
 		
-		leftConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller, CompositeID.COMPOSITE_LEFT);
-		rightConfigComposite = new ConfigComposite(configCompositeSashForm, SWT.BORDER, controller, CompositeID.COMPOSITE_RIGHT);
-		
-		txtInfoBlock = new StyledText(main, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		gd = new GridData(GridData.FILL_BOTH);
-		gd.horizontalSpan = 3;
-		txtInfoBlock.setLayoutData(gd);
-		txtInfoBlock.setEditable(false);
-		txtInfoBlock.setVisible(false);
-		
-		new InfoBlockWriter(txtInfoBlock, controller);
-
-		main.setWeights(new int[]
-		{ 1, 0 });
-		
-		rightConfigComposite.setVisible(false);
-		configCompositeSashForm.setWeights(new int[] {1, 0});
+		new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
+//		
+//		leftConfigComposite = new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
+//		rightConfigComposite = new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
+//		
+//		txtInfoBlock = new StyledText(main, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+//		gd = new GridData(GridData.FILL_BOTH);
+//		gd.horizontalSpan = 3;
+//		txtInfoBlock.setLayoutData(gd);
+//		txtInfoBlock.setEditable(false);
+//		txtInfoBlock.setVisible(false);
+//		
+//		new InfoBlockWriter(txtInfoBlock, controller);
+//
+//		main.setWeights(new int[]
+//		{ 1, 0 });
+//		
+//		rightConfigComposite.setVisible(false);
+//		configCompositeSashForm.setWeights(new int[] {1, 0});
 	}
 
 	private void initMainScreen(Composite shell)
@@ -449,7 +321,7 @@ public class MainScreen implements IMessageListener
 	}
 
 	@Override
-	public void receivedAction(int type, int compositeID, Object content)
+	public void receivedAction(int type, Object content)
 	{
 		if (Constants.ACTION_COMPOSITE_CHANGED == type)
 		{
@@ -457,9 +329,6 @@ public class MainScreen implements IMessageListener
 			
 			boolean left = value[0];
 			boolean right = value[1];
-			
-			leftConfigComposite.setVisible(left);
-			rightConfigComposite.setVisible(right);
 			
 			if(left && right)
 			{

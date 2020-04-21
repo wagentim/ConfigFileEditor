@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.helper.Constants;
 import de.etas.tef.config.listener.IMessageListener;
@@ -26,19 +26,17 @@ public abstract class CellEditingListener implements MouseListener, IMessageList
 {
 	
 	private final Composite composite;
-	private final IController controller;
-	private final int compositeID;
+	private final MainController controller;
 
 	protected ControlEditor editor = null;
 	protected String newValue = Constants.EMPTY_STRING;
 	protected String oldValue = Constants.EMPTY_STRING;
 	protected boolean isLocked = true;
 	
-	public CellEditingListener(Composite composite, IController controller, int compositeID)
+	public CellEditingListener(Composite composite, MainController controller)
 	{
 		this.composite = composite;
 		this.controller = controller;
-		this.compositeID = compositeID;
 		
 		editor = getNewEditor();
 		
@@ -53,7 +51,7 @@ public abstract class CellEditingListener implements MouseListener, IMessageList
 	protected abstract ControlEditor getNewEditor();
 	
 	@Override
-	public void receivedAction(int type, int compositeID, Object content)
+	public void receivedAction(int type, Object content)
 	{
 
 	}
@@ -94,14 +92,6 @@ public abstract class CellEditingListener implements MouseListener, IMessageList
 	@Override
 	public void mouseDoubleClick(MouseEvent event)
 	{
-		boolean isEditingLocked = getController().isEditingLocked();
-		
-		if(isEditingLocked)
-		{
-			return;
-		}
-		
-		handleModification(event);
 	}
 	
 	protected void handleModification(TypedEvent event)
@@ -199,13 +189,6 @@ public abstract class CellEditingListener implements MouseListener, IMessageList
 	{
 		if( keyEvent.keyCode == SWT.SPACE )
 		{
-			boolean isEditingLocked = getController().isEditingLocked();
-			
-			if(isEditingLocked)
-			{
-				return;
-			}
-			
 			handleModification(keyEvent);
 		}
 		
@@ -229,15 +212,5 @@ public abstract class CellEditingListener implements MouseListener, IMessageList
 	public void keyReleased(KeyEvent arg0)
 	{
 		
-	}
-	
-	protected int getCompositeID()
-	{
-		return this.compositeID;
-	}
-	
-	protected IController getController()
-	{
-		return controller;
 	}
 }

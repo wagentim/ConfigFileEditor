@@ -27,7 +27,6 @@ public class FileExec
 	{
 		if( null == filePath || filePath.isEmpty() )
 		{
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Input File Path is NULL or empty");
 			return null;
 		}
 		
@@ -36,7 +35,6 @@ public class FileExec
 		
 		if( !file.exists() )
 		{
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "CANNOT find file: " + filePath);
 			return null;
 		}
 		

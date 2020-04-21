@@ -16,18 +16,16 @@ import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.KeyValuePair;
-import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.message.MessageManager;
 
 public class CommentComposite extends AbstractComposite
 {
 	private Text commentBlock;
 	private Button btnCommentSave;
 	
-	public CommentComposite(Composite parent, int style, MainController controller, int compositeID)
+	public CommentComposite(Composite parent, int style, MainController controller)
 	{
-		super(parent, style, controller, compositeID);
+		super(parent, style, controller);
 		
 		this.setLayout(new GridLayout(1, false));
 		GridData gd = new GridData(GridData.FILL_BOTH);
@@ -90,17 +88,11 @@ public class CommentComposite extends AbstractComposite
 	
 	private void saveAction()
 	{
-		MessageManager.INSTANCE.sendMessage(Constants.ACTION_COMMENT_SAVED, getCompositeID(), commentBlock.getText());
 	}
 	
 	@Override
-	public void receivedAction(int type, int compositeID, Object content)
+	public void receivedAction(int type, Object content)
 	{
-		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE )
-		{
-			return;
-		}
-		
 		if( Constants.ACTION_LOCK_SELECTION_CHANGED == type)
 		{
 			boolean locked = (boolean)content;
@@ -110,14 +102,11 @@ public class CommentComposite extends AbstractComposite
 		
 		if( Constants.ACTION_BLOCK_SELECTED == type)
 		{
-			commentBlock.setText(getController().getSelectedConfigBlock().getComments());
 		}
 		
 		if( Constants.ACTION_PARAMETER_SELECTED == type)
 		{
-			List<KeyValuePair> paras = getController().getSelectedConfigBlock().getAllParameters();
 			
-			commentBlock.setText(paras.get((int) content).getComment());
 		}
 		
 		if( type == Constants.ACTION_NEW_FILE_SELECTED || type == Constants.ACTION_DROP_NEW_FILE_SELECTED)
@@ -125,4 +114,5 @@ public class CommentComposite extends AbstractComposite
 			commentBlock.setText(Constants.EMPTY_STRING);
 		}
 	}
+
 }

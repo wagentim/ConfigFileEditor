@@ -25,9 +25,9 @@ public class SelectComposite extends AbstractComposite
 	private Button btnFileSelect;
 	private Label labelFileSelect;
 	
-	protected SelectComposite(Composite parent, int style, MainController controller, int compositeID)
+	protected SelectComposite(Composite parent, int style, MainController controller)
 	{
-		super(parent, style, controller, compositeID);
+		super(parent, style, controller);
 
 		GridLayout layout = new GridLayout(3, false);
 		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = 0; 
@@ -75,15 +75,11 @@ public class SelectComposite extends AbstractComposite
 		
 		if ( null == currFilePath || currFilePath.isEmpty())
 		{
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "No File is selected!");
 			return;
 		}
 		
 		txtFileSelect.setText(currFilePath);
 		
-		getController().setInputConfigFile(currFilePath);
-		
-		MessageManager.INSTANCE.sendMessage(Constants.ACTION_NEW_FILE_SELECTED, getCompositeID(), currFilePath);
 	}
 	
 	protected void initText(Composite comp)
@@ -130,16 +126,14 @@ public class SelectComposite extends AbstractComposite
 	}
 
 	@Override
-	public void receivedAction(int type, int compositeID, Object content)
+	public void receivedAction(int type, Object content)
 	{
-		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE )
-		{
-			return;
-		}
-		
+		// TODO Auto-generated method stub
 		if( type == Constants.ACTION_DROP_NEW_FILE_SELECTED )
 		{
 			setCurrFilePath((String)content);
 		}
+		
 	}
+
 }

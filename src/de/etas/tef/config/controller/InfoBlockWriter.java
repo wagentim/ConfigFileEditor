@@ -85,7 +85,7 @@ public class InfoBlockWriter implements IMessageListener
 
 
 	@Override
-	public void receivedAction(int type, int compositeID, Object content)
+	public void receivedAction(int type, Object content)
 	{
 		if ((type == Constants.ACTION_LOG_WRITE_INFO))
 		{
@@ -101,17 +101,9 @@ public class InfoBlockWriter implements IMessageListener
 		}
 		else if(type == Constants.ACTION_NEW_FILE_SELECTED)
 		{
-			logInfo("Set Source File: " + content.toString());
-			logInfo("New Source Parameter Blocks: " + controller.getController(compositeID).getAllBlocks().length);
 		}
 		else if (type == Constants.ACTION_PARAMETER_UPDATE)
 		{
-			ConfigBlock cb = controller.getController(compositeID).getSelectedConfigBlock();
-			if(null == cb)
-			{
-				return;
-			}
-			logInfo("Select Source Block: " + cb.getBlockName() + " : Parameter Number: " + cb.getAllParameters().size());
 		}
 		else if (type == Constants.ACTION_CONNECT_SELECTED)
 		{

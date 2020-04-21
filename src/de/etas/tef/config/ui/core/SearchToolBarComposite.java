@@ -12,9 +12,9 @@ public class SearchToolBarComposite extends AbstractComposite
 	private SearchComposite search;
 	
 	public SearchToolBarComposite(Composite parent, int style,
-			MainController controller, int compositeID)
+			MainController controller)
 	{
-		super(parent, style, controller, compositeID);
+		super(parent, style, controller);
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginTop = 0;
 		this.setLayout(layout);
@@ -24,6 +24,13 @@ public class SearchToolBarComposite extends AbstractComposite
 	}
 
 	private void initMainComposite(SearchToolBarComposite searchToolBarComposite)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receivedAction(int type, Object content)
 	{
 		// TODO Auto-generated method stub
 		

@@ -1,6 +1,7 @@
 package de.etas.tef.config.core;
 
-import de.etas.tef.config.controller.GitController;
+import org.eclipse.swt.widgets.Display;
+
 import de.etas.tef.config.controller.MainController;
 
 /**
@@ -14,9 +15,7 @@ public final class Starter
 	
 	public static void main(String[] args)
 	{
-		MainController mc = new MainController();
-		
-		GitController gc = new GitController();
-		mc.setGitController(gc);
+		Display display = new Display();
+		new MainController(display);
 	}
 }

@@ -5,7 +5,6 @@ import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -17,68 +16,50 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
-import de.etas.tef.config.helper.CompositeID;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.message.MessageManager;
 
-public class SearchTreeComponent extends AbstractComposite
+public abstract class CustomTree extends AbstractComposite
 {
 
-	private Tree blockList;
+	private final MainController controller;
+	
+	private Tree tree;
 	private TreeItem root;
-	private ContentComposite tableComposite;
-
 	private TreeListener tl;
 	private Menu rightClickMenu;
 	
-	public final Image IMAGE_ADD;
-	public final Image IMAGE_REMOVE;
-	public final Image IMAGE_COPY;
-	public final Image IMAGE_PASTE;
-	public final Image IMAGE_BLOCK;
-	public final Image IMAGE_ROOT;
-	
-	public SearchTreeComponent(Composite parent, int style, MainController controller, int compositeID)
+	public CustomTree(Composite parent, int style, MainController controller)
 	{
-		super(parent, style, controller, compositeID);
+		super(parent, style, controller);
+		this.controller = controller;
 		
-		GridLayout layout = new GridLayout(1, false);
-		layout.marginTop = 0;
-		this.setLayout(layout);
-		this.setLayoutData(new GridData(GridData.FILL_BOTH));
-		
-		IMAGE_ADD = new Image(parent.getDisplay(), SearchTreeComponent.class.getClassLoader().getResourceAsStream("icons/add.png"));
-		IMAGE_REMOVE = new Image(parent.getDisplay(), SearchTreeComponent.class.getClassLoader().getResourceAsStream("icons/remove.png"));
-		IMAGE_COPY = new Image(parent.getDisplay(), SearchTreeComponent.class.getClassLoader().getResourceAsStream("icons/copy.png"));
-		IMAGE_PASTE = new Image(parent.getDisplay(), SearchTreeComponent.class.getClassLoader().getResourceAsStream("icons/paste.png"));
-		IMAGE_BLOCK = new Image(parent.getDisplay(), SearchTreeComponent.class.getClassLoader().getResourceAsStream("icons/block.png"));
-		IMAGE_ROOT = new Image(parent.getDisplay(), SearchTreeComponent.class.getClassLoader().getResourceAsStream("icons/root.png"));
-		
-		initComponent(controller);
+		initComponent();
 	}
 
-	protected void initComponent(MainController controller)
+	protected void initComponent()
 	{
-		new SearchComposite(this, SWT.BORDER, controller, getCompositeID());
-		
-		blockList = new Tree(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = 0;
 		GridData gd = new GridData(GridData.FILL_BOTH);
+		this.setLayout(layout);
+		this.setLayoutData(gd);
+		this.setBackground(defaultBackgroundColor);
+		
+		tree = new Tree(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = Constants.HEIGHT_HINT;
-		blockList.setLayoutData(gd);
+		tree.setLayoutData(gd);
 		
-		root = new TreeItem(blockList, SWT.NONE);
+		root = new TreeItem(tree, SWT.NONE);
 		root.setText(Constants.TXT_CONFIG_FILE);
-		root.setImage(IMAGE_ROOT);
 		
-		blockList.addSelectionListener(new SelectionListener()
+		tree.addSelectionListener(new SelectionListener()
 		{
 			
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
 				String s = getSelectedTreeItem().getText();
-				treeItemSelected(s);
-				getController().setFocusedElement(Constants.FOCUS_BLOCK);
 			}
 			
 			@Override
@@ -88,15 +69,6 @@ public class SearchTreeComponent extends AbstractComposite
 			}
 		});
 		
-		tl = new TreeListener(blockList, getController(), getCompositeID());
-		blockList.addMouseListener(tl);
-		blockList.addKeyListener(tl);
-		
-	}
-	
-	private void treeItemSelected(String name)
-	{
-		getTableComposite().treeItemSelected(name.trim());
 	}
 	
 	private void createRightMenu(Control control, SelectionListener listener)
@@ -116,31 +88,27 @@ public class SearchTreeComponent extends AbstractComposite
 	                items[i].dispose();
 	            }
 	            
-	            if(blockList.getSelectionCount() <= 0)
+	            if(tree.getSelectionCount() <= 0)
 	            {
 	            	return;
 	            }
 	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            copyItem.setText(Constants.TXT_COPY);
-	            copyItem.setImage(IMAGE_COPY);
 	            copyItem.addSelectionListener(listener);
 	            
 	            MenuItem pasteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            pasteItem.setText(Constants.TXT_PASTE);
-	            pasteItem.setImage(IMAGE_PASTE);
 	            pasteItem.addSelectionListener(listener);
 	            
 	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
 	            
 	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            newItem.setText(Constants.TXT_BTN_ADD);
-	            newItem.setImage(IMAGE_ADD);
 	            newItem.addSelectionListener(listener);
 
 	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            deleteItem.setText(Constants.TXT_BTN_DELETE);
-	            deleteItem.setImage(IMAGE_REMOVE);
 	            deleteItem.addSelectionListener(listener);
 	            
 	            
@@ -175,12 +143,11 @@ public class SearchTreeComponent extends AbstractComposite
 			it = new TreeItem(parent, SWT.NONE, index);
 		}
 		it.setText(blockName);
-		it.setImage(IMAGE_BLOCK);
 	}
 
 	public TreeItem getSelectedTreeItem()
 	{
-		TreeItem ti = blockList.getSelection()[0];
+		TreeItem ti = tree.getSelection()[0];
 		return ti;
 	}
 	
@@ -192,21 +159,11 @@ public class SearchTreeComponent extends AbstractComposite
 		{
 			if( blockName.trim().equals(items[i].getText().trim()))
 			{
-				blockList.select(items[i]);
+				tree.select(items[i]);
 			}
 		}
 	}
 
-	public ContentComposite getTableComposite()
-	{
-		return tableComposite;
-	}
-
-	public void setTableComposite(ContentComposite tableComposite)
-	{
-		this.tableComposite = tableComposite;
-	}
-	
 	private TreeItem getTreeItem(String name)
 	{
 		TreeItem[] items = root.getItems();
@@ -226,42 +183,8 @@ public class SearchTreeComponent extends AbstractComposite
 	
 	public void receivedAction(int type, int compositeID, Object content)
 	{
-		if( type == Constants.ACTION_SOURCE_PARAMETER_SELECTED && compositeID != getCompositeID() && ((MainController)getController().getParent()).isConnected())
-		{
-			String blockName = (String)content;
-			
-			TreeItem ti = getTreeItem(blockName);
-			
-			if( null == ti )
-			{
-				MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_WARNING, getCompositeID(), "Connected, but cannot find block: " + blockName);
-				return;
-			}
-			
-			blockList.setSelection(ti);
-			treeItemSelected(blockName);
-		}
-		
-		if( compositeID != getCompositeID() && compositeID != CompositeID.COMPOSITE_ALONE)
-		{
-			return;
-		}
-		
 		if( Constants.ACTION_SET_SHOW_CONFIG_BLOCKS == type)
 		{
-			String[] blocks = getController().getShowConfigBlocks();
-			setBlockList(blocks);
-			
-			if(blocks.length > 0)
-			{
-				String s = blocks[0];
-				setTreeSelectedBlock(s);
-				getTableComposite().treeItemSelected(s);
-			}
-			else
-			{
-				getTableComposite().treeItemSelected(Constants.EMPTY_STRING);
-			}
 			
 		}
 		
@@ -271,7 +194,7 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			if( locked )
 			{
-				blockList.setMenu(null);
+				tree.setMenu(null);
 				
 				if(null != rightClickMenu)
 				{
@@ -280,7 +203,7 @@ public class SearchTreeComponent extends AbstractComposite
 			}
 			else
 			{
-				createRightMenu(blockList, tl);
+				createRightMenu(tree, tl);
 			}
 		}
 		
@@ -296,7 +219,6 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			if( null == blockName || blockName.isEmpty() )
 			{
-				MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Delete node name is empty");
 				return;
 			}
 			
@@ -304,19 +226,17 @@ public class SearchTreeComponent extends AbstractComposite
 			
 			if(null == selected.getParentItem())
 			{
-				MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_WARNING, CompositeID.COMPOSITE_ALONE, "Cannot remove the root node");
 				return;
 			}
-			getController().removeBlock(blockName);
 			
 			TreeItem root = selected.getParentItem();
 			selected.dispose();
-			blockList.setSelection(root.getItem(0));
+			tree.setSelection(root.getItem(0));
 		}
 		
 		if( Constants.ACTION_COPY_BLOCK == type )
 		{
-			TreeItem cb = blockList.getSelection()[0];
+			TreeItem cb = tree.getSelection()[0];
 			
 			if( null == cb || null == cb.getParentItem() )
 			{
@@ -324,27 +244,19 @@ public class SearchTreeComponent extends AbstractComposite
 			}
 			
 			String blockName = cb.getText();
-			getController().copyBlock(blockName);
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is copied: " + blockName);
 		}
 		
 		if( Constants.ACTION_PASTE_BLOCK == type )
 		{
-			ConfigBlock newBlock = getController().getCopyBlock();
+			ConfigBlock newBlock = controller.getCopyBlock();
 			
 			if( null == newBlock )
 			{
 				return;
 			}
-			getController().addConfigBlock(newBlock);
 			addNewBlock(newBlock);
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_INFO, CompositeID.COMPOSITE_ALONE, "Block is pasted: " + newBlock.getBlockName());
 		}
 		
-		if( Constants.ACTION_COMMENT_SAVED == type && getController().getFocusedElement() == Constants.FOCUS_BLOCK )
-		{
-			getController().getSelectedConfigBlock().setComments((String) content);
-		}
 	}
 	
 	private void addNewBlock(ConfigBlock content)

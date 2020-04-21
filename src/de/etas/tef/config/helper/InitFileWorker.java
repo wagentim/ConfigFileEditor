@@ -52,7 +52,6 @@ public class InitFileWorker implements IConfigFileWorker
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )
 		{
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "Cannot find file: " + filePath);
 			
 			return;
 		}
@@ -105,7 +104,6 @@ public class InitFileWorker implements IConfigFileWorker
 				}
 				else
 				{
-					MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing File Comments in line: " + lineCount);
 					break;
 				}
 			}
@@ -210,7 +208,6 @@ public class InitFileWorker implements IConfigFileWorker
 						}
 						else
 						{
-							MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by Parsing Parameter in line: " + lineCount);
 						}
 					}
 					else
@@ -235,7 +232,6 @@ public class InitFileWorker implements IConfigFileWorker
 		
 		if( index < 1 )
 		{
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE,  "ERROR by parsing block name in line: " + lineCount);
 			configBlock.setBlockName(currentLine.substring(1, currentLine.length()));
 		}
 		else
@@ -251,7 +247,6 @@ public class InitFileWorker implements IConfigFileWorker
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )
 		{
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Cannot find file: " + filePath);
 			
 			return;
 		}

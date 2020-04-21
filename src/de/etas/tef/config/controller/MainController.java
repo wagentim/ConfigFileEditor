@@ -1,30 +1,129 @@
 package de.etas.tef.config.controller;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.etas.tef.config.controller.SettingController.Setting;
+import de.etas.tef.config.core.ColorFactory;
+import de.etas.tef.config.core.ImageFactory;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.KeyValuePair;
-import de.etas.tef.config.helper.CompositeID;
-import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.message.MessageManager;
+import de.etas.tef.config.ui.composites.MainScreen;
+import de.etas.tef.config.ui.composites.SelectWorkSpaceDialog;
 
-public class MainController extends AbstractController
+public class MainController
 {
-	private final IController left;
-	private final IController right;
+
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	private final ImageFactory imageFactory;
+	private final ColorFactory colorFactory;
+	private final Display display;
+	
+	private boolean quitProgram = false;
+	
 	private GitController gitController = null;
+	private final SettingController settingController;
+	
 	private ConfigBlock copyBlock = null;
 	private List<KeyValuePair> copyParameters = null;
 	
 	private boolean connected = false;
 	
-	public MainController()
+	public MainController(final Display display)
 	{
-		this.left = new ConfigFileController(this);
-		this.left.setParent(this);
-		this.right = new ConfigFileController(this);
-		this.right.setParent(this);
+		this.display = display;
+		this.imageFactory = new ImageFactory(display);
+		this.colorFactory = new ColorFactory(display);
+		this.settingController = new SettingController();
+		
+		initController();
+		initEnvironment();
+	}
+	
+	private void initEnvironment()
+	{
+		String workingspace = getSetting().getWorkingSpace();
+		boolean updateWorkingspace = false;
+		
+		if(workingspace == null || workingspace.isEmpty())
+		{
+			updateWorkingspace = true;
+		}
+		
+		while( !quitProgram && (workingspace == null || workingspace.isEmpty() ))
+		{
+			Shell shell = new Shell(display);
+			SelectWorkSpaceDialog d = new SelectWorkSpaceDialog(shell, this);
+			workingspace = d.open();
+			logger.info("Selected Working Space: {}", workingspace);
+		}
+		
+		if( updateWorkingspace && workingspace != null && !workingspace.isEmpty() )
+		{
+			getSetting().setWorkingSpace(workingspace);
+			settingController.saveSettingToFile();
+		}
+		
+		if(!quitProgram)
+		{
+			gitController = new GitController(workingspace);
+			
+			boolean result = gitController.checkWorkingSpace();
+			
+			if(result)
+			{
+				logger.info("Using Git Repository Location: {}", workingspace);
+				new MainScreen(display, this);
+			}
+			else
+			{
+				try
+				{
+					gitController.createRepository();
+				} 
+				catch (IllegalStateException | IOException | GitAPIException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public boolean isQuiteProgram()
+	{
+		return quitProgram;
+	}
+
+	public void setQuiteProgram(boolean quiteProgram)
+	{
+		this.quitProgram = quiteProgram;
+	}
+
+	private void initController()
+	{
+		settingController.loadSettingFromFile();
+	}
+	
+	public Setting getSetting()
+	{
+		return this.settingController.getSetting();
+	}
+	
+	public ImageFactory getImageFactory()
+	{
+		return this.imageFactory;
+	}
+	
+	public ColorFactory getColorFactory()
+	{
+		return this.colorFactory;
 	}
 	
 	public GitController getGitController()
@@ -32,27 +131,6 @@ public class MainController extends AbstractController
 		return gitController;
 	}
 
-	public void setGitController(GitController gitController)
-	{
-		this.gitController = gitController;
-	}
-
-	public IController getController(int compositeID)
-	{
-		switch (compositeID)
-		{
-			case CompositeID.COMPOSITE_LEFT:
-				return left;
-			case CompositeID.COMPOSITE_RIGHT:
-				return right;
-			case CompositeID.COMPOSITE_ALONE:
-			case CompositeID.COMPOSITE_ROOT:
-				return this;
-		}
-		
-		return null;
-	}
-	
 	public void setConnected(boolean connected)
 	{
 		this.connected = connected;
@@ -71,7 +149,6 @@ public class MainController extends AbstractController
 		}
 		catch (CloneNotSupportedException e)
 		{
-			MessageManager.INSTANCE.sendMessage(Constants.ACTION_LOG_WRITE_ERROR, CompositeID.COMPOSITE_ALONE, "Cannot Clone Block: " + selectedConfigBlock.getBlockName());
 			e.printStackTrace();
 		}
 	}

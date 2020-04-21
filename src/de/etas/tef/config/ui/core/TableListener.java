@@ -15,19 +15,20 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.config.controller.IController;
+import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.CellIndex;
 import de.etas.tef.config.helper.Constants;
-import de.etas.tef.editor.message.MessageManager;
 
 public class TableListener extends CellEditingListener
 {
 
 	private CellIndex cell = null;
+	private final MainController controller;
 	
-	public TableListener(Table table, IController controller, int compositeID)
+	public TableListener(Table table, MainController controller)
 	{
-		super(table, controller, compositeID);
+		super(table, controller);
+		this.controller = controller;
 	}
 	
 	private CellIndex getDoubleClickPosIndex(Point pt)
@@ -67,7 +68,6 @@ public class TableListener extends CellEditingListener
 	@Override
 	protected void updateWithNewValue()
 	{
-		getController().parameterChanged(cell, newValue);
 	}
 	
 	protected void disposeEditor()
@@ -137,11 +137,9 @@ public class TableListener extends CellEditingListener
 			
 			if( text.contentEquals(Constants.TXT_BTN_ADD) )
 			{
-				MessageManager.INSTANCE.sendMessage(Constants.ACTION_MENU_ADD, getCompositeID(), Constants.EMPTY_STRING);
 			}
 			else if( text.contentEquals(Constants.TXT_BTN_DELETE) )
 			{
-				MessageManager.INSTANCE.sendMessage(Constants.ACTION_MENU_DELETE, getCompositeID(), Constants.EMPTY_STRING);
 			}
 			else if( text.contentEquals(Constants.TXT_COPY) )
 			{
@@ -157,12 +155,10 @@ public class TableListener extends CellEditingListener
 	
 	private void sendCopyMessage()
 	{
-		MessageManager.INSTANCE.sendMessage(Constants.ACTION_COPY_PARAMETER, getCompositeID(), null);
 	}
 	
 	private void sendPasteMessage()
 	{
-		MessageManager.INSTANCE.sendMessage(Constants.ACTION_PASTE_PARAMETER, getCompositeID(), null);
 	}
 
 	@Override
@@ -181,6 +177,13 @@ public class TableListener extends CellEditingListener
 	protected void keyPastePressed()
 	{
 		sendPasteMessage();
+	}
+
+	@Override
+	public void receivedAction(int type, Object content)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

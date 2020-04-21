@@ -39,13 +39,13 @@ public class MessageManager
 		}
 	}
 	
-	public void sendMessage(final int type, final int compositeID, final Object content)
+	public void sendMessage(final int type, final Object content)
 	{
 		if( !listenerList.isEmpty() )
 		{
 			for( int i = 0; i < listenerList.size(); i++ )
 			{
-				listenerList.get(i).receivedAction(type, compositeID, content);
+				listenerList.get(i).receivedAction(type, content);
 			}
 		}
 	}
