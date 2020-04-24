@@ -30,25 +30,43 @@ public final class SettingController
 	private final Gson gson;
 	private Setting setting = null;
 	
-	class Setting
+	public class Setting
 	{
-		private String workingSpace = IConstants.EMPTY_STRING;
+		private String repositoryLocal = IConstants.EMPTY_STRING;
+		private String repositoryRemote = IConstants.EMPTY_STRING;
 		
-		public void setWorkingSpace(final String workingSpace)
+		public String getRepositoryRemote()
 		{
-			if(workingSpace == null || workingSpace.isEmpty())
+			return repositoryRemote;
+		}
+
+		public void setRepositoryRemote(String repositoryRemote)
+		{
+			if(repositoryRemote == null || repositoryRemote.isEmpty())
 			{
-				logger.error("Error -> Set workingspace wrong");
+				logger.error("Error -> Set repository remote wrong");
 			}
 			else
 			{
-				this.workingSpace = workingSpace;
+				this.repositoryRemote = repositoryRemote;
+			}
+		}
+
+		public void setRepositoryLocal(final String repositoryLocal)
+		{
+			if(repositoryLocal == null || repositoryLocal.isEmpty())
+			{
+				logger.error("Error -> Set repository local wrong");
+			}
+			else
+			{
+				this.repositoryLocal = repositoryLocal;
 			}
 		}
 		
-		public String getWorkingSpace()
+		public String getRepositoryLocal()
 		{
-			return this.workingSpace;
+			return this.repositoryLocal;
 		}
 	}
 	

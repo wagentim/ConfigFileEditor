@@ -25,7 +25,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
-import de.etas.tef.config.controller.InfoBlockWriter;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.core.IImageConstants;
 import de.etas.tef.config.helper.IConstants;

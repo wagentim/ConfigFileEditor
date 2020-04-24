@@ -1,10 +1,9 @@
 package de.etas.tef.config.controller;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
@@ -49,50 +48,58 @@ public class MainController
 	
 	private void initEnvironment()
 	{
-		String workingspace = getSetting().getWorkingSpace();
+		String repositoryRemote = getSetting().getRepositoryRemote();
+		String repositoryLocal = getSetting().getRepositoryLocal();
+		
+		boolean updateRepository = false;
 		boolean updateWorkingspace = false;
 		
-		if(workingspace == null || workingspace.isEmpty())
+		if(repositoryRemote == null || repositoryRemote.isEmpty())
+		{
+			updateRepository = true;
+		}
+		
+		if(repositoryLocal == null || repositoryLocal.isEmpty())
 		{
 			updateWorkingspace = true;
 		}
 		
-		while( !quitProgram && (workingspace == null || workingspace.isEmpty() ))
+		while( !quitProgram && ((repositoryLocal == null || repositoryLocal.isEmpty()) || (repositoryRemote == null || repositoryRemote.isEmpty()) ))
 		{
-			Shell shell = new Shell(display);
+			Shell shell = new Shell(display, SWT.SHELL_TRIM & (~SWT.RESIZE));
 			SelectWorkSpaceDialog d = new SelectWorkSpaceDialog(shell, this);
-			workingspace = d.open();
-			logger.info("Selected Working Space: {}", workingspace);
+			d.setValues(repositoryRemote, repositoryLocal);
+			String[] result = d.open();
+			repositoryRemote = result[0];
+			repositoryLocal = result[1];
+			logger.info("Selected Working Space: {}", repositoryLocal);
+			logger.info("Selected Repository: {}", repositoryRemote);
 		}
 		
-		if( updateWorkingspace && workingspace != null && !workingspace.isEmpty() )
+		if( updateWorkingspace && repositoryLocal != null && !repositoryLocal.isEmpty() )
 		{
-			getSetting().setWorkingSpace(workingspace);
+			getSetting().setRepositoryLocal(repositoryLocal);
+			settingController.saveSettingToFile();
+		}
+		
+		if( updateRepository && repositoryRemote != null && !repositoryRemote.isEmpty() )
+		{
+			getSetting().setRepositoryRemote(repositoryRemote);
 			settingController.saveSettingToFile();
 		}
 		
 		if(!quitProgram)
 		{
-			gitController = new GitController(workingspace);
+			gitController = new GitController(repositoryRemote, repositoryLocal);
 			
-			boolean result = gitController.checkWorkingSpace();
-			
-			if(result)
+			if(gitController.checkRepository())
 			{
-				logger.info("Using Git Repository Location: {}", workingspace);
 				new MainScreen(display, this);
 			}
-			else
-			{
-				try
-				{
-					gitController.createRepository();
-				} 
-				catch (IllegalStateException | IOException | GitAPIException e)
-				{
-					e.printStackTrace();
-				}
-			}
+		}
+		else
+		{
+			System.exit(0);
 		}
 	}
 

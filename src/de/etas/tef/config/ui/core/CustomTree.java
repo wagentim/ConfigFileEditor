@@ -7,25 +7,23 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
+import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
-import de.etas.tef.config.helper.IConstants;
 
 public abstract class CustomTree extends AbstractComposite
 {
 
-	private final MainController controller;
+	protected final MainController controller;
 	
-	private Tree tree;
-	private TreeItem root;
-	private TreeListener tl;
-	private Menu rightClickMenu;
+	protected Tree tree;
+	protected TreeItem root;
+	protected TreeListener tl;
 	
 	public CustomTree(Composite parent, int style, MainController controller)
 	{
@@ -49,11 +47,9 @@ public abstract class CustomTree extends AbstractComposite
 		
 		tree.addSelectionListener(new SelectionListener()
 		{
-			
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
-				String s = getSelectedTreeItem().getText();
 			}
 			
 			@Override
@@ -62,20 +58,35 @@ public abstract class CustomTree extends AbstractComposite
 				
 			}
 		});
+		
+		createRightMenu(getTreeRightMenuSelectionListener());
+		
+		this.getDisplay().asyncExec(new Runnable()
+		{
+			
+			@Override
+			public void run()
+			{
+				loadData();
+			}
+		});
 	}
+	
+	protected abstract void loadData();
+
+	protected abstract SelectionListener getTreeRightMenuSelectionListener();
 	
 	protected abstract String getRootNodeName();
 	
-	private void createRightMenu(Control control, SelectionListener listener)
+	protected Menu createRightMenu(SelectionListener listener)
 	{
-		rightClickMenu = new Menu(control);
-		control.setMenu(rightClickMenu);
+		Menu rightClickMenu = new Menu(tree);
+		tree.setMenu(rightClickMenu);
 		
 		rightClickMenu.addMenuListener(new MenuAdapter()
 	    {
 	        public void menuShown(MenuEvent e)
 	        {
-	        	
 	            MenuItem[] items = rightClickMenu.getItems();
 	            
 	            for (int i = 0; i < items.length; i++)
@@ -83,34 +94,23 @@ public abstract class CustomTree extends AbstractComposite
 	                items[i].dispose();
 	            }
 	            
-	            if(tree.getSelectionCount() <= 0)
-	            {
-	            	return;
-	            }
-	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            copyItem.setText(IConstants.TXT_COPY);
+	            copyItem.setText(IConstants.TXT_MENU_COPY);
 	            copyItem.addSelectionListener(listener);
 	            
 	            MenuItem pasteItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            pasteItem.setText(IConstants.TXT_PASTE);
+	            pasteItem.setText(IConstants.TXT_MENU_PASTE);
 	            pasteItem.addSelectionListener(listener);
 	            
-	            new MenuItem(rightClickMenu, SWT.SEPARATOR);
-	            
-	            MenuItem newItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            newItem.setText(IConstants.TXT_BTN_ADD);
-	            newItem.addSelectionListener(listener);
-
-	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
-	            deleteItem.setText(IConstants.TXT_BTN_DELETE);
-	            deleteItem.addSelectionListener(listener);
-	            
-	            
+	            createCustomRightMenu(rightClickMenu);
 	        }
 	    });
+		
+		return rightClickMenu;
 	}
 	
+	protected abstract void createCustomRightMenu(Menu rightClickMenu);
+
 	public void setBlockList(String[] blockList)
 	{
 		root.removeAll();
@@ -174,84 +174,6 @@ public abstract class CustomTree extends AbstractComposite
 		}
 		
 		return null;
-	}
-	
-	public void receivedAction(int type, int compositeID, Object content)
-	{
-		if( IConstants.ACTION_SET_SHOW_CONFIG_BLOCKS == type)
-		{
-			
-		}
-		
-		if( IConstants.ACTION_LOCK_SELECTION_CHANGED == type)
-		{
-			boolean locked = (boolean)content;
-			
-			if( locked )
-			{
-				tree.setMenu(null);
-				
-				if(null != rightClickMenu)
-				{
-					rightClickMenu.dispose();
-				}
-			}
-			else
-			{
-				createRightMenu(tree, tl);
-			}
-		}
-		
-		if( IConstants.ACTION_ADD_NEW_BLOCK == type )
-		{
-			
-			addNewBlock((ConfigBlock)content);
-		}
-		
-		if( IConstants.ACTION_DELETE_BLOCK == type )
-		{
-			String blockName = (String)content;
-			
-			if( null == blockName || blockName.isEmpty() )
-			{
-				return;
-			}
-			
-			TreeItem selected = getSelectedTreeItem();
-			
-			if(null == selected.getParentItem())
-			{
-				return;
-			}
-			
-			TreeItem root = selected.getParentItem();
-			selected.dispose();
-			tree.setSelection(root.getItem(0));
-		}
-		
-		if( IConstants.ACTION_COPY_BLOCK == type )
-		{
-			TreeItem cb = tree.getSelection()[0];
-			
-			if( null == cb || null == cb.getParentItem() )
-			{
-				return;
-			}
-			
-			String blockName = cb.getText();
-		}
-		
-		if( IConstants.ACTION_PASTE_BLOCK == type )
-		{
-			ConfigBlock newBlock = controller.getCopyBlock();
-			
-			if( null == newBlock )
-			{
-				return;
-			}
-			addNewBlock(newBlock);
-		}
-		
 	}
 	
 	private void addNewBlock(ConfigBlock content)

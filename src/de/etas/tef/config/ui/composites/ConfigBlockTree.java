@@ -1,6 +1,9 @@
 package de.etas.tef.config.ui.composites;
 
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 
 import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
@@ -25,6 +28,26 @@ public class ConfigBlockTree extends CustomTree
 	protected String getRootNodeName()
 	{
 		return IConstants.TXT_INI_FILE_DEFAULT;
+	}
+
+	@Override
+	protected SelectionListener getTreeRightMenuSelectionListener()
+	{
+		// TODO Auto-generated method stub
+		return new SelectionAdapter()
+		{
+		};
+	}
+
+	@Override
+	protected void createCustomRightMenu(Menu rightClickMenu)
+	{
+		
+	}
+
+	@Override
+	protected void loadData()
+	{
 	}
 
 }

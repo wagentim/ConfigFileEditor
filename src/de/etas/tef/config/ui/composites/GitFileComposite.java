@@ -20,6 +20,7 @@ public class GitFileComposite extends AbstractComposite
 		super.initComposite();
 		
 		new FileListTree(this, SWT.NONE, controller);
+		
 	}
 
 	@Override
