@@ -16,9 +16,14 @@ public interface IConstants
 	public static final String TXT_BROWSE = "Browse...";
 	public static final String TXT_OK = "OK";
 	public static final String TXT_CANCEL = "Cancel";
+	public static final String TXT_DEFAULT = "DEFAULT";
 	
 	// internal data for GUI Composite
 	public static final String DATA_PATH = "data_path";
+	public static final String DATA_TYPE = "data_type";
+	
+	public static final int DATA_TYPE_DIR = 0x00;
+	public static final int DATA_TYPE_FILE = 0x01;
 
 	// Constants Numer
 	public static final int HEIGHT_HINT = 150;

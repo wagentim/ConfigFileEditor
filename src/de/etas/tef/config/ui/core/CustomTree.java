@@ -140,12 +140,6 @@ public abstract class CustomTree extends AbstractComposite
 		it.setText(blockName);
 	}
 
-	public TreeItem getSelectedTreeItem()
-	{
-		TreeItem ti = tree.getSelection()[0];
-		return ti;
-	}
-	
 	public void setTreeSelectedBlock(String blockName)
 	{
 		TreeItem[] items = root.getItems();
@@ -174,29 +168,5 @@ public abstract class CustomTree extends AbstractComposite
 		}
 		
 		return null;
-	}
-	
-	private void addNewBlock(ConfigBlock content)
-	{
-		ConfigBlock newBlock = content;
-		
-		TreeItem selectedItem = getSelectedTreeItem();
-		TreeItem root = selectedItem.getParentItem();
-		
-		TreeItem parent;
-		int index;
-		
-		if( null == root )
-		{
-			parent = selectedItem;
-			index = 0;
-		}
-		else
-		{
-			parent = root;
-			index = parent.indexOf(selectedItem);
-		}
-		
-		addTreeItem(newBlock.getBlockName(), parent, index);
 	}
 }

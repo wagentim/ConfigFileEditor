@@ -256,7 +256,7 @@ public class MainScreen implements IMessageListener
 		Composite statusbar = new Composite(shell, SWT.BORDER);
 
         GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.heightHint = 16;
+        gridData.heightHint = 20;
         statusbar.setLayoutData(gridData);
         RowLayout layout = new RowLayout();
         layout.marginLeft = layout.marginTop = 0;

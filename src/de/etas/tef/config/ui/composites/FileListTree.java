@@ -16,16 +16,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.etas.tef.config.controller.IConstants;
-import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.listener.FileTreeRightMenuSelectionListener;
+import de.etas.tef.config.listener.TreeSelectionListener;
 import de.etas.tef.config.ui.core.CustomTree;
 
 public class FileListTree extends CustomTree
 {
 	private static final Logger logger = LoggerFactory.getLogger(FileListTree.class);
 	
-	private FileTreeRightMenuSelectionListener selectionListener = null;
+	private TreeSelectionListener selectionListener = null;
 	
 	public FileListTree(Composite parent, int style, MainController controller)
 	{
@@ -35,17 +35,8 @@ public class FileListTree extends CustomTree
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		if( type == IMessage.MSG_ADD_DIR )
-		{
-			TreeItem ti = getSelectedTreeItem();
-			
-			if(ti != null)
-			{
-				logger.info("Selected Tree Node: {} with location: {}", ti.getText(), ((Path)ti.getData()).toString());
-			}
-		}
 	}
-
+	
 	@Override
 	protected String getRootNodeName()
 	{
@@ -57,7 +48,7 @@ public class FileListTree extends CustomTree
 	{
 		if( null == selectionListener )
 		{
-			selectionListener = new FileTreeRightMenuSelectionListener();
+			selectionListener = new FileTreeRightMenuSelectionListener(tree, controller);
 		}
 		
 		return selectionListener;
@@ -101,27 +92,28 @@ public class FileListTree extends CustomTree
 				@Override
 				public void accept(Path pth)
 				{
-					if(pth == null)
+					if(pth == null || pth.getFileName().toString().equalsIgnoreCase(".git"))
 					{
 						return;
 					}
-					else if(!Files.isDirectory(pth))
+					else
 					{
 						TreeItem ti = new TreeItem(root, SWT.NONE);
 						ti.setText(pth.getFileName().toString());
-					}
-					else if(Files.isDirectory(pth))
-					{
-						TreeItem ti = new TreeItem(root, SWT.NONE);
-						ti.setText(pth.getFileName().toString());
-						createFileTree(ti, pth.toString());
+						ti.setData(IConstants.DATA_PATH, pth.toString());
+						ti.setData(IConstants.DATA_TYPE, IConstants.DATA_TYPE_FILE);
+
+						if(Files.isDirectory(pth))
+						{
+							createFileTree(ti, pth.toString());
+							ti.setData(IConstants.DATA_TYPE, IConstants.DATA_TYPE_DIR);
+						}
 					}
 				}
 			});
 		} 
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

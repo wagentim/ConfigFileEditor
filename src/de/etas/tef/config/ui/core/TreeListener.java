@@ -19,36 +19,24 @@ import de.etas.tef.config.helper.IConstants;
 public class TreeListener extends CellEditingListener
 {
 	private final MainController controller;
+	private final Tree tree;
 
 	public TreeListener(Tree tree, MainController controller)
 	{
 		super(tree, controller);
 		this.controller = controller;
+		this.tree = tree;
 	}
 	
-	protected ControlEditor getNewEditor()
+	protected Tree getTree()
 	{
-		TreeEditor editor = new TreeEditor(getTree());
-		editor.horizontalAlignment = SWT.LEFT;
-	    editor.grabHorizontal = true;
-	    editor.minimumWidth = 50;
-		return editor;
+		return tree;
 	}
 	
-	private Tree getTree()
-	{
-		return (Tree)getComposite();
-	}
-
+	
 	@Override
 	protected void updateWithNewValue()
 	{
-	}
-
-	@Override
-	protected Item getSelectedItem(TypedEvent event)
-	{
-		return getTree().getSelection()[0];
 	}
 
 	@Override
@@ -74,27 +62,28 @@ public class TreeListener extends CellEditingListener
 	{
 		if(event.getSource() instanceof MenuItem)
 		{
-			String text = ((MenuItem)event.getSource()).getText();
-			
-			if( text.contentEquals(IConstants.TXT_BTN_ADD) )
-			{
-				ConfigBlock cb = new ConfigBlock();
-				cb.setBlockName(IConstants.TXT_TEMP);
-			}
-			else if( text.contentEquals(IConstants.TXT_BTN_DELETE) )
-			{
-			}
-			else if( text.contentEquals(IConstants.TXT_COPY) )
-			{
-				sendCopyMessage();
-			}
-			else if( text.contentEquals(IConstants.TXT_PASTE) )
-			{
-				sendPasteMessage();
-			}
+			handleRightMenu(event);
 		}
 	}
 	
+	protected void handleRightMenu(SelectionEvent event)
+	{
+		String text = ((MenuItem)event.getSource()).getText();
+		
+		if( text.contentEquals(IConstants.TXT_BTN_DELETE) )
+		{
+		}
+		else if( text.contentEquals(IConstants.TXT_COPY) )
+		{
+			sendCopyMessage();
+		}
+		else if( text.contentEquals(IConstants.TXT_PASTE) )
+		{
+			sendPasteMessage();
+		}
+		
+	}
+
 	private void sendCopyMessage()
 	{
 	}
@@ -125,6 +114,19 @@ public class TreeListener extends CellEditingListener
 	public void receivedAction(int type, Object content)
 	{
 		// TODO Auto-generated method stub
-		
+	}
+
+	@Override
+	protected ControlEditor getNewEditor()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Item getSelectedItem(TypedEvent event)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
