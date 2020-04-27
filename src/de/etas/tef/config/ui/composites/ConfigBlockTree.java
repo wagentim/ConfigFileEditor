@@ -1,11 +1,17 @@
 package de.etas.tef.config.ui.composites;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 
 import de.etas.tef.config.controller.IConstants;
+import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.ui.core.CustomTree;
 
@@ -20,8 +26,10 @@ public class ConfigBlockTree extends CustomTree
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		// TODO Auto-generated method stub
-
+		if(type == IMessage.MSG_SET_FILE)
+		{
+			Path p = Paths.get((String)content);
+		}
 	}
 
 	@Override
@@ -48,6 +56,14 @@ public class ConfigBlockTree extends CustomTree
 	@Override
 	protected void loadData()
 	{
+	}
+
+	@Override
+	protected MouseListener getMouseListener()
+	{
+		return new MouseAdapter()
+		{
+		};
 	}
 
 }

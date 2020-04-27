@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.function.Consumer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.listener.FileTreeRightMenuSelectionListener;
+import de.etas.tef.config.listener.GitTreeMouseListener;
 import de.etas.tef.config.listener.TreeSelectionListener;
 import de.etas.tef.config.ui.core.CustomTree;
 
@@ -26,6 +28,7 @@ public class FileListTree extends CustomTree
 	private static final Logger logger = LoggerFactory.getLogger(FileListTree.class);
 	
 	private TreeSelectionListener selectionListener = null;
+	private GitTreeMouseListener mouseListener = null;
 	
 	public FileListTree(Composite parent, int style, MainController controller)
 	{
@@ -116,5 +119,16 @@ public class FileListTree extends CustomTree
 		{
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	protected MouseListener getMouseListener()
+	{
+		if( mouseListener == null )
+		{
+			mouseListener = new GitTreeMouseListener();
+		}
+		
+		return mouseListener;
 	}
 }

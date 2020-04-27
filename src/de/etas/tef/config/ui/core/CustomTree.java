@@ -3,6 +3,7 @@ package de.etas.tef.config.ui.core;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -14,7 +15,6 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.entity.ConfigBlock;
 
 public abstract class CustomTree extends AbstractComposite
 {
@@ -59,6 +59,8 @@ public abstract class CustomTree extends AbstractComposite
 			}
 		});
 		
+		tree.addMouseListener(getMouseListener());
+		
 		createRightMenu(getTreeRightMenuSelectionListener());
 		
 		this.getDisplay().asyncExec(new Runnable()
@@ -72,6 +74,14 @@ public abstract class CustomTree extends AbstractComposite
 		});
 	}
 	
+	protected void updateRootNode(String name, String key, Object value)
+	{
+		root.setText(name);
+		root.setData(key, value);
+	}
+	
+	protected abstract MouseListener getMouseListener();
+
 	protected abstract void loadData();
 
 	protected abstract SelectionListener getTreeRightMenuSelectionListener();
