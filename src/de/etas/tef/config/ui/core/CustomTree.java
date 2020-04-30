@@ -104,6 +104,13 @@ public abstract class CustomTree extends AbstractComposite
 	                items[i].dispose();
 	            }
 	            
+	            TreeItem selItem = getSelectedItem();
+	            
+	            if(null == selItem)
+	            {
+	            	return;
+	            }
+	            
 	            MenuItem copyItem = new MenuItem(rightClickMenu, SWT.NONE);
 	            copyItem.setText(IConstants.TXT_MENU_COPY);
 	            copyItem.addSelectionListener(listener);
@@ -117,6 +124,11 @@ public abstract class CustomTree extends AbstractComposite
 	    });
 		
 		return rightClickMenu;
+	}
+	
+	protected TreeItem getSelectedItem()
+	{
+		return tree.getSelection()[0];
 	}
 	
 	protected abstract void createCustomRightMenu(Menu rightClickMenu);

@@ -23,6 +23,7 @@ public class MainController
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	private final ImageFactory imageFactory;
 	private final ColorFactory colorFactory;
+	private final CheckerFactory checkerFactory;
 	private final Display display;
 	
 	private boolean quitProgram = false;
@@ -40,6 +41,7 @@ public class MainController
 		this.display = display;
 		this.imageFactory = new ImageFactory(display);
 		this.colorFactory = new ColorFactory(display);
+		this.checkerFactory = new CheckerFactory();
 		this.settingController = new SettingController();
 		
 		initController();
@@ -92,7 +94,7 @@ public class MainController
 		{
 			gitController = new GitController(repositoryRemote, repositoryLocal);
 			
-			if(gitController.checkRepository())
+			if(gitController.isRepositoryAvailable())
 			{
 				new MainScreen(display, this);
 			}
@@ -131,6 +133,11 @@ public class MainController
 	public ColorFactory getColorFactory()
 	{
 		return this.colorFactory;
+	}
+	
+	public CheckerFactory getCheckerFactory()
+	{
+		return this.checkerFactory;
 	}
 	
 	public GitController getGitController()

@@ -43,7 +43,7 @@ public class FileListTree extends CustomTree
 	@Override
 	protected String getRootNodeName()
 	{
-		return IConstants.TXT_FILES;
+		return IConstants.TXT_REPOSITORY_FILES;
 	}
 
 	@Override
@@ -62,13 +62,18 @@ public class FileListTree extends CustomTree
 	{
 		new MenuItem(rightClickMenu, SWT.SEPARATOR);
 		
-		MenuItem newFileItem = new MenuItem(rightClickMenu, SWT.NONE);
-		newFileItem.setText(IConstants.TXT_MENU_ADD_FILE);
-		newFileItem.addSelectionListener(getTreeRightMenuSelectionListener());
-	
-		MenuItem newDirItem = new MenuItem(rightClickMenu, SWT.NONE);
-		newDirItem.setText(IConstants.TXT_MENU_ADD_DIR);
-		newDirItem.addSelectionListener(getTreeRightMenuSelectionListener());
+		TreeItem selItem = getSelectedItem();
+		
+		if((int)selItem.getData(IConstants.DATA_TYPE) != IConstants.DATA_TYPE_FILE)
+		{
+			MenuItem newFileItem = new MenuItem(rightClickMenu, SWT.NONE);
+			newFileItem.setText(IConstants.TXT_MENU_ADD_FILE);
+			newFileItem.addSelectionListener(getTreeRightMenuSelectionListener());
+		
+			MenuItem newDirItem = new MenuItem(rightClickMenu, SWT.NONE);
+			newDirItem.setText(IConstants.TXT_MENU_ADD_DIR);
+			newDirItem.addSelectionListener(getTreeRightMenuSelectionListener());
+		}
         
         MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
         deleteItem.setText(IConstants.TXT_MENU_DELETE);
@@ -80,6 +85,7 @@ public class FileListTree extends CustomTree
 	{
 		String path = controller.getSetting().getRepositoryLocal();
 		root.setData(IConstants.DATA_PATH, path);
+		root.setData(IConstants.DATA_TYPE, IConstants.DATA_TYPE_DIR);
 		createFileTree(root, path);
 		root.setExpanded(true);
 	}

@@ -1,5 +1,6 @@
 package de.etas.tef.config.ui.composites;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -29,6 +30,12 @@ public class ConfigBlockTree extends CustomTree
 		if(type == IMessage.MSG_SET_FILE)
 		{
 			Path p = Paths.get((String)content);
+			
+			if(Files.exists(p))
+			{
+				String fileName = p.getFileName().toString();
+				updateRootNode(fileName, IConstants.DATA_PATH, p.toString());
+			}
 		}
 	}
 

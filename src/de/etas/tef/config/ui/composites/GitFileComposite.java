@@ -18,7 +18,7 @@ public class GitFileComposite extends AbstractComposite
 	protected void initComposite()
 	{
 		super.initComposite();
-		
+		new GitFileToolbar(this, SWT.NONE, controller);
 		new FileListTree(this, SWT.NONE, controller);
 		
 	}

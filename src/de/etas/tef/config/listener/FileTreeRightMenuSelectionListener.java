@@ -30,39 +30,63 @@ public class FileTreeRightMenuSelectionListener extends TreeSelectionListener
 	{
 		String text = item.getText();
 		
-		if(text.equals(IConstants.TXT_MENU_ADD_DIR)  || text.equals(IConstants.TXT_MENU_ADD_FILE))
+		if(text.equals(IConstants.TXT_MENU_ADD_DIR))
 		{
-			addNewTreeItem();
+			handleAddDir();
+		}
+		else if(text.equals(IConstants.TXT_MENU_ADD_FILE))
+		{
+			handelAddFile();
+		}
+	}
+	
+	private void handleAddDir()
+	{
+		TreeItem newItem = addNewTreeItem();
+		
+		if( null != newItem)
+		{
+			newItem.setText(IConstants.TXT_DEFAULT_DIR);
+			handleTreeItemEdit(newItem);
 		}
 	}
 
-	// create a new Dir Node in the File Tree
-	private void addNewTreeItem()
+	/**
+	 * Add {@link TreeItem} under selected Item
+	 */
+	private void handelAddFile()
+	{
+		TreeItem newItem = addNewTreeItem();
+		
+		if( null != newItem)
+		{
+			newItem.setText(IConstants.TXT_DEFAULT_INI);
+			handleTreeItemEdit(newItem);
+		}
+	}
+
+	private TreeItem addNewTreeItem()
 	{
 		TreeItem selected = getSelectedTreeItem();
 		
 		if( null == selected )
 		{
 			logger.error("The selected tree node is null");
-			return;
+			return null;
 		}
 		
 		TreeItem ti = new TreeItem(selected, SWT.NONE);
-		
 		selected.setExpanded(true);
 		
-		String newPath = selected.getData(IConstants.DATA_PATH) + File.separator + IConstants.TXT_DEFAULT;
-		ti.setText(IConstants.TXT_DEFAULT);
-		ti.setData(IConstants.DATA_PATH, newPath);
-		
-		handleTreeItemEdit(ti);
+		return ti;
 	}
 	
 	@Override
 	protected boolean updateTreeItemValue(TreeItem item)
 	{
-		String text = item.getText();
-		text = (String)item.getParentItem().getData(IConstants.DATA_PATH) + File.separator + text;
+		String fileName = item.getText();
+		String parentPath = (String)item.getParentItem().getData(IConstants.DATA_PATH);
+		String text = parentPath + File.separator + fileName;
 		item.setData(IConstants.DATA_PATH, text);
 		
 		TreeItem parent = item.getParentItem();
@@ -81,6 +105,7 @@ public class FileTreeRightMenuSelectionListener extends TreeSelectionListener
 				{
 					Files.createFile(newFile);
 					item.setData(IConstants.DATA_TYPE, IConstants.DATA_TYPE_FILE);
+					controller.getGitController().addFileToRepository(text);
 				} 
 				catch (IOException e)
 				{
@@ -139,7 +164,6 @@ public class FileTreeRightMenuSelectionListener extends TreeSelectionListener
 		} 
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

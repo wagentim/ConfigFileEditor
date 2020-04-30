@@ -5,7 +5,7 @@ public interface IConstants
 	// Constants Text
 	public static final String EMPTY_STRING = "";
 	public static final String TXT_INI_FILE_DEFAULT = "DEFAULT";
-	public static final String TXT_FILES = "Files";
+	public static final String TXT_REPOSITORY_FILES = "Repository Files";
 	public static final String TXT_MENU_COPY = "Copy";
 	public static final String TXT_MENU_PASTE = "Paste";
 	public static final String TXT_MENU_ADD_DIR = "Add Directory";
@@ -16,7 +16,10 @@ public interface IConstants
 	public static final String TXT_BROWSE = "Browse...";
 	public static final String TXT_OK = "OK";
 	public static final String TXT_CANCEL = "Cancel";
-	public static final String TXT_DEFAULT = "DEFAULT";
+	public static final String TXT_DEFAULT_DIR = "DEFAULT";
+	public static final String TXT_DEFAULT_INI = "default.ini";
+	public static final String TXT_DEFAULT_FILE = "default.txt";
+	public static final String TXT_REPOSITORY_README_FILE = "README.md";
 	
 	// internal data for GUI Composite
 	public static final String DATA_PATH = "data_path";
@@ -36,6 +39,10 @@ public interface IConstants
 	public static final int OPERATION_SUCCESS = 0x01;
 	public static final int OPERATION_INPUT_ERROR = 0x02;
 	
+	// supported file type
+	public static final String[] SUPPORT_FILE_TYPE = {".ini", ".txt"};
 	
+	// checker
+	public static final String CHECKER_FILE_NAME = "CheckerFileName";
 
 }

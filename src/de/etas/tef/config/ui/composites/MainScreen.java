@@ -97,7 +97,7 @@ public class MainScreen implements IMessageListener
 		});
 		
 		initMainScreen(shell);
-//		initMenu(shell);
+		initMenu(shell);
 		initMainComponents(shell);
 		
 		initStatusBar(shell);
@@ -161,7 +161,7 @@ public class MainScreen implements IMessageListener
 	    functionMenuHeader.setMenu(functionMenu);
 	    
 	    connectItem = new MenuItem(functionMenu, SWT.PUSH);
-	    connectItem.setText("&Disconnect");
+	    connectItem.setText("&Settings");
 	    connectItem.addSelectionListener(new SelectionListener()
 		{
 			
