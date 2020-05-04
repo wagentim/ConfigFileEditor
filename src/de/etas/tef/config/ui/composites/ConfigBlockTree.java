@@ -3,17 +3,23 @@ package de.etas.tef.config.ui.composites;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.ui.core.CustomTree;
 
 public class ConfigBlockTree extends CustomTree
@@ -35,7 +41,26 @@ public class ConfigBlockTree extends CustomTree
 			{
 				String fileName = p.getFileName().toString();
 				updateRootNode(fileName, IConstants.DATA_PATH, p.toString());
+				ConfigFile cf = controller.parserINIFile(p);
+				createTree(cf);
+				root.setExpanded(true);
 			}
+		}
+	}
+	
+	public void createTree(ConfigFile configFile)
+	{
+		root.removeAll();
+		List<ConfigBlock> blocks = configFile.getConfigBlocks();
+		
+		Iterator<ConfigBlock> it = blocks.iterator();
+
+		while (it.hasNext())
+		{
+			ConfigBlock cb = it.next();
+			TreeItem ti = new TreeItem(root, SWT.NONE);
+			ti.setText(cb.getBlockName());
+			ti.setData(IConstants.DATA_VALUE);
 		}
 	}
 

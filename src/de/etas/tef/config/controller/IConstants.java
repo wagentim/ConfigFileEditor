@@ -24,6 +24,7 @@ public interface IConstants
 	// internal data for GUI Composite
 	public static final String DATA_PATH = "data_path";
 	public static final String DATA_TYPE = "data_type";
+	public static final String DATA_VALUE = "data_value";
 	
 	public static final int DATA_TYPE_DIR = 0x00;
 	public static final int DATA_TYPE_FILE = 0x01;
@@ -44,5 +45,17 @@ public interface IConstants
 	
 	// checker
 	public static final String CHECKER_FILE_NAME = "CheckerFileName";
+	
+	public static final int EMPTY_INT = -1;
+	public static final String[] EMPTY_STRING_ARRAY = {};
+	public static final String SYMBOL_INIT_FILE_COMMENT_DASH = "--";
+	public static final String SYMBOL_INIT_FILE_COMMENT_SEMICOLON = ";";
+	public static final String SYMBOL_NEW_LINE = "\n";
+	public static final String SYMBOL_LEFT_BRACKET = "[";
+	public static final String SYMBOL_RIGHT_BRACKET = "]";
+	public static final String SYMBOL_EQUAL = "=";
+	public static final String SYMBOL_SPACE = " ";
+	public static final String SYMBOL_LEFT_PARENTHESES_ = "("; 
+	public static final String SYMBOL_RIGHT_PARENTHESES_ = ")"; 
 
 }

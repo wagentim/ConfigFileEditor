@@ -1,6 +1,6 @@
 package de.etas.tef.config.entity;
 
-import de.etas.tef.config.helper.IConstants;
+import de.etas.tef.config.controller.IConstants;
 
 public class KeyValuePair
 {

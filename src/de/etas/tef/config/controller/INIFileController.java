@@ -1,4 +1,4 @@
-package de.etas.tef.config.helper;
+package de.etas.tef.config.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,10 +14,21 @@ import java.util.SortedMap;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
-import de.etas.tef.editor.message.MessageManager;
+import de.etas.tef.config.helper.IConstants;
+import de.etas.tef.config.helper.Validator;
 
-public class InitFileWorker implements IConfigFileWorker
+public class INIFileController
 {
+	static final int TAG_FILE_COMMENT_START = 0x00;
+	static final int TAG_FILE_COMMENT_FINISH = 0x01;
+	
+	static final int TAG_BLOCK_COMMENT_START = 0x02;
+	static final int TAG_BLOCK_COMMENT_FINISH = 0x03;
+	
+	static final int TAG_BLOCK_NAME_START = 0x04;
+	static final int TAG_BLOCK_NAME_FINISH = 0x05;
+	
+	static final int TAG_FILE_NEW = 0x06;
 	
 	private static final String CHARSET_ISO_8859_1 = "ISO-8859-1";
 	private static final String CHARSET_UTF_8 = "UTF-8";
@@ -47,7 +58,6 @@ public class InitFileWorker implements IConfigFileWorker
 		}
 	}
 	
-	@Override
 	public void readFile(String filePath, Object result) throws IOException
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )
@@ -242,7 +252,6 @@ public class InitFileWorker implements IConfigFileWorker
 		}
 	}
 		
-	@Override
 	public void writeFile(String filePath, Object result) throws IOException
 	{
 		if( !Validator.INSTANCE().validFile(filePath, true) )

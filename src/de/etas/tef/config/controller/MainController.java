@@ -1,5 +1,7 @@
 package de.etas.tef.config.controller;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import de.etas.tef.config.controller.SettingController.Setting;
 import de.etas.tef.config.core.ColorFactory;
 import de.etas.tef.config.core.ImageFactory;
 import de.etas.tef.config.entity.ConfigBlock;
+import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
 import de.etas.tef.config.ui.composites.MainScreen;
 import de.etas.tef.config.ui.composites.SelectWorkSpaceDialog;
@@ -24,6 +27,7 @@ public class MainController
 	private final ImageFactory imageFactory;
 	private final ColorFactory colorFactory;
 	private final CheckerFactory checkerFactory;
+	private final INIFileController iniFileController;
 	private final Display display;
 	
 	private boolean quitProgram = false;
@@ -43,9 +47,27 @@ public class MainController
 		this.colorFactory = new ColorFactory(display);
 		this.checkerFactory = new CheckerFactory();
 		this.settingController = new SettingController();
+		this.iniFileController = new INIFileController();
 		
 		initController();
 		initEnvironment();
+	}
+	
+	public ConfigFile parserINIFile(Path filePath)
+	{
+		ConfigFile cf = new ConfigFile();
+		
+		try
+		{
+			iniFileController.readFile(filePath.toString(), cf);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return cf;
 	}
 	
 	private void initEnvironment()

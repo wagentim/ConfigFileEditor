@@ -3,7 +3,7 @@ package de.etas.tef.config.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.etas.tef.config.helper.IConstants;
+import de.etas.tef.config.controller.IConstants;
 
 public final class ConfigBlock
 {
