@@ -31,6 +31,8 @@ public class ConfigMainComposite extends AbstractComposite
 		// setting for the composite
 		super.initComposite();
 		
+		new ConfigToolbar(this, SWT.NONE, controller);
+		
 		svBelow = new SashForm(this, SWT.VERTICAL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		svBelow.setLayoutData(gd);
@@ -45,7 +47,7 @@ public class ConfigMainComposite extends AbstractComposite
 		sfAbove.setWeights(new int[]{1,2});
 		
 		new CommentComposite(svBelow, SWT.NONE, controller);
-		svBelow.setWeights(new int[]{4,1});		
+		svBelow.setWeights(new int[]{2,1});		
 		
 		initDropFunction(this);
 	}

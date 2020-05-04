@@ -8,10 +8,10 @@ import org.eclipse.swt.widgets.Composite;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.ui.core.AbstractComposite;
 
-public class GitFileComposite extends AbstractComposite
+public class GitFileMainComposite extends AbstractComposite
 {
 
-	public GitFileComposite(Composite parent, int style, MainController controller)
+	public GitFileMainComposite(Composite parent, int style, MainController controller)
 	{
 		super(parent, style, controller);
 		initComposite();
