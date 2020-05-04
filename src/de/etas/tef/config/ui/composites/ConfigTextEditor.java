@@ -11,6 +11,7 @@ public class ConfigTextEditor extends TextEditor
 	public ConfigTextEditor(Composite parent, int style, MainController controller)
 	{
 		super(parent, style, controller);
+		initComposite();
 	}
 
 	@Override

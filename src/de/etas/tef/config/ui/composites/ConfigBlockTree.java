@@ -28,6 +28,7 @@ public class ConfigBlockTree extends CustomTree
 	public ConfigBlockTree(Composite parent, int style, MainController controller)
 	{
 		super(parent, style, controller);
+		initComponent();
 	}
 
 	@Override

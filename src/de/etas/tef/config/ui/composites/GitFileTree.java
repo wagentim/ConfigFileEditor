@@ -23,16 +23,17 @@ import de.etas.tef.config.listener.GitTreeMouseListener;
 import de.etas.tef.config.listener.TreeSelectionListener;
 import de.etas.tef.config.ui.core.CustomTree;
 
-public class FileListTree extends CustomTree
+public class GitFileTree extends CustomTree
 {
-	private static final Logger logger = LoggerFactory.getLogger(FileListTree.class);
+	private static final Logger logger = LoggerFactory.getLogger(GitFileTree.class);
 	
 	private TreeSelectionListener selectionListener = null;
 	private GitTreeMouseListener mouseListener = null;
 	
-	public FileListTree(Composite parent, int style, MainController controller)
+	public GitFileTree(Composite parent, int style, MainController controller)
 	{
 		super(parent, style, controller);
+		initComponent();
 	}
 
 	@Override

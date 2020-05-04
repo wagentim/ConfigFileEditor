@@ -26,7 +26,7 @@ public abstract class AbstractComposite extends Composite implements IMessageLis
 	protected void initComposite() 
 	{
 		GridLayout layout = new GridLayout(1, false);
-		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = 0;
+		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = layout.horizontalSpacing = layout.verticalSpacing = 0;
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		this.setLayout(layout);
 		this.setLayoutData(gd);

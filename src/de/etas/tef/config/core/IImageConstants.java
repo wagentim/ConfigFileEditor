@@ -30,4 +30,5 @@ public interface IImageConstants
 	public static final int IMAGE_PIN = 0x19;
 	public static final int IMAGE_CONNECT = 0x1A;
 	public static final int IMAGE_DISCONNECT = 0x1B;
+	public static final int IMAGE_HISTORY = 0x1C;
 }

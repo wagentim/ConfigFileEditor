@@ -20,6 +20,10 @@ public interface IConstants
 	public static final String TXT_DEFAULT_INI = "default.ini";
 	public static final String TXT_DEFAULT_FILE = "default.txt";
 	public static final String TXT_REPOSITORY_README_FILE = "README.md";
+	public static final String TXT_FILE_HISTORY = "File History"; 
+	public static final String TXT_COMMITS = "Commits"; 
+	public static final String[] ARRAY_TABLE_HISTORY_HEADER = {"Time", "Comments"};
+	public static final String[] ARRAY_TABLE_COMMITS_HEADER = {"Time", "Comments"};
 	
 	// internal data for GUI Composite
 	public static final String DATA_PATH = "data_path";
@@ -56,6 +60,6 @@ public interface IConstants
 	public static final String SYMBOL_EQUAL = "=";
 	public static final String SYMBOL_SPACE = " ";
 	public static final String SYMBOL_LEFT_PARENTHESES_ = "("; 
-	public static final String SYMBOL_RIGHT_PARENTHESES_ = ")"; 
+	public static final String SYMBOL_RIGHT_PARENTHESES_ = ")";
 
 }

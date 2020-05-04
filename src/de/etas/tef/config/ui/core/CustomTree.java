@@ -29,8 +29,6 @@ public abstract class CustomTree extends AbstractComposite
 	{
 		super(parent, style, controller);
 		this.controller = controller;
-		
-		initComponent();
 	}
 
 	protected void initComponent()

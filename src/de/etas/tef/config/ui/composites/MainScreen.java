@@ -277,7 +277,7 @@ public class MainScreen implements IMessageListener
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		main.setLayoutData(gd);
 		
-		new FileListTree(main, SWT.BORDER, controller);
+		new GitFileComposite(main, SWT.BORDER, controller);
 
 //		configCompositeSashForm = new SashForm(main, SWT.HORIZONTAL);
 //		gd = new GridData(GridData.FILL_BOTH);
