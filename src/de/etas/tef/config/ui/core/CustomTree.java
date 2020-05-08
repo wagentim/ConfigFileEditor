@@ -117,6 +117,10 @@ public abstract class CustomTree extends AbstractComposite
 	            pasteItem.setText(IConstants.TXT_MENU_PASTE);
 	            pasteItem.addSelectionListener(listener);
 	            
+	            MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
+	            deleteItem.setText(IConstants.TXT_MENU_DELETE);
+	            deleteItem.addSelectionListener(getTreeRightMenuSelectionListener());
+	            
 	            createCustomRightMenu(rightClickMenu);
 	        }
 	    });

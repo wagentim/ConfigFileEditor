@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jgit.api.Git;
@@ -14,7 +16,6 @@ import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -109,11 +110,19 @@ public final class GitController
 		}
 	}
 	
-	public void printAllCommits(String fileName)
+	public void listFileHistory(Path filePath)
+	{
+
+	}
+	
+	public List<RevCommit> getAllCommits(String fileName)
 	{
 		Repository repository = git.getRepository();
 		
+		List<RevCommit> commits = new ArrayList<RevCommit>();
+		
 		ObjectId lastCommitId =	null;
+		
 		try
 		{
 			lastCommitId = repository.resolve(Constants.HEAD);
@@ -150,11 +159,13 @@ public final class GitController
 						throw new IllegalStateException("Did not find expected file: " + fileName);
 					}
 					
-					ObjectId objectId = treeWalk.getObjectId(0);
-					ObjectLoader loader = repository.open(objectId);
+//					ObjectId objectId = treeWalk.getObjectId(0);
+//					ObjectLoader loader = repository.open(objectId);
+//					
+//					loader.copyTo(System.out);
 					
-					// and then one can the loader to read the file
-					loader.copyTo(System.out);
+					commits.add(commit);
+
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
@@ -164,6 +175,8 @@ public final class GitController
 
             revWalk.dispose();
         }
+        
+        return commits;
 	}
 	
 	public int addUntractedFile(String path, String name)

@@ -22,8 +22,12 @@ public interface IConstants
 	public static final String TXT_REPOSITORY_README_FILE = "README.md";
 	public static final String TXT_FILE_HISTORY = "File History"; 
 	public static final String TXT_COMMITS = "Commits"; 
-	public static final String[] ARRAY_TABLE_HISTORY_HEADER = {"Time", "Comments"};
-	public static final String[] ARRAY_TABLE_COMMITS_HEADER = {"Time", "Comments"};
+	public static final String TXT_TOOLBAR_ADD_FILE = "Add File";
+	public static final String TXT_TOOLBAR_ADD_DIR = "Add Directory";
+	public static final String TXT_TOOLBAR_FILE_HISTORY = "File History";
+	public static final String TXT_TOOLBAR_COMMIT_HISTORY = "Commit History";
+	public static final String[] ARRAY_TABLE_HISTORY_HEADER = {"Time", "Comments", "User"};
+	public static final String[] ARRAY_TABLE_COMMITS_HEADER = {"Time", "Comments", "User"};
 	
 	// internal data for GUI Composite
 	public static final String DATA_PATH = "data_path";

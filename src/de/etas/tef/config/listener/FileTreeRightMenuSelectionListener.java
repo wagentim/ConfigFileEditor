@@ -2,6 +2,7 @@ package de.etas.tef.config.listener;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,7 +14,9 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.etas.tef.config.controller.IConstants;
+import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.editor.message.MessageManager;
 
 public class FileTreeRightMenuSelectionListener extends TreeSelectionListener
 {
@@ -38,8 +41,19 @@ public class FileTreeRightMenuSelectionListener extends TreeSelectionListener
 		{
 			handelAddFile();
 		}
+		else if(text.equals(IConstants.TXT_TOOLBAR_FILE_HISTORY))
+		{
+			handleShowFileHistory();
+		}
 	}
 	
+	private void handleShowFileHistory()
+	{
+		TreeItem selected = getSelectedTreeItem();
+		Path filePath = Paths.get((String) selected.getData(IConstants.DATA_PATH));
+		MessageManager.INSTANCE.sendMessage(IMessage.MSG_GET_FILE_HISTORY, filePath);
+	}
+
 	private void handleAddDir()
 	{
 		TreeItem newItem = addNewTreeItem();

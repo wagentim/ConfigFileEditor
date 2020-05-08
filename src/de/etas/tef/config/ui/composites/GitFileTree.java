@@ -65,7 +65,9 @@ public class GitFileTree extends CustomTree
 		
 		TreeItem selItem = getSelectedItem();
 		
-		if((int)selItem.getData(IConstants.DATA_TYPE) != IConstants.DATA_TYPE_FILE)
+		int type = (int)selItem.getData(IConstants.DATA_TYPE);
+		
+		if( type == IConstants.DATA_TYPE_DIR)
 		{
 			MenuItem newFileItem = new MenuItem(rightClickMenu, SWT.NONE);
 			newFileItem.setText(IConstants.TXT_MENU_ADD_FILE);
@@ -75,10 +77,12 @@ public class GitFileTree extends CustomTree
 			newDirItem.setText(IConstants.TXT_MENU_ADD_DIR);
 			newDirItem.addSelectionListener(getTreeRightMenuSelectionListener());
 		}
-        
-        MenuItem deleteItem = new MenuItem(rightClickMenu, SWT.NONE);
-        deleteItem.setText(IConstants.TXT_MENU_DELETE);
-        deleteItem.addSelectionListener(getTreeRightMenuSelectionListener());
+		else if( type == IConstants.DATA_TYPE_FILE )
+		{
+			MenuItem newFileItem = new MenuItem(rightClickMenu, SWT.NONE);
+			newFileItem.setText(IConstants.TXT_TOOLBAR_FILE_HISTORY);
+			newFileItem.addSelectionListener(getTreeRightMenuSelectionListener());
+		}
 	}
 
 	@Override

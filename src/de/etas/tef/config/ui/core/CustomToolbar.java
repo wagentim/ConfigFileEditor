@@ -15,7 +15,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.editor.message.MessageManager;
 
 public abstract class CustomToolbar extends AbstractComposite
 {
@@ -54,11 +56,13 @@ public abstract class CustomToolbar extends AbstractComposite
 	{
 		ToolItem ti = initToolItem(name, image, SWT.DROP_DOWN, tooltip);
 		DropdownToolItem itm = new DropdownToolItem(ti);
+		
 		for(String s : items)
 		{
 			itm.add(s);
 		}
 		ti.addSelectionListener(itm);
+		
 		return ti;
 	}
 	
@@ -98,7 +102,8 @@ public abstract class CustomToolbar extends AbstractComposite
 				public void widgetSelected(SelectionEvent event)
 				{
 					MenuItem selected = (MenuItem) event.widget;
-					dropdown.setText(selected.getText());
+					String text = selected.getText();
+					MessageManager.INSTANCE.sendMessage(IMessage.MSG_TOOLBAR_ITEM, text);
 				}
 			});
 		}
