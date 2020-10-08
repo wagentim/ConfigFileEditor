@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.listener.ConfigFileTreeMouseListener;
 import de.etas.tef.config.listener.FileTreeRightMenuSelectionListener;
-import de.etas.tef.config.listener.GitTreeMouseListener;
 import de.etas.tef.config.listener.TreeSelectionListener;
 import de.etas.tef.config.ui.core.CustomTree;
 
@@ -28,7 +28,7 @@ public class ConfigFileTree extends CustomTree
 	private static final Logger logger = LoggerFactory.getLogger(ConfigFileTree.class);
 	
 	private TreeSelectionListener selectionListener = null;
-	private GitTreeMouseListener mouseListener = null;
+	private ConfigFileTreeMouseListener mouseListener = null;
 	
 	public ConfigFileTree(Composite parent, int style, MainController controller)
 	{
@@ -44,7 +44,7 @@ public class ConfigFileTree extends CustomTree
 	@Override
 	protected String getRootNodeName()
 	{
-		return IConstants.TXT_REPOSITORY_FILES;
+		return IConstants.TXT_CONFIG_FILES;
 	}
 
 	@Override
@@ -87,6 +87,11 @@ public class ConfigFileTree extends CustomTree
 
 	@Override
 	protected void loadData()
+	{
+		
+	}
+	
+	private void delayLoadData()
 	{
 		String path = controller.getSetting().getRepositoryLocal();
 		root.setData(IConstants.DATA_PATH, path);
@@ -137,7 +142,7 @@ public class ConfigFileTree extends CustomTree
 	{
 		if( mouseListener == null )
 		{
-			mouseListener = new GitTreeMouseListener();
+			mouseListener = new ConfigFileTreeMouseListener();
 		}
 		
 		return mouseListener;

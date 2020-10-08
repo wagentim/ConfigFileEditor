@@ -11,12 +11,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.etas.tef.config.controller.SettingController.Setting;
 import de.etas.tef.config.core.ColorFactory;
 import de.etas.tef.config.core.ImageFactory;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
 import de.etas.tef.config.entity.KeyValuePair;
+import de.etas.tef.config.settings.SettingController;
+import de.etas.tef.config.settings.SettingController.Setting;
 import de.etas.tef.config.ui.composites.MainScreen;
 import de.etas.tef.config.ui.composites.SelectWorkSpaceDialog;
 

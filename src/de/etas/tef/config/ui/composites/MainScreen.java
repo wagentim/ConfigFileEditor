@@ -322,6 +322,8 @@ public class MainScreen implements IMessageListener
 		layout.marginBottom = 10;
 		shell.setLayout(layout);
 	}
+	
+	
 
 	@Override
 	public void receivedAction(int type, Object content)

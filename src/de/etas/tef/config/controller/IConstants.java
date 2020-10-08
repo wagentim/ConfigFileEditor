@@ -6,6 +6,7 @@ public interface IConstants
 	public static final String EMPTY_STRING = "";
 	public static final String TXT_INI_FILE_DEFAULT = "DEFAULT";
 	public static final String TXT_REPOSITORY_FILES = "Repository Files";
+	public static final String TXT_CONFIG_FILES = "INI Files";
 	public static final String TXT_MENU_COPY = "Copy";
 	public static final String TXT_MENU_PASTE = "Paste";
 	public static final String TXT_MENU_ADD_DIR = "Add Directory";
