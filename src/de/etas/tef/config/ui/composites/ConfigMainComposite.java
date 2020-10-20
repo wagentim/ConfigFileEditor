@@ -12,8 +12,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.ui.core.AbstractComposite;
-import de.etas.tef.config.ui.core.CommentComposite;
 
 public class ConfigMainComposite extends AbstractComposite
 {

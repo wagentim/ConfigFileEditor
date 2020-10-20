@@ -3,7 +3,6 @@ package de.etas.tef.config.ui.composites;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.ui.core.CustomToolbar;
 
 public class ConfigToolbar extends CustomToolbar
 {

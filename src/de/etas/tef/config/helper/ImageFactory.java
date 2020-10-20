@@ -1,4 +1,4 @@
-package de.etas.tef.config.core;
+package de.etas.tef.config.helper;
 
 import java.util.HashMap;
 import java.util.Map;

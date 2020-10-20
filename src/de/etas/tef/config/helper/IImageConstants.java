@@ -1,4 +1,4 @@
-package de.etas.tef.config.core;
+package de.etas.tef.config.helper;
 
 public interface IImageConstants
 {

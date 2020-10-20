@@ -1,4 +1,4 @@
-package de.etas.tef.config.core;
+package de.etas.tef.config.helper;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;

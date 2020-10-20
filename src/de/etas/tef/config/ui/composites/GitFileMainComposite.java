@@ -6,7 +6,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.ui.core.AbstractComposite;
 
 public class GitFileMainComposite extends AbstractComposite
 {

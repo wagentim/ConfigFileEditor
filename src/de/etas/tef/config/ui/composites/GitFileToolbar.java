@@ -5,9 +5,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolItem;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.core.IImageConstants;
 import de.etas.tef.config.helper.IConstants;
-import de.etas.tef.config.ui.core.CustomToolbar;
+import de.etas.tef.config.helper.IImageConstants;
 
 public class GitFileToolbar extends CustomToolbar
 {

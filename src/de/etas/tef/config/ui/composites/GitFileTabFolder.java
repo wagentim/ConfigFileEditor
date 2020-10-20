@@ -12,7 +12,6 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
-import de.etas.tef.config.ui.core.CustomTabFolder;
 
 public class GitFileTabFolder extends CustomTabFolder
 {

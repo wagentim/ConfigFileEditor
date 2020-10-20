@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
-import de.etas.tef.config.ui.core.AbstractComposite;
 
 public class SearchComposite extends AbstractComposite
 {

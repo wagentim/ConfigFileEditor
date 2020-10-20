@@ -27,8 +27,8 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
 import de.etas.tef.config.controller.MainController;
-import de.etas.tef.config.core.IImageConstants;
 import de.etas.tef.config.helper.IConstants;
+import de.etas.tef.config.helper.IImageConstants;
 import de.etas.tef.config.listener.IMessageListener;
 import de.etas.tef.editor.message.MessageManager;
 
@@ -280,7 +280,7 @@ public class MainScreen implements IMessageListener
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		main.setLayoutData(gd);
 		
-		new ConfigFileListComposite(main, SWT.NONE, controller);
+		new ConfigFileComposite(main, SWT.NONE, controller);
 
 //		configCompositeSashForm = new SashForm(main, SWT.HORIZONTAL);
 //		gd = new GridData(GridData.FILL_BOTH);

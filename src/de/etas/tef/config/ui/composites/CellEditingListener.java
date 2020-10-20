@@ -1,4 +1,4 @@
-package de.etas.tef.config.ui.core;
+package de.etas.tef.config.ui.composites;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ControlEditor;

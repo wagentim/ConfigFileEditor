@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.app.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
-import de.etas.tef.config.ui.core.AbstractComposite;
 
 public class SelectComposite extends AbstractComposite
 {

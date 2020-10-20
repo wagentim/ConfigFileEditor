@@ -1,4 +1,4 @@
-package de.etas.tef.config.core;
+package de.etas.tef.config.helper;
 
 import org.eclipse.swt.widgets.Display;
 

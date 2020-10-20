@@ -21,7 +21,6 @@ import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.listener.FileTreeRightMenuSelectionListener;
 import de.etas.tef.config.listener.GitTreeMouseListener;
 import de.etas.tef.config.listener.TreeSelectionListener;
-import de.etas.tef.config.ui.core.CustomTree;
 
 public class GitFileTree extends CustomTree
 {

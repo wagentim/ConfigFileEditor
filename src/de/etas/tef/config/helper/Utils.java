@@ -1,9 +1,7 @@
-package de.etas.tef.config.core;
+package de.etas.tef.config.helper;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import de.etas.tef.config.helper.IConstants;
 
 public final class Utils
 {
