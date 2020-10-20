@@ -1,6 +1,6 @@
 package de.etas.tef.config.checker;
 
-import de.etas.tef.config.controller.IConstants;
+import de.etas.tef.config.helper.IConstants;
 
 public class FileNameChecker extends StringChecker
 {

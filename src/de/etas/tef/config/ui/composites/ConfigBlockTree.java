@@ -15,11 +15,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.ui.core.CustomTree;
 
 public class ConfigBlockTree extends CustomTree

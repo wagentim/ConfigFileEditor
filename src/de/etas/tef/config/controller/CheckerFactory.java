@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import de.etas.tef.config.checker.FileNameChecker;
 import de.etas.tef.config.checker.IChecker;
+import de.etas.tef.config.helper.IConstants;
 
 public final class CheckerFactory
 {

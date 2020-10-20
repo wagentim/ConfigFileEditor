@@ -13,9 +13,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.editor.message.MessageManager;
 
 public class FileTreeRightMenuSelectionListener extends TreeSelectionListener

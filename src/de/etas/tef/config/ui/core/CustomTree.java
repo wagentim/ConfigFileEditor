@@ -13,8 +13,8 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.IConstants;
 
 public abstract class CustomTree extends AbstractComposite
 {

@@ -3,7 +3,7 @@ package de.etas.tef.config.core;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import de.etas.tef.config.controller.IConstants;
+import de.etas.tef.config.helper.IConstants;
 
 public final class Utils
 {

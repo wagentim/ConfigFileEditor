@@ -11,8 +11,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.ui.core.CustomDialog;
 
 public class SelectWorkSpaceDialog extends CustomDialog

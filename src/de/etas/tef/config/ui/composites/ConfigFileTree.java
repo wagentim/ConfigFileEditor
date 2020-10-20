@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.listener.ConfigFileTreeMouseListener;
 import de.etas.tef.config.listener.FileTreeRightMenuSelectionListener;
 import de.etas.tef.config.listener.TreeSelectionListener;

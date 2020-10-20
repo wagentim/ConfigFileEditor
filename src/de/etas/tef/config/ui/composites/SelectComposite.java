@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import de.etas.tef.app.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.ui.core.AbstractComposite;
@@ -57,13 +58,12 @@ public class SelectComposite extends AbstractComposite
 	protected void setCurrFilePath(String currFilePath)
 	{
 		
-		if ( null == currFilePath || currFilePath.isEmpty())
+		if ( null == currFilePath )
 		{
-			return;
+			currFilePath = IConstants.EMPTY_STRING;
 		}
 		
 		txtFileSelect.setText(currFilePath);
-		
 	}
 	
 	protected void initText(Composite comp)
@@ -114,6 +114,10 @@ public class SelectComposite extends AbstractComposite
 		if( type == IConstants.ACTION_DROP_NEW_FILE_SELECTED )
 		{
 			setCurrFilePath((String)content);
+		}
+		else if( type == IConstants.ACTION_GET_SELECTED_PATH )
+		{
+			ActionManager.INSTANCE.sendAction(IConstants.ACTION_SELECTED_PATH, txtFileSelect.getText());
 		}
 		
 	}

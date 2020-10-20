@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import de.etas.tef.config.controller.IConstants;
 import de.etas.tef.config.core.Utils;
+import de.etas.tef.config.helper.IConstants;
 
 /**
  * Handle all Setting file related actions

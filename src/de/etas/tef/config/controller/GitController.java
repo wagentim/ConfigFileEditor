@@ -27,6 +27,8 @@ import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.etas.tef.config.helper.IConstants;
+
 /**
  * Controller to handle all Git related tasks
  * 
