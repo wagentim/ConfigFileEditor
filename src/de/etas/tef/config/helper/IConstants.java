@@ -32,6 +32,7 @@ public interface IConstants
 	public static final String TXT_LABEL_BLOCK_LIST = "Blocks:";
 	public static final String TXT_LABEL_EXEC_DIRECTORY = "Directory: ";
 	public static final String TXT_BTN_SELECT = "Select";
+	public static final String TXT_BTN_DIRECTORY = "Dir";
 	public static final String TXT_BTN_RUN = "Run";
 	public static final String TXT_BTN_ADD = "Add";
 	public static final String TXT_BTN_DELETE = "Delete";

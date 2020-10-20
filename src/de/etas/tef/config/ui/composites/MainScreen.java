@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
@@ -43,6 +44,7 @@ public class MainScreen implements IMessageListener
 	private StyledText txtInfoBlock;
 	private SashForm main;
 	private Label dateLabel;
+	private CoolBar coolbar;
 
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
@@ -98,6 +100,7 @@ public class MainScreen implements IMessageListener
 		
 		initMainScreen(shell);
 		initMenu(shell);
+		initCoolbar(shell);
 		initMainComponents(shell);
 		
 		initStatusBar(shell);
@@ -277,7 +280,7 @@ public class MainScreen implements IMessageListener
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		main.setLayoutData(gd);
 		
-		new ConfigFileTree(main, SWT.BORDER, controller);
+		new ConfigFileListComposite(main, SWT.NONE, controller);
 
 //		configCompositeSashForm = new SashForm(main, SWT.HORIZONTAL);
 //		gd = new GridData(GridData.FILL_BOTH);
@@ -285,7 +288,7 @@ public class MainScreen implements IMessageListener
 		
 		new ConfigMainComposite(main, SWT.BORDER, controller);
 		
-		main.setWeights(new int[] { 1, 3 });
+		main.setWeights(new int[] { 1, 2 });
 //		
 //		leftConfigComposite = new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
 //		rightConfigComposite = new ConfigMainComposite(configCompositeSashForm, SWT.BORDER, controller);
@@ -323,7 +326,10 @@ public class MainScreen implements IMessageListener
 		shell.setLayout(layout);
 	}
 	
-	
+	private void initCoolbar(Composite shell)
+	{
+		coolbar = new CoolBar(shell, SWT.NONE);
+	}
 
 	@Override
 	public void receivedAction(int type, Object content)

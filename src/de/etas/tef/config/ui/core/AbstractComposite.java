@@ -14,13 +14,16 @@ public abstract class AbstractComposite extends Composite implements IMessageLis
 	
 	protected final MainController controller;
 	protected final Color defaultBackgroundColor;
+	protected final Composite parent;
 
 	public AbstractComposite(Composite parent, int style, MainController controller)
 	{
 		super(parent, style);
 		this.controller = controller;
+		this.parent = parent;
 		MessageManager.INSTANCE.addMessageListener(this);
 		defaultBackgroundColor = controller.getColorFactory().getColorWhite();
+		initComposite();
 	}
 	
 	protected void initComposite() 
@@ -30,7 +33,6 @@ public abstract class AbstractComposite extends Composite implements IMessageLis
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		this.setLayout(layout);
 		this.setLayoutData(gd);
-		this.setBackground(defaultBackgroundColor);
 	}
 
 }

@@ -23,7 +23,6 @@ public class ConfigMainComposite extends AbstractComposite
 	public ConfigMainComposite(Composite composite, int style, MainController controller)
 	{
 		super(composite, style, controller);
-		initComposite();
 	}
 	
 	protected void initComposite()

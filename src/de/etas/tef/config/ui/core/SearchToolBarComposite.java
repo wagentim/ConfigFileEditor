@@ -5,6 +5,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.ui.composites.SearchComposite;
 
 public class SearchToolBarComposite extends AbstractComposite
 {
