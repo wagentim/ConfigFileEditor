@@ -108,7 +108,7 @@ public interface IConstants
 	public static final int ACTION_COMMENT_SAVED = 0x1B;
 	public static final int ACTION_PARAMETER_SELECTED = 0x1C;
 	public static final int ACTION_GET_SELECTED_PATH = 0x1D;
-	public static final int ACTION_SELECTED_PATH = 0x1E;
+	public static final int ACTION_SELECTED_SEARCH_PATH = 0x1E;
 	public static final int ACTION_FILE_SEARCH_FINISHED = 0x1F;
 	
 	public static final int FOCUS_NONE = 0x00;

@@ -49,7 +49,7 @@ public class ImageFactory
 //		mapper.put(IImageConstants.IMAGE_CONNECT, createImage("icons/connect.png"));
 //		mapper.put(IImageConstants.IMAGE_ETAS, createImage("icons/disconnect.png"));
 //		mapper.put(IImageConstants.IMAGE_HISTORY, createImage("icons/history.png"));
-		mapper.put(IImageConstants.IMAGE_PLAY, createImage("icons/run.png"));
+		mapper.put(IImageConstants.IMAGE_RUN, createImage("icons/run.png"));
 	}
 	
 	private Image createImage(String path)

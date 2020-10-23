@@ -115,7 +115,7 @@ public class SelectComposite extends AbstractComposite
 		}
 		else if( type == IConstants.ACTION_GET_SELECTED_PATH )
 		{
-			MessageManager.INSTANCE.sendMessage(IConstants.ACTION_SELECTED_PATH, txtFileSelect.getText());
+			MessageManager.INSTANCE.sendMessage(IConstants.ACTION_SELECTED_SEARCH_PATH, txtFileSelect.getText());
 		}
 	}
 }
