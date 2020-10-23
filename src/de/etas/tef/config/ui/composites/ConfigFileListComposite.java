@@ -1,27 +1,29 @@
 package de.etas.tef.config.ui.composites;
 
+import java.io.File;
+import java.nio.file.Path;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import de.etas.tef.app.ActionManager;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.FileSearchWalker;
 import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.helper.IImageConstants;
+import de.etas.tef.editor.message.MessageManager;
 
 public class ConfigFileListComposite extends AbstractComposite
 {
 
-	private List configFileList;
+	private Table configFileList;
 	private final Color bgTableHeader;
 
 	public ConfigFileListComposite(Composite parent, int style, MainController controller)
@@ -35,9 +37,11 @@ public class ConfigFileListComposite extends AbstractComposite
 		super.initComposite();
 		initToolbar();		
 		
-		configFileList = new List(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		configFileList = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		configFileList.setLayoutData(gd);
+		configFileList.setHeaderVisible(false);
+		configFileList.setLinesVisible(false);
 	}
 	
 	private void initToolbar()
@@ -52,7 +56,7 @@ public class ConfigFileListComposite extends AbstractComposite
 			@Override
 			public void widgetSelected(SelectionEvent event)
 			{
-				ActionManager.INSTANCE.sendAction(IConstants.ACTION_GET_SELECTED_PATH, null);
+				MessageManager.INSTANCE.sendMessage(IConstants.ACTION_GET_SELECTED_PATH, null);
 			}
 			
 			@Override
@@ -63,13 +67,47 @@ public class ConfigFileListComposite extends AbstractComposite
 			}
 		});
 	}
+	
+	private void updateList(java.util.List<Path> files)
+	{
+		configFileList.removeAll();
+		
+		if(files == null || files.isEmpty())
+		{
+			return;
+		}
+		
+		configFileList.setData(files);
+		
+		for(Path p : files)
+		{
+			String parent = p.getParent().getFileName().toString();
+			TableItem ti = new TableItem(configFileList, SWT.NONE);
+			
+			
+			ti.setText(parent + File.separator + p.getFileName().toString());
+			ti.setData(p);
+		}
+		
+	}
 
 	@Override
 	public void receivedAction(int type, Object content)
 	{
 		if(type == IConstants.ACTION_SELECTED_PATH)
 		{
+			String[] pattern = {"ini"};
 			
+			Thread search = new Thread(new FileSearchWalker((String)content, pattern, this.getDisplay()));
+			search.start();
+			
+		}
+		else if(type == IConstants.ACTION_FILE_SEARCH_FINISHED)
+		{
+			@SuppressWarnings("unchecked")
+			java.util.List<Path> files = (java.util.List<Path>)content;
+			
+			updateList(files);
 		}
 	}
 

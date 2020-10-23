@@ -1,8 +1,5 @@
 package de.etas.tef.config.ui.composites;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
@@ -14,12 +11,9 @@ import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
@@ -43,12 +37,8 @@ public class MainScreen implements IMessageListener
 	private MenuItem connectItem;
 	private StyledText txtInfoBlock;
 	private SashForm main;
-	private Label dateLabel;
 	private CoolBar coolbar;
-
-	
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-	
+	private Statusbar statusBar;
 
 	public MainScreen(final Display display, final MainController controller)
 	{
@@ -103,13 +93,13 @@ public class MainScreen implements IMessageListener
 		initCoolbar(shell);
 		initMainComponents(shell);
 		
-		initStatusBar(shell);
+		statusBar = new Statusbar(shell, SWT.NONE, controller);
 		
 		Runnable timer = new Runnable()
 		{
 			public void run()
 			{
-				dateLabel.setText(" " + sdf.format(new Date()) + " ");
+				statusBar.updateTime();
 				display.timerExec(1000, this);
 			}
 		};
@@ -253,29 +243,16 @@ public class MainScreen implements IMessageListener
 	    shell.setMenuBar(menuBar);
 	}
 	
-	private void initStatusBar(Shell shell)
-	{
-		
-		Composite statusbar = new Composite(shell, SWT.BORDER);
-
-        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.heightHint = 20;
-        statusbar.setLayoutData(gridData);
-        RowLayout layout = new RowLayout();
-        layout.marginLeft = layout.marginTop = 0;
-        statusbar.setLayout(layout);
-        
-        Label image = new Label(statusbar, SWT.NONE);
-        
-        dateLabel = new Label(statusbar, SWT.BOLD);
-        dateLabel.setLayoutData(new RowData(150, -1));
-        dateLabel.setText(" "+sdf.format(new Date())+" ");
-        
-        new Label(statusbar, SWT.SEPARATOR | SWT.VERTICAL);
-	}
-	
+	/** initial the main composite and component area */
 	private void initMainComponents(Composite shell)
 	{
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginTop = 10;
+		layout.marginLeft = 10;
+		layout.marginRight = 10;
+		layout.marginBottom = 10;
+		shell.setLayout(layout);
+		
 		main = new SashForm(shell, SWT.HORIZONTAL);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		main.setLayoutData(gd);
@@ -309,6 +286,7 @@ public class MainScreen implements IMessageListener
 //		configCompositeSashForm.setWeights(new int[] {1, 0});
 	}
 
+	/** Define the main window location */
 	private void initMainScreen(Composite shell)
 	{
 		Monitor primary = shell.getDisplay().getPrimaryMonitor();
@@ -317,13 +295,6 @@ public class MainScreen implements IMessageListener
 		shell.setBounds((Math.abs(area.width - IConstants.MAIN_SCREEN_WIDTH)) / 2,
 				Math.abs((area.height - IConstants.MAIN_SCREEN_HEIGHT)) / 2, IConstants.MAIN_SCREEN_WIDTH,
 				IConstants.MAIN_SCREEN_HEIGHT);
-
-		GridLayout layout = new GridLayout(1, false);
-		layout.marginTop = 10;
-		layout.marginLeft = 10;
-		layout.marginRight = 10;
-		layout.marginBottom = 10;
-		shell.setLayout(layout);
 	}
 	
 	private void initCoolbar(Composite shell)

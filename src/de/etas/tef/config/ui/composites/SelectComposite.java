@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.app.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
+import de.etas.tef.editor.message.MessageManager;
 
 public class SelectComposite extends AbstractComposite
 {
@@ -116,7 +117,7 @@ public class SelectComposite extends AbstractComposite
 		}
 		else if( type == IConstants.ACTION_GET_SELECTED_PATH )
 		{
-			ActionManager.INSTANCE.sendAction(IConstants.ACTION_SELECTED_PATH, txtFileSelect.getText());
+			MessageManager.INSTANCE.sendMessage(IConstants.ACTION_SELECTED_PATH, txtFileSelect.getText());
 		}
 		
 	}
