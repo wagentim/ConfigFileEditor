@@ -1,4 +1,4 @@
-package de.etas.tef.config.ui.composites;
+package de.etas.tef.config.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;

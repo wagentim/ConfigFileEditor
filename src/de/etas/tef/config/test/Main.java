@@ -1,6 +1,6 @@
 package de.etas.tef.config.test;
 
-import de.etas.tef.config.ui.composites.MainScreen;
+import de.etas.tef.config.ui.MainScreen;
 
 public class Main
 {

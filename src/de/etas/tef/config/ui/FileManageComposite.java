@@ -1,14 +1,14 @@
-package de.etas.tef.config.ui.composites;
+package de.etas.tef.config.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
 
-public class ConfigFileComposite extends AbstractComposite
+public class FileManageComposite extends AbstractComposite
 {
 	
-	public ConfigFileComposite(Composite composite, int style, MainController controller)
+	public FileManageComposite(Composite composite, int style, MainController controller)
 	{
 		super(composite, style, controller);
 	}
@@ -23,7 +23,6 @@ public class ConfigFileComposite extends AbstractComposite
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 }

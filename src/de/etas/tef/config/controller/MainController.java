@@ -18,8 +18,8 @@ import de.etas.tef.config.helper.ColorFactory;
 import de.etas.tef.config.helper.ImageFactory;
 import de.etas.tef.config.settings.SettingController;
 import de.etas.tef.config.settings.SettingController.Setting;
-import de.etas.tef.config.ui.composites.MainScreen;
-import de.etas.tef.config.ui.composites.SelectWorkSpaceDialog;
+import de.etas.tef.config.ui.MainScreen;
+import de.etas.tef.config.ui.SelectWorkSpaceDialog;
 
 public class MainController
 {

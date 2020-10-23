@@ -1,4 +1,4 @@
-package de.etas.tef.config.ui.composites;
+package de.etas.tef.config.ui;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.widgets.Composite;

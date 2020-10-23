@@ -1,4 +1,4 @@
-package de.etas.tef.config.ui.composites;
+package de.etas.tef.config.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,7 +11,6 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import de.etas.tef.app.ActionManager;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.editor.message.MessageManager;
@@ -32,9 +31,9 @@ public class SelectComposite extends AbstractComposite
 		GridLayout layout = new GridLayout(2, false);
 		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = 0; 
 		layout.marginHeight = layout.marginWidth = 0;
-		
 		this.setLayout(layout);
 		this.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		this.setBackground(controller.getColorFactory().getColorBackground());
 		
 		initText(this);
 		initButton(this);
@@ -72,19 +71,18 @@ public class SelectComposite extends AbstractComposite
 		GridData txtGD = new GridData(GridData.FILL_HORIZONTAL);
 		txtFileSelect.setLayoutData(txtGD);
 		txtFileSelect.setEditable(false);
-		txtFileSelect.setMessage("Select File Here");
+		txtFileSelect.setMessage("Select Directory");
+		txtFileSelect.setBackground(controller.getColorFactory().getColorBackground());
 	}
 	
 	protected void initButton(Composite comp)
 	{
-		Composite c = new Composite(comp, SWT.NONE);
-		c.setLayout(new GridLayout(1, false));
-		
-		btnFileSelect = new Button(c, SWT.PUSH);
+		btnFileSelect = new Button(this, SWT.PUSH);
 		btnFileSelect.setText(IConstants.TXT_BTN_DIRECTORY);
 		GridData gd = new GridData();
 		gd.widthHint = IConstants.BTN_DEFAULT_WIDTH;
 		btnFileSelect.setLayoutData(gd);
+		btnFileSelect.setBackground(controller.getColorFactory().getColorBackground());
 		btnFileSelect.addSelectionListener(new SelectionListener()
 		{
 			
@@ -119,7 +117,5 @@ public class SelectComposite extends AbstractComposite
 		{
 			MessageManager.INSTANCE.sendMessage(IConstants.ACTION_SELECTED_PATH, txtFileSelect.getText());
 		}
-		
 	}
-
 }

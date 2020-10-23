@@ -1,4 +1,4 @@
-package de.etas.tef.config.ui.composites;
+package de.etas.tef.config.ui;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -33,6 +33,7 @@ public abstract class AbstractComposite extends Composite implements IMessageLis
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		this.setLayout(layout);
 		this.setLayoutData(gd);
+		this.setBackground(controller.getColorFactory().getColorBackground());
 	}
 
 }

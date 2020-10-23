@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Display;
  */
 public final class ColorFactory
 {
-	private final Color BACKGROUND;
+	private Color BACKGROUND;
 	private final Color WHITE;
 	private final Color GRAY;
 	private final Color BLACK;
@@ -35,6 +35,7 @@ public final class ColorFactory
 	
 	public Color getColorBackground()
 	{
+		BACKGROUND = WHITE;
 		return BACKGROUND;
 	}
 	
