@@ -38,5 +38,7 @@ public class MainDisplayComponent
 		mainArea.setLayoutData(gd);
 		new FileManageComposite(mainArea, SWT.NONE, controller);
 		new ConfigMainComposite(mainArea, SWT.BORDER, controller);
+		
+		mainArea.setWeights(new int[] {1, 0});
 	}
 }

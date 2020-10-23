@@ -17,7 +17,7 @@ public class FileManageComposite extends AbstractComposite
 	{
 		super.initComposite();
 		new SelectComposite(this, SWT.NONE, controller);
-		new ConfigFileListComposite(this, SWT.BORDER, controller);
+		new ConfigFileListComposite(this, SWT.NONE, controller);
 	}
 	
 	@Override

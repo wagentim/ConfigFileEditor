@@ -40,7 +40,35 @@ public class ToobarComponent extends AbstractComposite
 	
 	public void addButton(String name, List<Image> images, SelectionListener listener)
 	{
+		ToolItem ti = new ToolItem(toolbar, SWT.FLAT);
 		
+		if(name != null && !name.isEmpty())
+		{
+			ti.setText(name);
+		}
+		
+		if(images != null && images.size() > 0)
+		{
+			int counter = 0;
+			
+			for(Image i : images)
+			{
+				if(counter == 0 && i != null)
+				{
+					ti.setImage(i);
+				}
+				else if(counter == 1 && i != null)
+				{
+					ti.setHotImage(i);
+				}
+				else if(counter == 2 && i != null)
+				{
+					ti.setDisabledImage(i);
+				}
+				
+				counter++;
+			}
+		}
 	}
 	
 }
