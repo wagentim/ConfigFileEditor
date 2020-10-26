@@ -2,7 +2,7 @@ package de.etas.tef.config.helper;
 
 public interface IImageConstants
 {
-	public static final int IMAGE_PASSWORD_TITLE = 0x00;
+	public static final int IMAGE_FILE = 0x00;
 	public static final int IMAGE_LOAD_OUTLINE = 0x01;
 	public static final int IMAGE_EXIT = 0x02;
 	public static final int IMAGE_ABOUT = 0x03;

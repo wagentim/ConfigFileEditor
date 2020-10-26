@@ -20,7 +20,7 @@ public class ImageFactory
 	
 	private void initImages()
 	{
-//		mapper.put(IImageConstants.IMAGE_PASSWORD_TITLE, createImage("icons/title.png"));
+		mapper.put(IImageConstants.IMAGE_FILE, createImage("icons/file.png"));
 //		mapper.put(IImageConstants.IMAGE_LOAD_OUTLINE, createImage("icons/load_outline.png"));
 //		mapper.put(IImageConstants.IMAGE_LOAD_COLOR, createImage("icons/load_color.png"));
 //		mapper.put(IImageConstants.IMAGE_EXIT, createImage("icons/exit.png"));

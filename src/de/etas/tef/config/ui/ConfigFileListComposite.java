@@ -1,6 +1,5 @@
 package de.etas.tef.config.ui;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -17,6 +16,8 @@ import org.eclipse.swt.widgets.TableItem;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.FileSearchWalker;
 import de.etas.tef.config.helper.IConstants;
+import de.etas.tef.config.helper.IImageConstants;
+import de.etas.tef.config.listener.TableKeyListener;
 
 public class ConfigFileListComposite extends AbstractComposite
 {
@@ -34,7 +35,7 @@ public class ConfigFileListComposite extends AbstractComposite
 		
 		new ConfigFileListToolbar(this, SWT.NONE, controller);
 		
-		configFileList = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
+		configFileList = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION | SWT.MULTI);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		configFileList.setLayoutData(gd);
 		configFileList.setHeaderVisible(false);
@@ -50,6 +51,8 @@ public class ConfigFileListComposite extends AbstractComposite
 			}
 			
 		});
+		
+		configFileList.addKeyListener(new TableKeyListener(configFileList));
 	}
 	
 	private void updateList(java.util.List<Path> files)
@@ -68,6 +71,7 @@ public class ConfigFileListComposite extends AbstractComposite
 		for(Path p : files)
 		{
 			TableItem ti = new TableItem(configFileList, SWT.NONE);
+			ti.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_FILE));
 			ti.setText(0, getDisplayString(p));
 			ti.setData(p);
 			

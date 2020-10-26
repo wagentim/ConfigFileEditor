@@ -1,7 +1,9 @@
 package de.etas.tef.config.ui;
 
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -97,7 +99,12 @@ public class StatusbarComponent extends AbstractComposite
 			
 //			logger.info("Percentage: {}", value);
 			pb.setSelection(value);
-			
+		}
+		else if(type == IConstants.ACTION_FILE_SEARCH_FINISHED)
+		{
+			@SuppressWarnings("unchecked")
+			List<Path> files = (List<Path>)content;
+			text2.setText(String.valueOf(files.size()));
 		}
 	}
 	
