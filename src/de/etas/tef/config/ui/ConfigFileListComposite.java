@@ -63,33 +63,42 @@ public class ConfigFileListComposite extends AbstractComposite
 		
 		configFileList.setData(files);
 		
-		StringBuilder sb = new StringBuilder();
+		
 		
 		for(Path p : files)
 		{
-			Path parent = p.getParent();
-			
-			if(parent != null)
-			{
-				sb.append(p.getParent().getFileName().toString());
-			}
-			
 			TableItem ti = new TableItem(configFileList, SWT.NONE);
-			sb.append(File.separator);
-			sb.append(p.getFileName().toString());
-			
-			ti.setText(0, sb.toString());
+			ti.setText(0, getDisplayString(p));
 			ti.setData(p);
-			sb.delete(0, sb.length());
 			
-			int bg = configFileList.getItemCount() % 2;
-			if(bg == 0)
-			{
-				ti.setBackground(controller.getColorFactory().getColorLightBlue());
-			}
+//			int bg = configFileList.getItemCount() % 2;
+//			if(bg == 0)
+//			{
+//				ti.setBackground(controller.getColorFactory().getColorLightBlue());
+//			}
 		}
 		
 		adjustColumnSize();
+	}
+	
+	private String getDisplayString(Path p)
+	{
+		
+//		StringBuilder sb = new StringBuilder();
+//		Path parent = p.getParent();
+//		
+//		if(parent != null)
+//		{
+//			sb.append(p.getParent().getFileName().toString());
+//		}
+//		
+//		
+//		sb.append(File.separator);
+//		sb.append(p.getFileName().toString());
+//		
+//		return sb.toString();
+		
+		return p.toString();
 	}
 	
 	private void adjustColumnSize()

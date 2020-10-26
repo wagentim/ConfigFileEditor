@@ -1,6 +1,5 @@
 package de.etas.tef.config.helper;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -9,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.widgets.Display;
@@ -40,11 +40,6 @@ public class FileSearchWalker implements Runnable
 		
 		Path p = Paths.get(path);
 		
-		if(!p.isAbsolute())
-		{
-			p = p.toAbsolutePath();
-		}
-		
 		if(!Files.exists(p))
 		{
 			return;
@@ -53,7 +48,14 @@ public class FileSearchWalker implements Runnable
 		try
 		{
 			
-			String[] allFiles = new File(path).list();
+			Iterator<Path> it = Files.list(p).iterator();
+			
+			List<Path> allFiles = new ArrayList<Path>();
+			
+			while(it.hasNext())
+			{
+				allFiles.add(it.next());
+			}
 			
 			display.asyncExec(new Runnable()
 			{
@@ -66,13 +68,11 @@ public class FileSearchWalker implements Runnable
 			});
 			
 			int counter = 1;
-			int total = allFiles.length;
+			int total = allFiles.size();
 			
-			for(String s : allFiles)
+			for(Path pth : allFiles)
 			{
-				Path pth = Paths.get(s);
-				
-				if(Files.isDirectory(Paths.get(s)))
+				if(Files.isDirectory(pth))
 				{
 					Files.walkFileTree(pth, new FileVisitor<Path>()
 					{
@@ -88,9 +88,8 @@ public class FileSearchWalker implements Runnable
 						{
 							if(!Files.isDirectory(file))
 							{
-								String fname = file.getFileName().toString();
 								
-								if(findFile(fname, pattern))
+								if(findFile(file, pattern))
 								{
 									files.add(file);
 								}
@@ -116,7 +115,7 @@ public class FileSearchWalker implements Runnable
 				}
 				else
 				{
-					if(findFile(s, pattern))
+					if(findFile(pth, pattern))
 					{
 						files.add(pth);
 					}	
@@ -159,8 +158,10 @@ public class FileSearchWalker implements Runnable
 		});
 	}
 	
-	private boolean findFile(String file, String[] pattern)
+	private boolean findFile(Path path, String[] pattern)
 	{
+		String file = path.getFileName().toString();
+		
 		for(String pa : pattern)
 		{
 			if(file.endsWith(pa))

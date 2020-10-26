@@ -117,7 +117,8 @@ public final class SettingController
 	
 	public Path getSettingFilePath()
 	{
-		String file = Utils.getCurrentPath().toString() + File.separator + IConstants.SETTING_FILE;
+//		String file = Utils.getCurrentPath().toString() + File.separator + IConstants.SETTING_FILE;
+		String file = "D:" + File.separator + IConstants.SETTING_FILE;
 		logger.info("Loading Setting File: " + file);
 		
         Path path = Paths.get(file);

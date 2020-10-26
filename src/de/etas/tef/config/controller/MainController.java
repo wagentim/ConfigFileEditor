@@ -88,17 +88,17 @@ public class MainController
 			updateWorkingspace = true;
 		}
 		
-		while( !quitProgram && ((repositoryLocal == null || repositoryLocal.isEmpty()) || (repositoryRemote == null || repositoryRemote.isEmpty()) ))
-		{
-			Shell shell = new Shell(display, SWT.SHELL_TRIM & (~SWT.RESIZE));
-			SelectWorkSpaceDialog d = new SelectWorkSpaceDialog(shell, this);
-			d.setValues(repositoryRemote, repositoryLocal);
-			String[] result = d.open();
-			repositoryRemote = result[0];
-			repositoryLocal = result[1];
-			logger.info("Selected Working Space: {}", repositoryLocal);
-			logger.info("Selected Repository: {}", repositoryRemote);
-		}
+//		while( !quitProgram && ((repositoryLocal == null || repositoryLocal.isEmpty()) || (repositoryRemote == null || repositoryRemote.isEmpty()) ))
+//		{
+//			Shell shell = new Shell(display, SWT.SHELL_TRIM & (~SWT.RESIZE));
+//			SelectWorkSpaceDialog d = new SelectWorkSpaceDialog(shell, this);
+//			d.setValues(repositoryRemote, repositoryLocal);
+//			String[] result = d.open();
+//			repositoryRemote = result[0];
+//			repositoryLocal = result[1];
+//			logger.info("Selected Working Space: {}", repositoryLocal);
+//			logger.info("Selected Repository: {}", repositoryRemote);
+//		}
 		
 		if( updateWorkingspace && repositoryLocal != null && !repositoryLocal.isEmpty() )
 		{
@@ -114,12 +114,13 @@ public class MainController
 		
 		if(!quitProgram)
 		{
-			gitController = new GitController(repositoryRemote, repositoryLocal);
-			
-			if(gitController.isRepositoryAvailable())
-			{
-				new MainScreen(display, this);
-			}
+			new MainScreen(display, this);
+//			gitController = new GitController(repositoryRemote, repositoryLocal);
+//			
+//			if(gitController.isRepositoryAvailable())
+//			{
+//				new MainScreen(display, this);
+//			}
 		}
 		else
 		{
