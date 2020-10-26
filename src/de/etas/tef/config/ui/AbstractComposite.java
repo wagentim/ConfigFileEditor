@@ -1,6 +1,5 @@
 package de.etas.tef.config.ui;
 
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -13,7 +12,6 @@ public abstract class AbstractComposite extends Composite implements IMessageLis
 {
 	
 	protected final MainController controller;
-	protected final Color defaultBackgroundColor;
 	protected final Composite parent;
 
 	public AbstractComposite(Composite parent, int style, MainController controller)
@@ -22,7 +20,6 @@ public abstract class AbstractComposite extends Composite implements IMessageLis
 		this.controller = controller;
 		this.parent = parent;
 		MessageManager.INSTANCE.addMessageListener(this);
-		defaultBackgroundColor = controller.getColorFactory().getColorWhite();
 		initComposite();
 	}
 	

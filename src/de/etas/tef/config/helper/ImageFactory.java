@@ -29,8 +29,8 @@ public class ImageFactory
 //		mapper.put(IImageConstants.IMAGE_UNLOCK, createImage("icons/unlock.png"));
 //		mapper.put(IImageConstants.IMAGE_TIME, createImage("icons/time.png"));
 //		mapper.put(IImageConstants.IMAGE_LOAD, createImage("icons/load.png"));
-//		mapper.put(IImageConstants.IMAGE_SEARCH, createImage("icons/search.png"));
-//		mapper.put(IImageConstants.IMAGE_CANCEL, createImage("icons/cancel.png"));
+		mapper.put(IImageConstants.IMAGE_SEARCH, createImage("icons/search.png"));
+		mapper.put(IImageConstants.IMAGE_CANCEL, createImage("icons/cancel.png"));
 //		mapper.put(IImageConstants.IMAGE_ADD, createImage("icons/add.png"));
 //		mapper.put(IImageConstants.IMAGE_REMOVE, createImage("icons/remove.png"));
 //		mapper.put(IImageConstants.IMAGE_COPY, createImage("icons/copy.png"));
@@ -47,8 +47,8 @@ public class ImageFactory
 //		mapper.put(IImageConstants.IMAGE_TITLE, createImage("icons/file_24.png"));
 //		mapper.put(IImageConstants.IMAGE_PIN, createImage("icons/pin.png"));
 //		mapper.put(IImageConstants.IMAGE_CONNECT, createImage("icons/connect.png"));
-//		mapper.put(IImageConstants.IMAGE_ETAS, createImage("icons/disconnect.png"));
-//		mapper.put(IImageConstants.IMAGE_HISTORY, createImage("icons/history.png"));
+		mapper.put(IImageConstants.IMAGE_PROGRESSBAR_16, createImage("icons/progressbar16.png"));
+		mapper.put(IImageConstants.IMAGE_CALENDAR_16, createImage("icons/calendar16.png"));
 		mapper.put(IImageConstants.IMAGE_RUN, createImage("icons/run.png"));
 	}
 	

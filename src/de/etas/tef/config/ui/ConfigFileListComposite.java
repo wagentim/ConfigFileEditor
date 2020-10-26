@@ -2,23 +2,21 @@ package de.etas.tef.config.ui;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.FileSearchWalker;
 import de.etas.tef.config.helper.IConstants;
-import de.etas.tef.config.helper.IImageConstants;
-import de.etas.tef.editor.message.MessageManager;
 
 public class ConfigFileListComposite extends AbstractComposite
 {
@@ -33,27 +31,24 @@ public class ConfigFileListComposite extends AbstractComposite
 	protected void initComposite()
 	{
 		super.initComposite();
-		initToolbar();		
 		
-		configFileList = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		new ConfigFileListToolbar(this, SWT.NONE, controller);
+		
+		configFileList = new Table(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		configFileList.setLayoutData(gd);
 		configFileList.setHeaderVisible(false);
 		configFileList.setLinesVisible(false);
-	}
-	
-	private void initToolbar()
-	{
-		ToolbarComponent tc = new ToolbarComponent(this, SWT.NONE, controller);
-		List<Image> images = new ArrayList<Image>();
-		images.add(controller.getImageFactory().getImage(IImageConstants.IMAGE_RUN));
-		tc.addButton(null, images, new SelectionAdapter()
+		new TableColumn(configFileList, SWT.NONE);
+		configFileList.addControlListener(new ControlAdapter()
 		{
+			
 			@Override
-			public void widgetSelected(SelectionEvent arg0)
+			public void controlResized(ControlEvent event)
 			{
-				MessageManager.INSTANCE.sendMessage(IConstants.ACTION_GET_SELECTED_PATH, null);
+				adjustColumnSize();
 			}
+			
 		});
 	}
 	
@@ -68,16 +63,39 @@ public class ConfigFileListComposite extends AbstractComposite
 		
 		configFileList.setData(files);
 		
+		StringBuilder sb = new StringBuilder();
+		
 		for(Path p : files)
 		{
-			String parent = p.getParent().getFileName().toString();
+			Path parent = p.getParent();
+			
+			if(parent != null)
+			{
+				sb.append(p.getParent().getFileName().toString());
+			}
+			
 			TableItem ti = new TableItem(configFileList, SWT.NONE);
+			sb.append(File.separator);
+			sb.append(p.getFileName().toString());
 			
-			
-			ti.setText(parent + File.separator + p.getFileName().toString());
+			ti.setText(0, sb.toString());
 			ti.setData(p);
+			sb.delete(0, sb.length());
+			
+			int bg = configFileList.getItemCount() % 2;
+			if(bg == 0)
+			{
+				ti.setBackground(controller.getColorFactory().getColorLightBlue());
+			}
 		}
 		
+		adjustColumnSize();
+	}
+	
+	private void adjustColumnSize()
+	{
+		Rectangle rect = configFileList.getClientArea();
+		configFileList.getColumn(0).setWidth(rect.width);
 	}
 
 	@Override
@@ -94,8 +112,7 @@ public class ConfigFileListComposite extends AbstractComposite
 		else if(type == IConstants.ACTION_FILE_SEARCH_FINISHED)
 		{
 			@SuppressWarnings("unchecked")
-			java.util.List<Path> files = (java.util.List<Path>)content;
-			
+			List<Path> files = (List<Path>)content;
 			updateList(files);
 		}
 	}

@@ -1,6 +1,6 @@
 package de.etas.tef.config.settings;
 
-import de.wagentim.common.utils.IConstants;
+import de.etas.tef.config.helper.IConstants;
 
 public class StringStringSettingObject implements ISettingObject<String, String>
 {

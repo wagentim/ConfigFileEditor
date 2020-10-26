@@ -3,15 +3,23 @@ package de.etas.tef.config.ui;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
+import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.editor.message.MessageManager;
 
 public class ToolbarComponent extends AbstractComposite
 {
@@ -43,10 +51,10 @@ public class ToolbarComponent extends AbstractComposite
 	
 	public void addSeperator()
 	{
-		new ToolItem(toolbar, SWT.SEPARATOR);
+		new ToolItem(toolbar, SWT.SEPARATOR | SWT.VERTICAL);
 	}
 	
-	public void addButton(String name, List<Image> images, SelectionListener listener)
+	public void addItem(String name, List<Image> images, SelectionListener listener)
 	{
 		ToolItem ti = new ToolItem(toolbar, SWT.PUSH);
 		if(name != null && !name.isEmpty())
@@ -74,6 +82,75 @@ public class ToolbarComponent extends AbstractComposite
 				}
 				
 				counter++;
+			}
+		}
+		
+		ti.addSelectionListener(listener);
+	}
+	
+	private ToolItem initToolItem(String name, Image image, int type, String tooltip)
+	{
+		ToolItem ti = new ToolItem(toolbar, type);
+
+		ti.setImage(image);
+		ti.setToolTipText(tooltip);
+		
+		return ti;
+	}
+	
+	protected ToolItem addDropdownItem(String name, Image image, String[] items, String tooltip)
+	{
+		ToolItem ti = initToolItem(name, image, SWT.DROP_DOWN, tooltip);
+		DropdownToolItem itm = new DropdownToolItem(ti);
+		
+		for(String s : items)
+		{
+			itm.add(s);
+		}
+		ti.addSelectionListener(itm);
+		
+		return ti;
+	}
+	
+	class DropdownToolItem extends SelectionAdapter
+	{
+		private ToolItem dropdown;
+
+		private Menu menu;
+
+		public DropdownToolItem(ToolItem dropdown)
+		{
+			this.dropdown = dropdown;
+			menu = new Menu(dropdown.getParent().getShell());
+		}
+
+		public void add(String item)
+		{
+			MenuItem menuItem = new MenuItem(menu, SWT.NONE);
+			menuItem.setText(item);
+			menuItem.addSelectionListener(new SelectionAdapter()
+			{
+				public void widgetSelected(SelectionEvent event)
+				{
+					MenuItem selected = (MenuItem) event.widget;
+					String text = selected.getText();
+					MessageManager.INSTANCE.sendMessage(IMessage.MSG_TOOLBAR_ITEM, text);
+				}
+			});
+		}
+
+		public void widgetSelected(SelectionEvent event)
+		{
+			if (event.detail == SWT.ARROW)
+			{
+				ToolItem item = (ToolItem) event.widget;
+				Rectangle rect = item.getBounds();
+				Point pt = item.getParent().toDisplay(new Point(rect.x, rect.y));
+				menu.setLocation(pt.x, pt.y + rect.height);
+				menu.setVisible(true);
+			} else
+			{
+				System.out.println(dropdown.getText() + " Pressed");
 			}
 		}
 	}

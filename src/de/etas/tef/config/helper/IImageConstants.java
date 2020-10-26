@@ -29,7 +29,7 @@ public interface IImageConstants
 	public static final int IMAGE_TITLE = 0x18;
 	public static final int IMAGE_PIN = 0x19;
 	public static final int IMAGE_CONNECT = 0x1A;
-	public static final int IMAGE_DISCONNECT = 0x1B;
-	public static final int IMAGE_HISTORY = 0x1C;
+	public static final int IMAGE_PROGRESSBAR_16 = 0x1B;
+	public static final int IMAGE_CALENDAR_16 = 0x1C;
 	public static final int IMAGE_RUN = 0x1D;
 }

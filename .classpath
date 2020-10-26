@@ -18,6 +18,5 @@
 	<classpathentry kind="lib" path="libs/bcpg-jdk15to18-165.jar"/>
 	<classpathentry kind="lib" path="libs/bcprov-ext-jdk15to18-165.jar"/>
 	<classpathentry kind="lib" path="libs/objectdb.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

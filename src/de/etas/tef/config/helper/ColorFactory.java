@@ -20,6 +20,7 @@ public final class ColorFactory
 	private final Color BLUE;
 	private final Color DARK_GREEN;
 	private final Color LIGHT_GREEN;
+	private final Color LIGHT_BLUE;
 	
 	public ColorFactory(final Display display)
 	{
@@ -31,6 +32,7 @@ public final class ColorFactory
 		BLUE = display.getSystemColor(SWT.COLOR_BLUE);
 		DARK_GREEN = display.getSystemColor(SWT.COLOR_DARK_GREEN);
 		LIGHT_GREEN = display.getSystemColor(SWT.COLOR_GREEN);
+		LIGHT_BLUE = new Color(Display.getCurrent(), 175,215,255);
 	}
 	
 	public Color getColorBackground()
@@ -72,5 +74,10 @@ public final class ColorFactory
 	public Color getColorGreen()
 	{
 		return LIGHT_GREEN;
+	}
+	
+	public Color getColorLightBlue()
+	{
+		return LIGHT_BLUE;
 	}
 }

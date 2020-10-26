@@ -1,5 +1,6 @@
 package de.etas.tef.config.helper;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -20,6 +21,7 @@ public class FileSearchWalker implements Runnable
 	private final List<Path> files = new ArrayList<Path>();
 	private final String[] pattern;
 	private final Display display;
+//	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public FileSearchWalker(final String path, String[] pattern, final Display display)
 	{
@@ -50,58 +52,100 @@ public class FileSearchWalker implements Runnable
 		
 		try
 		{
-			Files.walkFileTree(p, new FileVisitor<Path>()
+			
+			String[] allFiles = new File(path).list();
+			
+			display.asyncExec(new Runnable()
 			{
-
+				
 				@Override
-				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
+				public void run()
 				{
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
-				{
-					if(!Files.isDirectory(file))
-					{
-						String fname = file.getFileName().toString();
-						
-						for(String pa : pattern)
-						{
-							if(fname.endsWith(pa))
-							{
-								files.add(file);
-							}
-//							if(fname.matches(pa))
-//							{
-//								files.add(file);
-//							}
-						}
-					}
-					
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException
-				{
-					// TODO Auto-generated method stub
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException
-				{
-					// TODO Auto-generated method stub
-					return FileVisitResult.CONTINUE;
+					MessageManager.INSTANCE.sendMessage(IConstants.ACTION_PROGRESS_BAR_DISPLAY, true);
 				}
 			});
+			
+			int counter = 1;
+			int total = allFiles.length;
+			
+			for(String s : allFiles)
+			{
+				Path pth = Paths.get(s);
+				
+				if(Files.isDirectory(Paths.get(s)))
+				{
+					Files.walkFileTree(pth, new FileVisitor<Path>()
+					{
+						
+						@Override
+						public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
+						{
+							return FileVisitResult.CONTINUE;
+						}
+						
+						@Override
+						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
+						{
+							if(!Files.isDirectory(file))
+							{
+								String fname = file.getFileName().toString();
+								
+								if(findFile(fname, pattern))
+								{
+									files.add(file);
+								}
+							}
+							
+							return FileVisitResult.CONTINUE;
+						}
+						
+						@Override
+						public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException
+						{
+							// TODO Auto-generated method stub
+							return FileVisitResult.CONTINUE;
+						}
+						
+						@Override
+						public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException
+						{
+							// TODO Auto-generated method stub
+							return FileVisitResult.CONTINUE;
+						}
+					});
+				}
+				else
+				{
+					if(findFile(s, pattern))
+					{
+						files.add(pth);
+					}	
+				}
+				
+				double d = (double)counter / total;
+				
+//				logger.info("counter: {}, total: {}, value: {}", counter, total, d);
+				counter++;
+				
+				
+				display.asyncExec(new Runnable()
+				{
+					
+					@Override
+					public void run()
+					{
+						MessageManager.INSTANCE.sendMessage(IConstants.ACTION_PROGRESS_BAR_UPDATE, d);
+					}
+				});
+			}
+			
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 		
+//		logger.info("Find Files: {}", files.size());
 		
 		display.asyncExec(new Runnable()
 		{
@@ -113,6 +157,19 @@ public class FileSearchWalker implements Runnable
 				
 			}
 		});
+	}
+	
+	private boolean findFile(String file, String[] pattern)
+	{
+		for(String pa : pattern)
+		{
+			if(file.endsWith(pa))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 }
