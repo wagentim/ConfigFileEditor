@@ -5,9 +5,7 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +17,6 @@ import de.etas.tef.config.helper.ImageFactory;
 import de.etas.tef.config.settings.SettingController;
 import de.etas.tef.config.settings.SettingController.Setting;
 import de.etas.tef.config.ui.MainScreen;
-import de.etas.tef.config.ui.SelectWorkSpaceDialog;
 
 public class MainController
 {

@@ -105,6 +105,8 @@ public class StatusbarComponent extends AbstractComposite
 			@SuppressWarnings("unchecked")
 			List<Path> files = (List<Path>)content;
 			text2.setText(String.valueOf(files.size()));
+			pb.setSelection(0);
+			setProgressbarDisplay(false);
 		}
 	}
 	

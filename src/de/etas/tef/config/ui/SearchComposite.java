@@ -50,7 +50,7 @@ public class SearchComposite extends AbstractComposite
 		gd.verticalAlignment = GridData.CENTER;
 		gd.verticalSpan = gd.horizontalSpan = 0;
 		searchText.setLayoutData(gd);
-		searchText.setMessage("Search");
+		searchText.setMessage("Name Filter");
 
 		Label labelRemove = new Label(this, SWT.NONE);
 		labelRemove.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_CANCEL));

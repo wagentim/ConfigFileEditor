@@ -17,7 +17,8 @@ import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.FileSearchWalker;
 import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.helper.IImageConstants;
-import de.etas.tef.config.listener.TableKeyListener;
+import de.etas.tef.config.listener.FileListMouseListener;
+import de.etas.tef.config.listener.FileListTableKeyListener;
 
 public class ConfigFileListComposite extends AbstractComposite
 {
@@ -52,7 +53,9 @@ public class ConfigFileListComposite extends AbstractComposite
 			
 		});
 		
-		configFileList.addKeyListener(new TableKeyListener(configFileList));
+		configFileList.addKeyListener(new FileListTableKeyListener(configFileList));
+		
+		configFileList.addMouseListener(new FileListMouseListener());
 	}
 	
 	private void updateList(java.util.List<Path> files)
@@ -73,7 +76,7 @@ public class ConfigFileListComposite extends AbstractComposite
 			TableItem ti = new TableItem(configFileList, SWT.NONE);
 			ti.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_FILE));
 			ti.setText(0, getDisplayString(p));
-			ti.setData(p);
+			ti.setData(IConstants.DATA_PATH, p);
 			
 //			int bg = configFileList.getItemCount() % 2;
 //			if(bg == 0)

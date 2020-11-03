@@ -5,12 +5,12 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Table;
 
-public class TableKeyListener implements KeyListener
+public class FileListTableKeyListener implements KeyListener
 {
 	
 	private final Table table;
 	
-	public TableKeyListener(final Table table)
+	public FileListTableKeyListener(final Table table)
 	{
 		this.table = table;
 	}
