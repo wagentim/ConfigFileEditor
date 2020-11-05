@@ -1,8 +1,5 @@
 package de.etas.tef.config.ui;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,7 +12,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.entity.ConfigBlock;
 import de.etas.tef.config.entity.ConfigFile;
@@ -33,26 +29,20 @@ public class ConfigBlockTree extends CustomTree
 	@Override
 	public void receivedAction(int type, Object content)
 	{
-		if(type == IMessage.MSG_SET_FILE)
+		if (type == IConstants.ACTION_PARSER_INI_FINISH)
 		{
-			Path p = Paths.get((String)content);
-			
-			if(Files.exists(p))
-			{
-				String fileName = p.getFileName().toString();
-				updateRootNode(fileName, IConstants.DATA_PATH, p.toString());
-				ConfigFile cf = controller.parserINIFile(p);
-				createTree(cf);
-				root.setExpanded(true);
-			}
+			ConfigFile cf = (ConfigFile)content;
+			updateRootNode(cf.getFilePath().getFileName().toString(), IConstants.DATA_PATH, cf.getFilePath());
+			createTree(cf);
+			root.setExpanded(true);
 		}
 	}
-	
+
 	public void createTree(ConfigFile configFile)
 	{
 		root.removeAll();
 		List<ConfigBlock> blocks = configFile.getConfigBlocks();
-		
+
 		Iterator<ConfigBlock> it = blocks.iterator();
 
 		while (it.hasNext())
@@ -82,7 +72,7 @@ public class ConfigBlockTree extends CustomTree
 	@Override
 	protected void createCustomRightMenu(Menu rightClickMenu)
 	{
-		
+
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.Composite;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.helper.LoadIniFileV2;
-import de.etas.tef.config.test.LoadIniFile;
 
 public class ConfigMainComposite extends AbstractComposite
 {
@@ -48,7 +47,7 @@ public class ConfigMainComposite extends AbstractComposite
 		sfAbove.setWeights(new int[]{1,2});
 		
 		new CommentComposite(svBelow, SWT.NONE, controller);
-		svBelow.setWeights(new int[]{2,1});		
+		svBelow.setWeights(new int[]{1,0});		
 		
 		initDropFunction(this);
 	}

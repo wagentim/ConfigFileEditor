@@ -13,8 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
@@ -24,7 +22,7 @@ import de.etas.tef.config.listener.TreeSelectionListener;
 
 public class ConfigFileTree extends CustomTree
 {
-	private static final Logger logger = LoggerFactory.getLogger(ConfigFileTree.class);
+//	private static final Logger logger = LoggerFactory.getLogger(ConfigFileTree.class);
 	
 	private TreeSelectionListener selectionListener = null;
 	private ConfigFileTreeMouseListener mouseListener = null;

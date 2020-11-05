@@ -37,6 +37,7 @@ public class LoadIniFileV2 implements Runnable
 	public ConfigFile read()
 	{
 		configFile = new ConfigFile();
+		configFile.setFilePath(filePath);
 		
 //		display.asyncExec(new Runnable()
 //		{
@@ -139,9 +140,6 @@ public class LoadIniFileV2 implements Runnable
 						}
 					}
 				}
-				
-				
-				
 				progressbarIndex++;
 			}
 		} catch (IOException e)
@@ -243,16 +241,26 @@ public class LoadIniFileV2 implements Runnable
 			return;
 		}
 		
-		read();
+		ConfigFile cf = read();
+		
+		display.asyncExec(new Runnable()
+		{
+			
+			@Override
+			public void run()
+			{
+				MessageManager.INSTANCE.sendMessage(IConstants.ACTION_PARSER_INI_FINISH, cf);
+			}
+		});
 
 	}
 	
-	public static void main(String[] args)
-	{
-		String path = "d:\\temp\\ES410.ini";
-		
-		LoadIniFileV2 load = new LoadIniFileV2(Paths.get(path), null);
-		
-		load.run();
-	}
+//	public static void main(String[] args)
+//	{
+//		String path = "d:\\temp\\ES410.ini";
+//		
+//		LoadIniFileV2 load = new LoadIniFileV2(Paths.get(path), null);
+//		
+//		load.run();
+//	}
 }

@@ -113,6 +113,7 @@ public interface IConstants
 	public static final int ACTION_PROGRESS_BAR_DISPLAY = 0x20;
 	public static final int ACTION_PROGRESS_BAR_UPDATE = 0x21;
 	public static final int ACTION_OPEN_INI_FILE = 0x22;
+	public static final int ACTION_PARSER_INI_FINISH = 0x23;
 	
 	public static final int FOCUS_NONE = 0x00;
 	public static final int FOCUS_BLOCK = 0x01;

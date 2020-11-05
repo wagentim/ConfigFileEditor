@@ -1,5 +1,6 @@
 package de.etas.tef.config.entity;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +10,7 @@ import de.etas.tef.config.helper.IConstants;
 
 public final class ConfigFile
 {
-	private String filePath = IConstants.EMPTY_STRING;
+	private Path filePath = null;
 	private List<ConfigBlock> configBlocks = Collections.emptyList();
 	private String comments = IConstants.EMPTY_STRING;
 	
@@ -18,11 +19,11 @@ public final class ConfigFile
 		configBlocks = new ArrayList<ConfigBlock>();
 	}
 	
-	public String getFilePath()
+	public Path getFilePath()
 	{
 		return filePath;
 	}
-	public void setFilePath(String filePath)
+	public void setFilePath(Path filePath)
 	{
 		this.filePath = filePath;
 	}

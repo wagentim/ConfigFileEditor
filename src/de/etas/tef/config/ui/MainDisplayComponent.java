@@ -57,7 +57,7 @@ public class MainDisplayComponent implements IMessageListener
 			
 			if(weights[weights.length - 1] <= 0)
 			{
-				mainArea.setWeights(new int[] {1, 2});
+				mainArea.setWeights(new int[] {1, 3});
 			}
 		}
 	}
