@@ -50,6 +50,7 @@ public class ImageFactory
 		mapper.put(IImageConstants.IMAGE_PROGRESSBAR_16, createImage("icons/progressbar16.png"));
 		mapper.put(IImageConstants.IMAGE_CALENDAR_16, createImage("icons/calendar16.png"));
 		mapper.put(IImageConstants.IMAGE_RUN, createImage("icons/run.png"));
+		mapper.put(IImageConstants.IMAGE_ARROW_DOWN, createImage("icons/arrow_down.png"));
 	}
 	
 	private Image createImage(String path)

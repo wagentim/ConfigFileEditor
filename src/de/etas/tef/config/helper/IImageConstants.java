@@ -32,4 +32,5 @@ public interface IImageConstants
 	public static final int IMAGE_PROGRESSBAR_16 = 0x1B;
 	public static final int IMAGE_CALENDAR_16 = 0x1C;
 	public static final int IMAGE_RUN = 0x1D;
+	public static final int IMAGE_ARROW_DOWN = 0x1E;
 }
