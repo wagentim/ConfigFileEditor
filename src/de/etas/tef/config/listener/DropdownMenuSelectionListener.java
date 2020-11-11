@@ -10,7 +10,9 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.helper.IImageConstants;
+import de.etas.tef.editor.message.MessageManager;
 
 public class DropdownMenuSelectionListener implements SelectionListener
 {
@@ -25,22 +27,58 @@ public class DropdownMenuSelectionListener implements SelectionListener
 	}
 
 	@Override
-	public void widgetDefaultSelected(SelectionEvent arg0)
+	public void widgetDefaultSelected(SelectionEvent e)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void widgetSelected(SelectionEvent arg0)
+	public void widgetSelected(SelectionEvent e)
 	{
 		Menu menu = new Menu(parent.getShell(), SWT.POP_UP);
 
         MenuItem item1 = new MenuItem(menu, SWT.PUSH);
         item1.setText("Search File List");
         item1.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_SEARCH));
+        item1.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+				MessageManager.INSTANCE.sendMessage(IConstants.ACTION_SEARCH_TYPE_CHANGED, IConstants.SEARCH_FILE_NAME);
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
         MenuItem item2 = new MenuItem(menu, SWT.PUSH);
         item2.setText("Search File Content");
+        item2.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_SEARCH_CONTENT));
+        item2.addSelectionListener(new SelectionListener()
+		{
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+				MessageManager.INSTANCE.sendMessage(IConstants.ACTION_SEARCH_TYPE_CHANGED, IConstants.SEARCH_CONTENT);
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
         Point loc = parent.getLocation();
         Rectangle rect = parent.getBounds();

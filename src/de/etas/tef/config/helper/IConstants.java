@@ -76,6 +76,8 @@ public interface IConstants
 	public static final String TXT_TOOLBAR_COMMIT_HISTORY = "Commit History";
 	public static final String[] ARRAY_TABLE_HISTORY_HEADER = {"Time", "Comments", "User"};
 	public static final String[] ARRAY_TABLE_COMMITS_HEADER = {"Time", "Comments", "User"};
+	public static final String TXT_SEARCH_FILE_NAME = "Search File Name";
+	public static final String TXT_SEARCH_FILE_CONTENT = "Search File Content";
 	
 	
 	public static final int ACTION_NEW_FILE_SELECTED = 0x00;
@@ -114,6 +116,7 @@ public interface IConstants
 	public static final int ACTION_PROGRESS_BAR_UPDATE = 0x21;
 	public static final int ACTION_OPEN_INI_FILE = 0x22;
 	public static final int ACTION_PARSER_INI_FINISH = 0x23;
+	public static final int ACTION_SEARCH_TYPE_CHANGED = 0x24;
 	
 	public static final int FOCUS_NONE = 0x00;
 	public static final int FOCUS_BLOCK = 0x01;
@@ -140,5 +143,7 @@ public interface IConstants
 	
 	// checker
 	public static final String CHECKER_FILE_NAME = "CheckerFileName";
+	public static final int SEARCH_CONTENT = 0x00;
+	public static final int SEARCH_FILE_NAME = 0x01;
 	
 }

@@ -16,7 +16,7 @@ public interface IImageConstants
 	public static final int IMAGE_REMOVE = 0x0B;
 	public static final int IMAGE_COPY = 0x0C;
 	public static final int IMAGE_PASTE = 0x0D;
-	public static final int IMAGE_RECORD = 0x0E;
+	public static final int IMAGE_SEARCH_CONTENT = 0x0E;
 	public static final int IMAGE_ROOT = 0x0F;
 	public static final int IMAGE_EDITABLE_OUTLINE = 0x10;
 	public static final int IMAGE_EDITABLE_COLOR = 0x11;

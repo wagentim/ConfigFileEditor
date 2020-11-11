@@ -19,12 +19,15 @@ import org.eclipse.swt.widgets.Text;
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.helper.IImageConstants;
+import de.etas.tef.config.helper.ISearchEngine;
 import de.etas.tef.config.listener.DropdownMenuSelectionListener;
 
 public class MultiSearchComposite extends AbstractComposite
 {
 
 	private Text searchText;
+	private Label labelSearch;
+	private ISearchEngine searchEngine;
 
 	public MultiSearchComposite(Composite parent, int style, MainController controller)
 	{
@@ -44,7 +47,7 @@ public class MultiSearchComposite extends AbstractComposite
 		this.setBackgroundMode(SWT.INHERIT_FORCE);
 		this.setBackground(controller.getColorFactory().getColorWhite());
 
-		Label labelSearch = new Label(this, SWT.NONE);
+		labelSearch = new Label(this, SWT.NONE);
 		labelSearch.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_SEARCH));
 		labelSearch.setBackground(controller.getColorFactory().getColorWhite());
 		
@@ -57,7 +60,7 @@ public class MultiSearchComposite extends AbstractComposite
 		gd.verticalAlignment = GridData.CENTER;
 		gd.verticalSpan = gd.horizontalSpan = 0;
 		searchText.setLayoutData(gd);
-		searchText.setMessage("Name Filter");
+		searchText.setMessage(IConstants.TXT_SEARCH_FILE_NAME);
 
 		Label labelRemove = new Label(this, SWT.NONE);
 		labelRemove.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_CANCEL));
@@ -112,6 +115,11 @@ public class MultiSearchComposite extends AbstractComposite
 		});
 		
 	}
+	
+	private void setSearchEngine(ISearchEngine searchEngine)
+	{
+		
+	}
 
 	@Override
 	public void receivedAction(int type, Object content)
@@ -120,6 +128,20 @@ public class MultiSearchComposite extends AbstractComposite
 		if (type == IConstants.ACTION_NEW_FILE_SELECTED || type == IConstants.ACTION_DROP_NEW_FILE_SELECTED)
 		{
 			searchText.setText(IConstants.EMPTY_STRING);
+		}
+		else if( type == IConstants.ACTION_SEARCH_TYPE_CHANGED)
+		{
+			switch((int)content)
+			{
+			case IConstants.SEARCH_CONTENT:
+				labelSearch.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_SEARCH_CONTENT));
+				searchText.setMessage(IConstants.TXT_SEARCH_FILE_CONTENT);
+				break;
+			default:
+				labelSearch.setImage(controller.getImageFactory().getImage(IImageConstants.IMAGE_SEARCH));
+				searchText.setMessage(IConstants.TXT_SEARCH_FILE_NAME);
+				break;				
+			}
 		}
 	}
 }
