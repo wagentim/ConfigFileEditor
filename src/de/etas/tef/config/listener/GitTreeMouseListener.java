@@ -34,7 +34,7 @@ public class GitTreeMouseListener implements MouseListener
 				item.setExpanded(true);
 				break;
 			case IConstants.DATA_TYPE_FILE:
-				MessageManager.INSTANCE.sendMessage(IMessage.MSG_SET_FILE, item.getData(IConstants.DATA_PATH));
+				MessageManager.INSTANCE.sendMessage(IConstants.ACTION_SET_FILE, item.getData(IConstants.DATA_PATH));
 			}
 		}
 	}

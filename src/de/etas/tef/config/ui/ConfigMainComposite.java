@@ -1,7 +1,5 @@
 package de.etas.tef.config.ui;
 
-import java.nio.file.Path;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -15,7 +13,6 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
-import de.etas.tef.config.helper.LoadIniFileV2;
 
 public class ConfigMainComposite extends AbstractComposite
 {
@@ -94,10 +91,10 @@ public class ConfigMainComposite extends AbstractComposite
 				return;
 			}
 			
-			Path filePath = (Path)content;
-			
-			Thread t = new Thread(new LoadIniFileV2(filePath, this.getDisplay()));
-			t.start();
+//			Path filePath = (Path)content;
+//			
+//			Thread t = new Thread(new LoadIniFileV2(filePath, this.getDisplay()));
+//			t.start();
 		}
 	}
 }

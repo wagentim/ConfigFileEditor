@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -17,7 +18,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import de.etas.tef.config.controller.MainController;
 import de.etas.tef.config.helper.IConstants;
@@ -32,7 +32,8 @@ public abstract class TextEditor extends AbstractComposite
 {
 
 	protected Menu rightClickMenu;
-	protected Text text;
+	protected StyledText text;
+	
 	
 	public TextEditor(Composite parent, int style, MainController controller)
 	{
@@ -47,11 +48,12 @@ public abstract class TextEditor extends AbstractComposite
 		super.initComposite();
 		
 		// setting for the table composite
-		text = new Text(this, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP | SWT.BORDER);
+		text = new StyledText(this, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP | SWT.BORDER);
 		
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = IConstants.HEIGHT_HINT;
 		text.setLayoutData(gd);
+		text.setEditable(false);
 		
 	}
 
@@ -138,11 +140,5 @@ public abstract class TextEditor extends AbstractComposite
 	
 	protected void saveAction(String targetFilePath)
 	{
-	}
-	
-	@Override
-	public void receivedAction(int type, Object content)
-	{
-		
 	}
 }

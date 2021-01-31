@@ -117,6 +117,7 @@ public interface IConstants
 	public static final int ACTION_OPEN_INI_FILE = 0x22;
 	public static final int ACTION_PARSER_INI_FINISH = 0x23;
 	public static final int ACTION_SEARCH_TYPE_CHANGED = 0x24;
+	public static final int ACTION_SET_FILE = 0x25;
 	
 	public static final int FOCUS_NONE = 0x00;
 	public static final int FOCUS_BLOCK = 0x01;
@@ -145,5 +146,16 @@ public interface IConstants
 	public static final String CHECKER_FILE_NAME = "CheckerFileName";
 	public static final int SEARCH_CONTENT = 0x00;
 	public static final int SEARCH_FILE_NAME = 0x01;
+	public static final int ACTION_GET_FILE_HISTORY = 0x26;
+	public static final int ACTION_SEARCH_CONTENT = 0x27;
+	public static final int ACTION_TOOLBAR_ITEM = 0x28;
+	public static final int ACTION_UPDATE_FILE_LIST_NUM = 0x29;
+	public static final int ACTION_START_SEARCH = 0x30;
+	public static final int ACTION_SEARCH_NEXT = 0x31;
+	public static final int ACTION_GET_SEARCH_TEXT = 0x32;
+	public static final int ACTION_GET_REPLACE_TEXT = 0x33;
+	public static final int ACTION_SET_SEARCH_TEXT = 0x34;
+	public static final int ACTION_SET_REPLACE_TEXT = 0x35;
+	public static final int ACTION_REPLACE_TEXT = 0x36;
 	
 }

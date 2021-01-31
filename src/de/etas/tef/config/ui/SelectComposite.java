@@ -29,8 +29,7 @@ public class SelectComposite extends AbstractComposite
 	protected void initComposite()
 	{
 		GridLayout layout = new GridLayout(3, false);
-		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = 0;
-		layout.marginHeight = layout.marginWidth = 0;
+		layout.marginTop = layout.marginBottom = layout.marginLeft = layout.marginRight = layout.marginHeight = layout.marginWidth = layout.horizontalSpacing = layout.verticalSpacing = 0;
 		this.setLayout(layout);
 		this.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		this.setBackground(controller.getColorFactory().getColorBackground());

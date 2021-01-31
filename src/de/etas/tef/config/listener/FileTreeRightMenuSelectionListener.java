@@ -50,7 +50,7 @@ public class FileTreeRightMenuSelectionListener extends TreeSelectionListener
 	{
 		TreeItem selected = getSelectedTreeItem();
 		Path filePath = Paths.get((String) selected.getData(IConstants.DATA_PATH));
-		MessageManager.INSTANCE.sendMessage(IMessage.MSG_GET_FILE_HISTORY, filePath);
+		MessageManager.INSTANCE.sendMessage(IConstants.ACTION_GET_FILE_HISTORY, filePath);
 	}
 
 	private void handleAddDir()

@@ -29,7 +29,7 @@ public class ImageFactory
 //		mapper.put(IImageConstants.IMAGE_UNLOCK, createImage("icons/unlock.png"));
 //		mapper.put(IImageConstants.IMAGE_TIME, createImage("icons/time.png"));
 //		mapper.put(IImageConstants.IMAGE_LOAD, createImage("icons/load.png"));
-		mapper.put(IImageConstants.IMAGE_SEARCH, createImage("icons/search.png"));
+		mapper.put(IImageConstants.IMAGE_SEARCH, createImage("icons/search_24.png"));
 		mapper.put(IImageConstants.IMAGE_CANCEL, createImage("icons/cancel.png"));
 //		mapper.put(IImageConstants.IMAGE_ADD, createImage("icons/add.png"));
 //		mapper.put(IImageConstants.IMAGE_REMOVE, createImage("icons/remove.png"));

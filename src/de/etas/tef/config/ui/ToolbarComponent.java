@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import de.etas.tef.config.controller.IMessage;
 import de.etas.tef.config.controller.MainController;
+import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.editor.message.MessageManager;
 
 public class ToolbarComponent extends AbstractComposite
@@ -134,7 +134,7 @@ public class ToolbarComponent extends AbstractComposite
 				{
 					MenuItem selected = (MenuItem) event.widget;
 					String text = selected.getText();
-					MessageManager.INSTANCE.sendMessage(IMessage.MSG_TOOLBAR_ITEM, text);
+					MessageManager.INSTANCE.sendMessage(IConstants.ACTION_TOOLBAR_ITEM, text);
 				}
 			});
 		}

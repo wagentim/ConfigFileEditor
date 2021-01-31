@@ -100,14 +100,19 @@ public class StatusbarComponent extends AbstractComposite
 //			logger.info("Percentage: {}", value);
 			pb.setSelection(value);
 		}
-		else if(type == IConstants.ACTION_FILE_SEARCH_FINISHED)
+		else if(type == IConstants.ACTION_FILE_SEARCH_FINISHED || type == IConstants.ACTION_UPDATE_FILE_LIST_NUM)
 		{
 			@SuppressWarnings("unchecked")
 			List<Path> files = (List<Path>)content;
-			text2.setText(String.valueOf(files.size()));
-			pb.setSelection(0);
-			setProgressbarDisplay(false);
+			updateFileListNumber(files.size());
 		}
+	}
+	
+	private void updateFileListNumber(int num)
+	{
+		text2.setText(String.valueOf(num));
+		pb.setSelection(0);
+		setProgressbarDisplay(false);
 	}
 	
 	private void setProgressbarDisplay(boolean display)

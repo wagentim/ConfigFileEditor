@@ -1,5 +1,6 @@
 package de.etas.tef.config.ui;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -19,11 +20,14 @@ import de.etas.tef.config.helper.IConstants;
 import de.etas.tef.config.helper.IImageConstants;
 import de.etas.tef.config.listener.FileListMouseListener;
 import de.etas.tef.config.listener.FileListTableKeyListener;
+import de.etas.tef.editor.message.MessageManager;
 
 public class ConfigFileListComposite extends AbstractComposite
 {
 
 	private Table configFileList;
+	private List<Path> iniFileList = null;
+	private List<Path> currentList = null;
 
 	public ConfigFileListComposite(Composite parent, int style, MainController controller)
 	{
@@ -86,6 +90,7 @@ public class ConfigFileListComposite extends AbstractComposite
 		}
 		
 		adjustColumnSize();
+		MessageManager.INSTANCE.sendMessage(IConstants.ACTION_UPDATE_FILE_LIST_NUM, files);
 	}
 	
 	private String getDisplayString(Path p)
@@ -129,7 +134,25 @@ public class ConfigFileListComposite extends AbstractComposite
 		{
 			@SuppressWarnings("unchecked")
 			List<Path> files = (List<Path>)content;
+			iniFileList = files;
 			updateList(files);
+		}
+		else if(type == IConstants.ACTION_SEARCH_CONTENT)
+		{
+			if(iniFileList != null && iniFileList.size() > 0)
+			{
+				currentList = controller.searchFileContent(iniFileList, (String)content);
+				updateList(currentList);
+			}
+		}
+		else if(type == IConstants.ACTION_REPLACE_TEXT)
+		{
+			try {
+				controller.replaceText(currentList, (String[]) content);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -1,5 +1,8 @@
 package de.etas.tef.config.ui;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
@@ -16,6 +19,7 @@ public class MainDisplayComponent implements IMessageListener
 	private final Shell shell;
 	private final MainController controller;
 	private SashForm mainArea;
+	private ConfigTextEditor editor = null;
 	
 	public MainDisplayComponent(final Shell shell, final MainController controller)
 	{
@@ -43,9 +47,10 @@ public class MainDisplayComponent implements IMessageListener
 		gd = new GridData(GridData.FILL_BOTH);
 		mainArea.setLayoutData(gd);
 		new FileManageComposite(mainArea, SWT.NONE, controller);
-		new ConfigMainComposite(mainArea, SWT.BORDER, controller);
+//		new ConfigMainComposite(mainArea, SWT.BORDER, controller);
+		editor = new ConfigTextEditor(mainArea, SWT.NONE, controller);
 		
-		mainArea.setWeights(new int[] {1, 0});
+		mainArea.setWeights(new int[] {1, 2});
 	}
 
 	@Override
@@ -53,11 +58,12 @@ public class MainDisplayComponent implements IMessageListener
 	{
 		if(type == IConstants.ACTION_OPEN_INI_FILE)
 		{
-			int[] weights = mainArea.getWeights();
-			
-			if(weights[weights.length - 1] <= 0)
-			{
-				mainArea.setWeights(new int[] {1, 3});
+			Path file = (Path)content;
+			try {
+				editor.setFile(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
